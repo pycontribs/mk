@@ -3,7 +3,7 @@ import git
 from mk.tools import Tool
 
 
-class Runner():
+class Runner:
     def __init__(self):
         self.repo = git.Repo(".", search_parent_directories=True)
         self.root = self.repo.working_dir
