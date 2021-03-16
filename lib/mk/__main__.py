@@ -1,12 +1,17 @@
 """Main module."""
 import logging
 import click
+from rich.logging import RichHandler
 import subprocess
 from mk import __version__
 from mk.runner import Runner
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(message)s",
+    handlers=[RichHandler(show_time=False, show_path=False)],
+)
 
 
 def print_version(ctx, param, value):
