@@ -42,3 +42,4 @@ repos:
         pass_filenames: false
         additional_dependencies:
           - packaging
+          - rich
