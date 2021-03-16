@@ -38,7 +38,7 @@ repos:
       - id: mypy
         # empy args needed in order to match mypy cli behavior
         args: []
-        entry: mypy lib/
+        entry: mypy src/
         pass_filenames: false
         additional_dependencies:
           - packaging
