@@ -1,10 +1,12 @@
 """Main module."""
 import logging
-import click
+import typer
 from rich.logging import RichHandler
 import subprocess
+from mk.ctx import ctx
 from mk import __version__
-from mk.runner import Runner
+
+app = typer.Typer()
 
 
 logging.basicConfig(
@@ -14,44 +16,45 @@ logging.basicConfig(
 )
 
 
-def print_version(ctx, param, value):
-    if not value or ctx.resilient_parsing:
-        return
-    click.echo(__version__)
-    ctx.exit()
+def version_callback(value: bool) -> None:
+    if value:
+        typer.echo(f"mk {__version__}")
+        raise typer.Exit()
 
 
-@click.group()
-@click.option("--version", is_flag=True, callback=print_version, expose_value=False, is_eager=True)
-@click.pass_context
-def cli(ctx):
-    """Run cli."""
-    ctx.ensure_object(dict)
-    runner = Runner()
-    ctx.obj["runner"] = runner
-
-    click.secho(f"mk detected {runner.root} git repository", fg="green")
-
-    # commands = {"lint": "pre-commit run -a"}
+@app.callback()
+def main(
+    version: bool = typer.Option(
+        None, "--version", callback=version_callback, is_eager=True
+    )  # noqa: B008
+) -> None:
+    return
 
 
-@cli.command()
-def detect():
+@app.command()
+def detect() -> None:
     """Display detected information about current project."""
-    click.secho("mk detect...", fg="yellow")
+    typer.echo("mk detect...")
+    ctx.runner.info()
 
 
-@cli.command()
-def lint():
+@app.command()
+def lint() -> None:
     """Perform linting."""
-    click.secho("mk lint...", fg="yellow")
+    typer.secho("mk lint...", fg="yellow")
     subprocess.call(["pre-commit", "run", "-a"])
 
 
-@cli.command()
-@click.pass_context
-def up(ctx):
+@app.command()
+def up() -> None:
     """Upload current change by creating or updating a CR/PR."""
-    click.secho("mk up...", fg="yellow")
-    ctx.obj["runner"].up()
-    # import pdb; pdb.set_trace()
+    typer.secho("mk up...", fg="yellow")
+    ctx.runner.up()
+
+
+def cli() -> None:
+    app()
+
+
+if __name__ == "__main__":
+    cli()
