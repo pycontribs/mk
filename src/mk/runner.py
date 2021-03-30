@@ -7,18 +7,23 @@ from mk.tools import Tool
 
 
 class Runner:
-    def __init__(self):
+    def __init__(self) -> None:
         self.repo = git.Repo(".", search_parent_directories=True)
         self.root = Path(self.repo.working_dir)
+        self.actions = []
 
         for c in Tool:
             if c.is_present(self.root):
                 logging.info(f"Detected {c} !")
+                self.actions.extend(c().actions())
             else:
                 logging.debug(f"{c} not detected !")
 
         if self.repo.is_dirty():
             logging.warning(f"Repo is dirty on {self.repo.active_branch}")
+
+    def info(self) -> None:
+        logging.info(f"Actions identified: {self.actions}")
 
     def up(self):
         if self.repo.is_dirty():
