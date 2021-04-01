@@ -101,13 +101,14 @@ jobs:
           fetch-depth: 0  # needed by setuptools-scm
       - name: Build dists
         run: python -m tox -p auto --parallel-live -vvvv
-      - name: Publish to test.pypi.org
-        if: >-  # "create" workflows run separately from "push" & "pull_request"
-          github.event_name == 'release'
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          password: ${{ secrets.testpypi_password }}
-          repository_url: https://test.pypi.org/legacy/
+      # https://github.com/pypa/pypi-support/issues/995
+      # - name: Publish to test.pypi.org
+      #   if: >-  # "create" workflows run separately from "push" & "pull_request"
+      #     github.event_name == 'release'
+      #   uses: pypa/gh-action-pypi-publish@master
+      #   with:
+      #     password: ${{ secrets.testpypi_password }}
+      #     repository_url: https://test.pypi.org/legacy/
       - name: Publish to pypi.org
         if: >-  # "create" workflows run separately from "push" & "pull_request"
           github.event_name == 'release'
