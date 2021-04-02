@@ -4,16 +4,17 @@ from typing import List, Optional, Any
 
 
 class Action:
-    def __init__(self, name: str, callable, args: Optional[List[Any]] = []) -> None:
+    def __init__(self, name: str, tool: "Tool", args: Optional[List[Any]] = []) -> None:
         self.name = name
-        self.callable = callable
+        self.description: str = f"... (from {tool})"
+        self.tool = tool
         self.args = args
         # Python does not allow writing __doc__ and this is what click uses
         # for storing command names.
         # self.run.__doc__ = "bleah!"
 
     def run(self) -> None:
-        self.callable(self.args)
+        self.tool.run(self.name)
 
     def __str__(self) -> str:
         return self.name
@@ -27,7 +28,7 @@ class ToolRegistry(type):
         super(ToolRegistry, cls).__init__(name, bases, nmspc)
         if not hasattr(cls, "registry"):
             cls.registry = set()
-        cls.registry.add(cls)
+        cls.registry.add(cls())
         cls.registry -= set(bases)  # Remove base classes
 
     # Metamethods, called on class objects:
@@ -41,11 +42,12 @@ class ToolRegistry(type):
 
 
 class Tool(metaclass=ToolRegistry):
+    name = "tool-name"
+
     def __init__(self, path=".") -> None:
         self.path = path
 
-    @classmethod
-    def is_present(cls, path: str) -> bool:
+    def is_present(self, path: str) -> bool:
         return False
 
     def actions(self) -> List[Action]:
@@ -54,32 +56,43 @@ class Tool(metaclass=ToolRegistry):
     def run(self, action: Optional[str] = None):
         pass
 
+    def __repr__(self):
+        return self.name
+
+    def __rich__(self):
+        return f"[magenta]{self.name}[/]"
+
 
 class PreCommitTool(Tool):
+    name = "pre-commit"
+
     def run(self, action: Optional[str] = None):
         subprocess.run(["pre-commit", "run", "-a"])
 
     @classmethod
-    def is_present(cls, path: str) -> bool:
+    def is_present(self, path: str) -> bool:
         if os.path.isfile(os.path.join(path, ".pre-commit-config.yaml")):
             return True
         return False
 
     def actions(self) -> List[Action]:
-        return [Action("lint", self.run)]
+        return [Action(name="lint", tool=self)]
 
 
 class ToxTool(Tool):
-    def is_present(path):
+    name = "tox"
+
+    def is_present(self, path: str) -> bool:
         if os.path.isfile(os.path.join(path, "tox.ini")):
             return True
         return False
 
     def actions(self) -> List[Action]:
-        actions = subprocess.check_output(["tox", "-la"], universal_newlines=True).split()
-        return [Action(name=a, callable=self.run, args=[a]) for a in actions]
+        # -a is not supported by tox4!
+        actions = subprocess.check_output(["tox", "-l"], universal_newlines=True).split()
+        return [Action(name=a, tool=self, args=[a]) for a in actions]
 
-    def run(self, action: Optional[str] = None):
+    def run(self, action: Optional[str] = None) -> None:
         if not action:
             cmd = ["tox"]
         else:
@@ -88,8 +101,8 @@ class ToxTool(Tool):
 
 
 class MakeTool(Tool):
-    pass
+    name = "make"
 
 
 class NpmTool(Tool):
-    pass
+    name = "npm"

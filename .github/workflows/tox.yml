@@ -73,7 +73,7 @@ jobs:
           ${{ matrix.PREFIX }} tox -e ${{ matrix.tox_env }}
 
   publish:
-    name: Publish to PyPI registry
+    name: packaging
     needs:
       - build
     runs-on: ubuntu-20.04
