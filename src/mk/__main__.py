@@ -1,8 +1,8 @@
 """Main module."""
 import logging
+import itertools
 import typer
 from rich.logging import RichHandler
-import subprocess
 from mk.ctx import ctx
 from mk import __version__
 
@@ -12,7 +12,7 @@ app = typer.Typer()
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(message)s",
-    handlers=[RichHandler(show_time=False, show_path=False)],
+    handlers=[RichHandler(show_time=False, show_path=False, markup=True)],
 )
 
 
@@ -39,13 +39,6 @@ def detect() -> None:
 
 
 @app.command()
-def lint() -> None:
-    """Perform linting."""
-    typer.secho("mk lint...", fg="yellow")
-    subprocess.call(["pre-commit", "run", "-a"])
-
-
-@app.command()
 def up() -> None:
     """Upload current change by creating or updating a CR/PR."""
     typer.secho("mk up...", fg="yellow")
@@ -53,6 +46,34 @@ def up() -> None:
 
 
 def cli() -> None:
+
+    existing_commands = []
+    for command_info in app.registered_commands:
+        command = typer.main.get_command_from_info(command_info=command_info)
+        existing_commands.append(command.name)
+
+    # command = get_command_from_info(command_info=command_info)
+
+    for action in ctx.runner.actions:
+        # Currently we rename action that overlap but in the future we may
+        # want to allow one to shadow others or we may want to chain them
+        # under a single name.
+        action_name = action.name
+        counter = itertools.count(2)
+        while action_name in existing_commands:
+            action_name = f"{action.name}{next(counter)}"
+
+        if action_name != action.name:
+            logging.warning(
+                "Action [dim]%s[/] exposed by [dim]%s[/] renamed to [dim]%s[/] to avoid shadowing existing one.",
+                action.name,
+                action.tool,
+                action_name,
+            )
+        app.command(name=action_name, short_help=action.description, help=action.description)(
+            action.run
+        )
+        existing_commands.append(action_name)
     app()
 
 
