@@ -1,14 +1,15 @@
 """Main module."""
-import logging
 import itertools
-import typer
-from rich.logging import RichHandler
-from rich.console import Console
-from mk.ctx import ctx
-from mk import __version__
-from typing import List
+import logging
 import os
+from typing import List
 
+import typer
+from rich.console import Console
+from rich.logging import RichHandler
+
+from mk import __version__
+from mk.ctx import ctx
 
 app = typer.Typer()
 handlers: List[logging.Handler]
