@@ -1,0 +1,16 @@
+[MESSAGES CONTROL]
+
+disable =
+    # On purpose disabled as we rely on black
+    line-too-long,
+    # TODO(ssbarnea): remove temporary skips adding during initial adoption:
+    dangerous-default-value,
+    invalid-name,
+    missing-class-docstring,
+    missing-function-docstring,
+    missing-module-docstring,
+    no-self-use,
+    no-value-for-parameter,
+    not-an-iterable,
+    too-few-public-methods,
+    wrong-import-order,

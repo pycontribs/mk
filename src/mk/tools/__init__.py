@@ -47,6 +47,7 @@ class Tool(metaclass=ToolRegistry):
     def __init__(self, path=".") -> None:
         self.path = path
 
+    # pylint: disable=unused-argument
     def is_present(self, path: str) -> bool:
         return False
 
@@ -67,9 +68,8 @@ class PreCommitTool(Tool):
     name = "pre-commit"
 
     def run(self, action: Optional[str] = None):
-        subprocess.run(["pre-commit", "run", "-a"])
+        subprocess.run(["pre-commit", "run", "-a"], check=True)
 
-    @classmethod
     def is_present(self, path: str) -> bool:
         if os.path.isfile(os.path.join(path, ".pre-commit-config.yaml")):
             return True
@@ -97,7 +97,7 @@ class ToxTool(Tool):
             cmd = ["tox"]
         else:
             cmd = ["tox", "-e", action]
-        subprocess.run(cmd)
+        subprocess.run(cmd, check=True)
 
 
 class MakeTool(Tool):

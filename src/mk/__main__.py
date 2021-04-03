@@ -36,6 +36,7 @@ def version_callback(value: bool) -> None:
 
 @app.callback()
 def main(
+    # pylint: disable=unused-argument
     version: bool = typer.Option(
         None, "--version", callback=version_callback, is_eager=True
     )  # noqa: B008

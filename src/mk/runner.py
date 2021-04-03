@@ -15,16 +15,16 @@ class Runner:
 
         for c in Tool:
             if c.is_present(self.root):
-                logging.info(f"Detected {c} !")
+                logging.info("Detected %s !", c)
                 self.actions.extend(c.actions())
             else:
                 logging.debug("%s not detected !", c)
 
         if self.repo.is_dirty():
-            logging.warning(f"Repo is dirty on {self.repo.active_branch}")
+            logging.warning("Repo is dirty on %s", self.repo.active_branch)
 
     def info(self) -> None:
-        logging.info(f"Actions identified: {self.actions}")
+        logging.info("Actions identified: %s", self.actions)
 
     def up(self):
         if self.repo.is_dirty():

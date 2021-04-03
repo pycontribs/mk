@@ -9,8 +9,6 @@ class Context:
     @property
     def runner(self) -> Runner:
         if not self._runner:
-            from mk.runner import Runner
-
             self._runner = Runner()
         return self._runner
 

@@ -43,3 +43,13 @@ repos:
           - packaging
           - rich
           - typer
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v3.0.0a1
+    hooks:
+      - id: pylint
+        additional_dependencies:
+          - GitPython
+          - importlib-metadata
+          - pytest
+          - rich
+          - typer
