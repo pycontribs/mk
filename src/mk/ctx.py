@@ -1,5 +1,6 @@
-from mk.runner import Runner
 from typing import Optional
+
+from mk.runner import Runner
 
 
 class Context:

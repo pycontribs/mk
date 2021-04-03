@@ -13,4 +13,3 @@ disable =
     no-value-for-parameter,
     not-an-iterable,
     too-few-public-methods,
-    wrong-import-order,

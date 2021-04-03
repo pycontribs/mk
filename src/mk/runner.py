@@ -1,10 +1,12 @@
 import logging
-import git
-from pathlib import Path
 import subprocess
 import sys
-from mk.tools import Tool, Action
+from pathlib import Path
 from typing import List
+
+import git
+
+from mk.tools import Action, Tool
 
 
 class Runner:
