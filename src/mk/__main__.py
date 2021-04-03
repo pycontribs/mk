@@ -3,16 +3,28 @@ import logging
 import itertools
 import typer
 from rich.logging import RichHandler
+from rich.console import Console
 from mk.ctx import ctx
 from mk import __version__
+from typing import List
+import os
+
 
 app = typer.Typer()
+handlers: List[logging.Handler]
+console_err = Console(stderr=True)
 
+if "_MK_COMPLETE" in os.environ:
+    level = logging.CRITICAL
+    handlers = [logging.NullHandler()]
+else:
+    level = logging.DEBUG
+    handlers = [RichHandler(console=console_err, show_time=False, show_path=False, markup=True)]
 
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(message)s",
-    handlers=[RichHandler(show_time=False, show_path=False, markup=True)],
+    handlers=handlers,
 )
 
 
