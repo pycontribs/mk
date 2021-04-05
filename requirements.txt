@@ -6,8 +6,11 @@
 #
 blessings==1.7
     # via mk (setup.cfg)
+click-help-colors==0.9
+    # via mk (setup.cfg)
 click==7.1.2
     # via
+    #   click-help-colors
     #   mk (setup.cfg)
     #   typer
 colorama==0.4.4

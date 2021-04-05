@@ -9,9 +9,10 @@ from rich.console import Console
 from rich.logging import RichHandler
 
 from mk import __version__
+from mk._typer import CustomTyper
 from mk.ctx import ctx
 
-app = typer.Typer()
+app = CustomTyper()
 handlers: List[logging.Handler]
 console_err = Console(stderr=True)
 
@@ -37,10 +38,11 @@ def version_callback(value: bool) -> None:
 
 @app.callback()
 def main(
+    # click_ctx: typer.Context,
     # pylint: disable=unused-argument
     version: bool = typer.Option(
         None, "--version", callback=version_callback, is_eager=True
-    )  # noqa: B008
+    ),  # noqa: B008
 ) -> None:
     return
 
@@ -88,6 +90,7 @@ def cli() -> None:
             action.run
         )
         existing_commands.append(action_name)
+    # breakpoint()
     app()
 
 

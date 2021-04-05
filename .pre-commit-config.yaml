@@ -60,6 +60,7 @@ repos:
       - id: pylint
         additional_dependencies:
           - GitPython
+          - click-help-colors
           - importlib-metadata
           - pytest
           - rich
