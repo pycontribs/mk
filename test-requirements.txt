@@ -34,7 +34,9 @@ more-itertools==8.7.0
 packaging==20.9
     # via pytest
 pluggy==0.13.1
-    # via pytest
+    # via
+    #   mk (setup.cfg)
+    #   pytest
 py==1.10.0
     # via pytest
 pygments==2.8.1

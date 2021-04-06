@@ -4,10 +4,11 @@ import sys
 from pathlib import Path
 from typing import List
 
+import pluggy
 from git import Repo
 from git.exc import GitError
 
-from mk.tools import Action, Tool
+from mk.tools import Action
 
 
 class Runner:
@@ -21,7 +22,11 @@ class Runner:
         self.root = Path(self.repo.working_dir)
         self.actions: List[Action] = []
 
-        for c in Tool:
+        self.pm = pluggy.PluginManager("mk_tools")
+        self.pm.load_setuptools_entrypoints("mk_tools")
+        for _, cls_name in self.pm.list_name_plugin():
+            # for c in Tool:
+            c = cls_name()
             if c.is_present(self.root):
                 logging.info("Detected %s !", c)
                 self.actions.extend(c.actions())
