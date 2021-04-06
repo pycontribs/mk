@@ -2,23 +2,27 @@ from typing import Any, List, Optional
 
 
 class Action:
+
+    # pylint: disable=too-many-arguments
     def __init__(
         self,
         name: str,
         tool: "Tool",
         description: Optional[str] = None,
+        cwd: Optional[str] = None,
         args: Optional[List[Any]] = [],
     ) -> None:
         self.name = name
         self.description: str = (description or "...") + f" (from {tool})"
         self.tool = tool
+        self.cwd = cwd
         self.args = args
         # Python does not allow writing __doc__ and this is what click uses
         # for storing command names.
         # self.run.__doc__ = "bleah!"
 
     def run(self) -> None:
-        self.tool.run(self.name)
+        self.tool.run(self)
 
     def __str__(self) -> str:
         return self.name
@@ -58,7 +62,7 @@ class Tool(metaclass=ToolRegistry):
     def actions(self) -> List[Action]:
         return []
 
-    def run(self, action: Optional[str] = None):
+    def run(self, action: Optional[Action] = None):
         pass
 
     def __repr__(self):

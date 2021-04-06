@@ -8,7 +8,7 @@ from mk.tools import Action, Tool
 class PreCommitTool(Tool):
     name = "pre-commit"
 
-    def run(self, action: Optional[str] = None):
+    def run(self, action: Optional[Action] = None):
         subprocess.run(["pre-commit", "run", "-a"], check=True)
 
     def is_present(self, path: str) -> bool:
