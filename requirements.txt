@@ -25,6 +25,8 @@ gitpython==3.1.14
     # via mk (setup.cfg)
 importlib-metadata==3.10.0
     # via mk (setup.cfg)
+pluggy==0.13.1
+    # via mk (setup.cfg)
 pygments==2.8.1
     # via
     #   mk (setup.cfg)
