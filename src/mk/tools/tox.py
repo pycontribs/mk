@@ -36,9 +36,9 @@ class ToxTool(Tool):
 
         return actions
 
-    def run(self, action: Optional[str] = None) -> None:
+    def run(self, action: Optional[Action] = None) -> None:
         if not action:
             cmd = ["tox"]
         else:
-            cmd = ["tox", "-e", action]
+            cmd = ["tox", "-e", action.name]
         subprocess.run(cmd, check=True)
