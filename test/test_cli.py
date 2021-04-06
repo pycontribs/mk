@@ -59,3 +59,10 @@ def test_help() -> None:
     assert result.returncode == 0, result
     # very important as we could easily break it by sending data to stdout
     assert result.stdout.startswith("Usage: mk")
+
+
+def test_no_git_repo() -> None:
+    """Ensure failure to run outside git repos."""
+    result = run(["mk"], universal_newlines=True, capture_output=True, check=False, cwd="/")
+    assert result.returncode == 1, result
+    assert "Current version of mk works only within git repos" in result.stderr

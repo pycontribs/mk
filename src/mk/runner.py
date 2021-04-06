@@ -4,14 +4,20 @@ import sys
 from pathlib import Path
 from typing import List
 
-import git
+from git import Repo
+from git.exc import GitError
 
 from mk.tools import Action, Tool
 
 
 class Runner:
     def __init__(self) -> None:
-        self.repo = git.Repo(".", search_parent_directories=True)
+        try:
+            self.repo = Repo(".", search_parent_directories=True)
+        except GitError:
+            logging.fatal("Current version of mk works only within git repos.")
+            sys.exit(1)
+
         self.root = Path(self.repo.working_dir)
         self.actions: List[Action] = []
 
