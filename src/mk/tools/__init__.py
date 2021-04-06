@@ -1,12 +1,19 @@
 import os
 import subprocess
+from configparser import ConfigParser
 from typing import Any, List, Optional
 
 
 class Action:
-    def __init__(self, name: str, tool: "Tool", args: Optional[List[Any]] = []) -> None:
+    def __init__(
+        self,
+        name: str,
+        tool: "Tool",
+        description: Optional[str] = None,
+        args: Optional[List[Any]] = [],
+    ) -> None:
         self.name = name
-        self.description: str = f"... (from {tool})"
+        self.description: str = (description or "...") + f" (from {tool})"
         self.tool = tool
         self.args = args
         # Python does not allow writing __doc__ and this is what click uses
@@ -89,8 +96,25 @@ class ToxTool(Tool):
 
     def actions(self) -> List[Action]:
         # -a is not supported by tox4!
-        actions = subprocess.check_output(["tox", "-l"], universal_newlines=True).split()
-        return [Action(name=a, tool=self, args=[a]) for a in actions]
+        actions: List[Action] = []
+        cp = ConfigParser()
+        tox_cfg = subprocess.check_output(["tox", "--showconfig"], universal_newlines=True)
+        cp.read_string(tox_cfg)
+        for section in cp.sections():
+            if section.startswith("testenv:"):
+                _, env_name = section.split(":")
+                # we ignore hidden envs like implicit .pkg:
+                if not env_name.startswith("."):
+                    actions.append(
+                        Action(
+                            name=env_name,
+                            tool=self,
+                            description=cp[section]["description"],
+                            args=[env_name],
+                        )
+                    )
+
+        return actions
 
     def run(self, action: Optional[str] = None) -> None:
         if not action:
