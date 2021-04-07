@@ -20,9 +20,11 @@ class NpmTool(Tool):
         if result.returncode != 0 or not result.stdout:
             self.present = False
             return
-        self.present = True
         self._actions: List[Action] = []
         for line in result.stdout.split():
+            # we consider only up to one level deep files
+            if line.count("/") > 1:
+                continue
             cwd = line.split("/")[0]
             with open(line, "r") as package_json:
                 x = json.load(package_json)["scripts"]
@@ -36,6 +38,7 @@ class NpmTool(Tool):
                             cwd=cwd,
                         )
                     )
+        self.present = bool(self._actions)
 
     def is_present(self, path: str) -> bool:
         return self.present
