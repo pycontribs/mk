@@ -10,7 +10,7 @@ class NpmTool(Tool):
 
     def __init__(self, path=".") -> None:
         super().__init__(path=path)
-        cmd = ("git", "ls-files", "**/package.json")
+        cmd = ("git", "ls-files", "**/package.json", "package.json")
         result = subprocess.run(
             cmd,
             stdout=subprocess.PIPE,
