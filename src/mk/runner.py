@@ -42,7 +42,7 @@ class Runner:
     def up(self):
         if self.repo.is_dirty():
             sys.exit(2)
-        if (self.root / ".git-review").is_file():
+        if (self.root / ".gitreview").is_file():
             cmd = ["git", "review"]
         else:
             if self.repo.active_branch in ["main", "master"]:
