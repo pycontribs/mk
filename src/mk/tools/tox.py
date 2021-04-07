@@ -17,7 +17,7 @@ class ToxTool(Tool):
     def actions(self) -> List[Action]:
         # -a is not supported by tox4!
         actions: List[Action] = []
-        cp = ConfigParser()
+        cp = ConfigParser(strict=False, interpolation=None)
         tox_cfg = subprocess.check_output(["tox", "--showconfig"], universal_newlines=True)
         cp.read_string(tox_cfg)
         for section in cp.sections():
