@@ -27,17 +27,18 @@ class NpmTool(Tool):
                 continue
             cwd = line.split("/")[0]
             with open(line, "r") as package_json:
-                x = json.load(package_json)["scripts"]
-                for k in x.keys():
-                    self._actions.append(
-                        Action(
-                            name=k,
-                            tool=self,
-                            # description=cp[section]["description"],
-                            args=[k],
-                            cwd=cwd,
+                data = json.load(package_json)
+                if "scripts" in data:
+                    for k in data["scripts"].keys():
+                        self._actions.append(
+                            Action(
+                                name=k,
+                                tool=self,
+                                # description=cp[section]["description"],
+                                args=[k],
+                                cwd=cwd,
+                            )
                         )
-                    )
         self.present = bool(self._actions)
 
     def is_present(self, path: str) -> bool:
