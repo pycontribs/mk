@@ -9,6 +9,10 @@ from mk.tools import Action, Tool
 class MakeTool(Tool):
     name = "make"
 
+    def __init__(self):
+        super().__init__(self)
+        self.makefile = None
+
     def run(self, action: Optional[Action] = None) -> None:
         cmd = ["make"]
         if action:
@@ -16,14 +20,17 @@ class MakeTool(Tool):
         subprocess.run(cmd, check=True)
 
     def is_present(self, path: str) -> bool:
-        if os.path.isfile(os.path.join(path, "Makefile")):
-            return True
+        for name in ["Makefile", "makefile", "GNUmakefile"]:
+            makefile = os.path.join(path, name)
+            if os.path.isfile(makefile):
+                self.makefile = makefile
+                return True
         return False
 
     def actions(self) -> List[Action]:
         actions = []
 
-        with open("Makefile", "r") as file:
+        with open(self.makefile, "r") as file:
             for line in file.readlines():
                 # Current implementation assumes that descriptions are added
                 # using double ## after the target name.
