@@ -10,13 +10,16 @@ class Action:
         tool: "Tool",
         description: Optional[str] = None,
         cwd: Optional[str] = None,
+        filename: Optional[str] = None,
         args: Optional[List[Any]] = [],
     ) -> None:
         self.name = name
         self.description: str = (description or "...") + f" (from {tool})"
         self.tool = tool
         self.cwd = cwd
+        self.filename = filename
         self.args = args
+
         # Python does not allow writing __doc__ and this is what click uses
         # for storing command names.
         # self.run.__doc__ = "bleah!"
