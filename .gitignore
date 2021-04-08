@@ -2,3 +2,5 @@
 build
 dist
 .eggs
+__pycache__
+src/mk.egg-info
