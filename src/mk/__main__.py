@@ -61,6 +61,13 @@ def up() -> None:
     ctx.runner.up()
 
 
+@app.command()
+def commands() -> None:
+    """List all commands available."""
+    for action in ctx.runner.actions:
+        print(action.name)
+
+
 def cli() -> None:
 
     existing_commands = []
@@ -78,6 +85,7 @@ def cli() -> None:
         counter = itertools.count(2)
         while action_name in existing_commands:
             action_name = f"{action.name}{next(counter)}"
+            action.name = action_name
 
         if action_name != action.name:
             logging.warning(
@@ -90,7 +98,6 @@ def cli() -> None:
             action.run
         )
         existing_commands.append(action_name)
-    # breakpoint()
     app()
 
 

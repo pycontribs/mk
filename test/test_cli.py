@@ -31,7 +31,7 @@ def test_show_completion_script(shell, expected) -> None:
     "shell,expected",
     (
         pytest.param("zsh", "_arguments", id="zsh"),
-        pytest.param("bash", "deps\n", id="bash"),
+        pytest.param("bash", "commands\n", id="bash"),
     ),
 )
 def test_show_completion_data(shell, expected) -> None:
