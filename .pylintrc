@@ -13,3 +13,7 @@ disable =
     no-value-for-parameter,
     not-an-iterable,
     too-few-public-methods,
+
+[SIMILARITIES]
+# default is 4
+min-similarity-lines = 5
