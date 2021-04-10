@@ -44,6 +44,7 @@ Usage: mk [OPTIONS] COMMAND [ARGS]...
 
 Options:
   --version
+  -v, --verbose         Increase verbosity.  [default: 0]
   --install-completion  Install completion for the current shell.
   --show-completion     Show completion for the current shell, to copy it or
                         customize the installation.

@@ -24,7 +24,9 @@ class CustomTyper(typer.Typer):
         context_settings={"help_option_names": ["-h", "--help"]},
         **kwargs
     ) -> None:
-        super().__init__(*args, cls=cls, context_settings=context_settings, **kwargs)
+        super().__init__(
+            *args, cls=cls, context_settings=context_settings, no_args_is_help=True, **kwargs
+        )
 
     def command(
         self,
