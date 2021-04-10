@@ -30,7 +30,7 @@ class Runner:
             # for c in Tool:
             c = cls_name()
             if c.is_present(self.root):
-                logging.info("Detected %s !", c)
+                logging.debug("Detected %s !", c)
                 self.actions.extend(c.actions())
             else:
                 logging.debug("%s not detected !", c)

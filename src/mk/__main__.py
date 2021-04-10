@@ -24,7 +24,7 @@ else:
     handlers = [RichHandler(console=console_err, show_time=False, show_path=False, markup=True)]
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(message)s",
     handlers=handlers,
 )
@@ -36,15 +36,20 @@ def version_callback(value: bool) -> None:
         raise typer.Exit()
 
 
-@app.callback()
+@app.callback(invoke_without_command=True)
 def main(
-    # click_ctx: typer.Context,
+    click_ctx: typer.Context,
     # pylint: disable=unused-argument
     version: bool = typer.Option(
         None, "--version", callback=version_callback, is_eager=True
     ),  # noqa: B008
+    verbose: int = typer.Option(0, "--verbose", "-v", count=True, help="Increase verbosity."),
 ) -> None:
-    return
+    if verbose:
+        log_level = logging.INFO if verbose == 1 else logging.DEBUG
+        logging.getLogger().setLevel(log_level)
+        logging.log(level=log_level, msg="Reconfigured logging level to %d" % log_level)
+    # click_ctx.invoked_subcommand can be the command or None
 
 
 @app.command()
