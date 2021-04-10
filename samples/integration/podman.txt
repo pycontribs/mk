@@ -9,3 +9,4 @@ install
 package
 package-install
 lint
+up
