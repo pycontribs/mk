@@ -9,9 +9,9 @@ def fail(msg: str, code: int = 1) -> None:
 
 
 def run(*args) -> None:
-    result = subprocess.run(*args, check=False)
+    result = subprocess.run(*args, capture_output=True, check=False, universal_newlines=True)  # type: ignore
     if result.returncode != 0:
         fail(
-            f"Received exit code {result.returncode} from: {' '.join(result.args)}",
+            f"Received exit code {result.returncode} from: {' '.join(result.args)}\n{result.stdout}\n{result.stderr}",
             code=result.returncode,
         )
