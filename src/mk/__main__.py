@@ -12,9 +12,9 @@ from mk import __version__
 from mk._typer import CustomTyper
 from mk.ctx import ctx
 
-app = CustomTyper()
 handlers: List[logging.Handler]
 console_err = Console(stderr=True)
+app = CustomTyper(width=console_err.width)
 
 if "_MK_COMPLETE" in os.environ:
     level = logging.CRITICAL
