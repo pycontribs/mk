@@ -1,4 +1,8 @@
+import typing
 from typing import Any, List, Optional
+
+if typing.TYPE_CHECKING:
+    from mk.runner import Runner
 
 
 class Action:
@@ -12,6 +16,7 @@ class Action:
         cwd: Optional[str] = None,
         filename: Optional[str] = None,
         args: Optional[List[Any]] = [],
+        runner: Optional["Runner"] = None,
     ) -> None:
         self.name = name
         self.description: str = (description or "...") + f" (from {tool})"
@@ -19,6 +24,7 @@ class Action:
         self.cwd = cwd
         self.filename = filename
         self.args = args
+        self.runner = runner
 
         # Python does not allow writing __doc__ and this is what click uses
         # for storing command names.

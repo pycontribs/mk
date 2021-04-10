@@ -9,18 +9,20 @@ from git import Repo
 from git.exc import GitError
 
 from mk.tools import Action
+from mk.tools.git import GitTool
 
 
 class Runner:
     def __init__(self) -> None:
+        self.actions: List[Action] = []
         try:
             self.repo = Repo(".", search_parent_directories=True)
         except GitError:
             logging.fatal("Current version of mk works only within git repos.")
-            sys.exit(1)
+            self.repo = None
+            return
 
         self.root = Path(self.repo.working_dir)
-        self.actions: List[Action] = []
 
         self.pm = pluggy.PluginManager("mk_tools")
         self.pm.load_setuptools_entrypoints("mk_tools")
@@ -36,26 +38,18 @@ class Runner:
         if self.repo.is_dirty():
             logging.warning("Repo is dirty on %s", self.repo.active_branch)
 
+        # expos up command
+        self.actions.append(
+            Action(
+                name="up",
+                description="Upload current change by creating or updating a CR/PR.",
+                tool=GitTool(),
+                runner=self
+            )
+        )
+
     def info(self) -> None:
         logging.info("Actions identified: %s", self.actions)
-
-    def up(self):
-        if self.repo.is_dirty():
-            sys.exit(2)
-        if (self.root / ".gitreview").is_file():
-            cmd = ["git", "review"]
-        else:
-            if self.repo.active_branch in ["main", "master"]:
-                fail(
-                    "Uploading from default branche is not allowed in order to avoid accidents.", 2
-                )
-            run(["git", "push", "--force-with-lease", "-u", "origin", "HEAD"])
-            # github for the moment
-            # https://github.com/cli/cli/issues/1718
-
-            # --web option is of not use because it happens to soon, confusing github
-            cmd = ["gh", "pr", "create", "--fill"]  # {self.repo.active_branch}
-        run(cmd)
 
 
 def fail(msg: str, code=1) -> None:
