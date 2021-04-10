@@ -21,3 +21,4 @@ py39
 pypy3
 cov-report
 docs2
+up

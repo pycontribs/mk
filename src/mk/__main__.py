@@ -55,13 +55,6 @@ def detect() -> None:
 
 
 @app.command()
-def up() -> None:
-    """Upload current change by creating or updating a CR/PR."""
-    typer.secho("mk up...", fg="yellow")
-    ctx.runner.up()
-
-
-@app.command()
 def commands() -> None:
     """List all commands available."""
     for action in ctx.runner.actions:

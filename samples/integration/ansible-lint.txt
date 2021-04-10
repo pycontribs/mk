@@ -18,3 +18,4 @@ py36-devel
 deps
 docs
 eco2
+up
