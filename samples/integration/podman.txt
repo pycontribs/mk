@@ -1,0 +1,11 @@
+gofmt
+local-cross
+clean
+test
+binaries
+docs
+changelog
+install
+package
+package-install
+lint

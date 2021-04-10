@@ -1,0 +1,38 @@
+- name: >
+    Tests that running mk in some popular repos does detect
+    what we would expect.
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    cache_dir: "{{ (lookup('env','HOME'), '.cache', 'mk') | path_join | realpath }}"
+    repos:
+      - name: podman
+        url: https://github.com/containers/podman
+      - name: ansible-lint
+        url: https://github.com/ansible-community/ansible-lint
+      - name: cookiecutter
+        url: https://github.com/cookiecutter/cookiecutter.git
+  tasks:
+
+    - name: Clone repo
+      git:
+        repo: "{{ item.url }}"
+        dest: "{{ (cache_dir, item.name) | path_join }}"
+      loop: "{{ repos }}"
+
+    - name: List commands
+      shell: |
+        mk commands > {{ output_dir }}/{{ item.name }}.txt
+      args:
+        chdir: "{{ (cache_dir, item.name) | path_join }}"
+      vars:
+        output_dir: "{{ (playbook_dir, '..', 'samples', 'integration') | path_join | realpath }}"
+      register: result
+      loop: "{{ repos }}"
+      changed_when: false
+
+    - name: Fail if samples were modified
+      shell:
+        pwd
+        git diff-index --exit-code HEAD
