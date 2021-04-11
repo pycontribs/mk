@@ -51,6 +51,7 @@ repos:
         entry: mypy src/
         pass_filenames: false
         additional_dependencies:
+          - importlib-metadata
           - packaging
           - rich
           - typer

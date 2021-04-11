@@ -1,8 +1,9 @@
 [MESSAGES CONTROL]
 
 disable =
-    # On purpose disabled as we rely on black
-    line-too-long,
+    # Disabled on purpose (explain in comment)
+    line-too-long,  # black managed
+    wrong-import-position,  # isort managed
     # TODO(ssbarnea): remove temporary skips adding during initial adoption:
     dangerous-default-value,
     invalid-name,

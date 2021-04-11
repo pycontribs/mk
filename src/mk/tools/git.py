@@ -3,6 +3,7 @@ import subprocess
 import sys
 from typing import List, Optional
 
+from mk.ctx import ctx
 from mk.exec import fail, run
 from mk.tools import Action, Tool
 
@@ -14,8 +15,8 @@ class GitTool(Tool):
         super().__init__(self)
 
     def run(self, action: Optional[Action] = None) -> None:
-        if action and action.name == "up" and action.runner:
-            self.up(runner=action.runner)
+        if action and action.name == "up":
+            self.up()
         else:
             raise NotImplementedError(f"Action {action} is not supported.")
 
@@ -24,31 +25,40 @@ class GitTool(Tool):
 
     def actions(self) -> List[Action]:
         actions: List[Action] = []
+        actions.append(
+            Action(
+                name="up",
+                description="Upload current change by creating or updating a CR/PR.",
+                tool=self,
+                # runner=self,
+            )
+        )
         return actions
 
     # pylint: disable=too-many-branches
-    def up(self, runner):
-        if not runner.repo or runner.repo.is_dirty():
+    def up(self):
+        repo = ctx.runner.repo
+        if not repo or repo.is_dirty():
             logging.fatal("This action cannot be performed with dirty repos.")
             sys.exit(2)
-        if (runner.root / ".gitreview").is_file():
+        if (ctx.runner.root / ".gitreview").is_file():
             cmd = ["git", "review"]
             run(cmd)
         else:
-            active_branch = str(runner.repo.active_branch)
-            tracking_branch = str(runner.repo.active_branch.tracking_branch())  # can be None
+            active_branch = str(repo.active_branch)
+            tracking_branch = str(repo.active_branch.tracking_branch())  # can be None
             if active_branch in ["main", "master"]:
                 fail(
                     "Uploading from default branch is not allowed in order to avoid accidents.", 2
                 )
 
-            remotes = {r.name for r in runner.repo.remotes}
+            remotes = {r.name for r in repo.remotes}
             if not {"origin", "upstream"}.issubset(remotes):
                 logging.debug(
                     "Assuring you have two remotes, your fork as [blue]origin[/] and [blue]upstream[/]"
                 )
                 run(["gh", "repo", "fork", "--remote=true"])
-                remotes = {r.name for r in runner.repo.remotes}
+                remotes = {r.name for r in repo.remotes}
             if "upstream" not in remotes:
                 fail("Failed to create upstream")
 
@@ -66,7 +76,7 @@ class GitTool(Tool):
             # --web option is of not use because it happens too soon, confusing github
             logging.debug("Tryging to detect if there are existing PRs open")
             result = subprocess.run(
-                ["gh", "pr", "list", "-S", f"head:{runner.repo.active_branch}"],
+                ["gh", "pr", "list", "-S", f"head:{repo.active_branch}"],
                 check=False,
                 stdin=subprocess.DEVNULL,
                 universal_newlines=True,
@@ -78,7 +88,7 @@ class GitTool(Tool):
                     pr_list.append(line.split("\t")[0])
                 if len(pr_list) == 0:
                     logging.debug("Existing PR not found, creating one.")
-                    commit = runner.repo.head.commit
+                    commit = repo.head.commit
                     title = commit.summary
                     body = "\n".join(commit.message.splitlines()[2:])
                     cmd = [
