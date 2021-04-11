@@ -19,6 +19,7 @@ py38-devel
 py39-ansible29
 py39-core
 py39-devel
+test-requirements
 test-setup
 uninstall
 up

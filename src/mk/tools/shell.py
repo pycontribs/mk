@@ -14,14 +14,22 @@ class ShellTool(Tool):
             subprocess.run([action.filename], check=True)
 
     def is_present(self, path: str) -> bool:
-        if os.path.isdir(os.path.join(path, "tools")):
-            return True
-        return False
+        return True
 
     def actions(self) -> List[Action]:
         actions: List[Action] = []
-        for filename in glob.glob("tools/*.*"):
-            if os.access(filename, os.X_OK):
+        exclude_list = ["setup.py"]
+        for filename in [
+            *glob.glob("*"),
+            *glob.glob("tools/*.*"),
+            *glob.glob("bin/*.*"),
+            *glob.glob("scripts/*.*"),
+        ]:
+            if (
+                os.path.isfile(filename)
+                and os.access(filename, os.X_OK)
+                and filename not in exclude_list
+            ):
                 name = os.path.splitext(os.path.basename(filename))[0]
                 actions.append(
                     Action(

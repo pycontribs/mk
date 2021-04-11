@@ -1,6 +1,7 @@
 binaries
 changelog
 clean
+docker
 docs
 gofmt
 install
