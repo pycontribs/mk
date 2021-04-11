@@ -2,19 +2,19 @@ import logging
 import subprocess
 import sys
 from pathlib import Path
-from typing import List
+from typing import TYPE_CHECKING, List
+
+if TYPE_CHECKING:
+    from mk.tools import Action
 
 import pluggy
 from git import Repo
 from git.exc import GitError
 
-from mk.tools import Action
-from mk.tools.git import GitTool
-
 
 class Runner:
     def __init__(self) -> None:
-        self.actions: List[Action] = []
+        self.actions: List["Action"] = []
         try:
             self.repo = Repo(".", search_parent_directories=True)
         except GitError:
@@ -38,15 +38,7 @@ class Runner:
         if self.repo.is_dirty():
             logging.warning("Repo is dirty on %s", self.repo.active_branch)
 
-        # expos up command
-        self.actions.append(
-            Action(
-                name="up",
-                description="Upload current change by creating or updating a CR/PR.",
-                tool=GitTool(),
-                runner=self,
-            )
-        )
+        self.actions.sort()
 
     def info(self) -> None:
         logging.info("Actions identified: %s", self.actions)

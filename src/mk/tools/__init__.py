@@ -1,43 +1,30 @@
-import typing
+from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
-if typing.TYPE_CHECKING:
-    from mk.runner import Runner
 
-
+@dataclass(order=True)
 class Action:
+    name: str
+    _name: str = field(default="undefined", init=False, compare=True, repr=False)
 
-    # pylint: disable=too-many-arguments
-    def __init__(
-        self,
-        name: str,
-        tool: "Tool",
-        description: Optional[str] = None,
-        cwd: Optional[str] = None,
-        filename: Optional[str] = None,
-        args: Optional[List[Any]] = [],
-        runner: Optional["Runner"] = None,
-    ) -> None:
-        self.name = name
-        self.description: str = (description or "...") + f" (from {tool})"
-        self.tool = tool
-        self.cwd = cwd
-        self.filename = filename
-        self.args = args
-        self.runner = runner
+    tool: Optional["Tool"] = field(default=None, compare=False)
+    description: Optional[str] = field(default="...", compare=False)
+    cwd: Optional[str] = field(default=None, compare=False)
+    filename: Optional[str] = field(default=None, compare=False)
+    args: Optional[List[Any]] = field(default_factory=list, compare=False)
 
-        # Python does not allow writing __doc__ and this is what click uses
-        # for storing command names.
-        # self.run.__doc__ = "bleah!"
+    # https://github.com/florimondmanca/www/issues/102#issuecomment-817279834
+    @property  # type: ignore
+    def name(self) -> str:  # pylint: disable=function-redefined
+        return self._name
+
+    @name.setter
+    def name(self, name: str) -> None:
+        self._name = name
 
     def run(self) -> None:
-        self.tool.run(self)
-
-    def __str__(self) -> str:
-        return self.name
-
-    def __repr__(self) -> str:
-        return self.name
+        if self.tool:
+            self.tool.run(self)
 
 
 class ToolRegistry(type):
