@@ -1,0 +1,7 @@
+build
+generate_proto_stubs
+install
+pre-commit
+uninstall
+up
+update-stubtest-whitelist

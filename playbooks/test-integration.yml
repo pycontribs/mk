@@ -13,6 +13,8 @@
         url: https://github.com/ansible-community/ansible-lint
       - name: cookiecutter
         url: https://github.com/cookiecutter/cookiecutter.git
+      - name: typeshed
+        url: https://github.com/python/typeshed.git
   tasks:
 
     - name: Clone repo
