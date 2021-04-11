@@ -46,7 +46,7 @@ repos:
     rev: v0.812
     hooks:
       - id: mypy
-        # empy args needed in order to match mypy cli behavior
+        # mypy args needed in order to match mypy cli behavior
         args: []
         entry: mypy src/
         pass_filenames: false
@@ -55,8 +55,8 @@ repos:
           - packaging
           - rich
           - typer
-  - repo: https://github.com/pre-commit/mirrors-pylint
-    rev: v3.0.0a1
+  - repo: https://github.com/pycqa/pylint
+    rev: pylint-3.0.0a1
     hooks:
       - id: pylint
         additional_dependencies:
