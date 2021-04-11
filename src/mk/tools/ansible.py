@@ -1,8 +1,8 @@
 import glob
 import os
-import subprocess
 from typing import List, Optional
 
+from mk.exec import run_or_fail
 from mk.tools import Action, Tool
 
 
@@ -11,7 +11,7 @@ class AnsibleTool(Tool):
 
     def run(self, action: Optional[Action] = None):
         if action and action.filename:
-            subprocess.run(["ansible-playbook", action.filename], check=True)
+            run_or_fail(["ansible-playbook", action.filename], tee=True)
 
     def is_present(self, path: str) -> bool:
         if os.path.isdir(os.path.join(path, "playbooks")):

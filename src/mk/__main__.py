@@ -21,7 +21,7 @@ if "_MK_COMPLETE" in os.environ:
     handlers = [logging.NullHandler()]
 else:
     level = logging.DEBUG
-    handlers = [RichHandler(console=console_err, show_time=False, show_path=False, markup=True)]
+    handlers = [RichHandler(console=console_err, show_time=False, show_path=False, markup=False)]
 
 logging.basicConfig(
     level=logging.INFO,

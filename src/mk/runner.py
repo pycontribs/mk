@@ -1,6 +1,4 @@
 import logging
-import subprocess
-import sys
 from pathlib import Path
 from typing import TYPE_CHECKING, List
 
@@ -42,17 +40,3 @@ class Runner:
 
     def info(self) -> None:
         logging.info("Actions identified: %s", self.actions)
-
-
-def fail(msg: str, code=1) -> None:
-    logging.error(msg)
-    sys.exit(code)
-
-
-def run(*args) -> None:
-    result = subprocess.run(*args, check=False)
-    if result.returncode != 0:
-        fail(
-            f"Received exit code {result.returncode} from: {' '.join(result.args)}",
-            code=result.returncode,
-        )

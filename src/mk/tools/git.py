@@ -1,10 +1,9 @@
 import logging
-import subprocess
 import sys
 from typing import List, Optional
 
 from mk.ctx import ctx
-from mk.exec import fail, run
+from mk.exec import fail, run_or_fail
 from mk.tools import Action, Tool
 
 
@@ -43,7 +42,7 @@ class GitTool(Tool):
             sys.exit(2)
         if (ctx.runner.root / ".gitreview").is_file():
             cmd = ["git", "review"]
-            run(cmd)
+            run_or_fail(cmd, tee=True)
         else:
             active_branch = str(repo.active_branch)
             tracking_branch = str(repo.active_branch.tracking_branch())  # can be None
@@ -57,7 +56,7 @@ class GitTool(Tool):
                 logging.debug(
                     "Assuring you have two remotes, your fork as [blue]origin[/] and [blue]upstream[/]"
                 )
-                run(["gh", "repo", "fork", "--remote=true"])
+                run_or_fail(["gh", "repo", "fork", "--remote=true"], tee=True)
                 remotes = {r.name for r in repo.remotes}
             if "upstream" not in remotes:
                 fail("Failed to create upstream")
@@ -68,20 +67,14 @@ class GitTool(Tool):
                 logging.debug("Performing a git push")
 
             logging.debug("Doing a git push")
-            run(["git", "push", "--force-with-lease", "-u", "origin", "HEAD"])
+            run_or_fail(["git", "push", "--force-with-lease", "-u", "origin", "HEAD"], tee=False)
 
             # github for the moment
             # https://github.com/cli/cli/issues/1718
 
             # --web option is of not use because it happens too soon, confusing github
             logging.debug("Tryging to detect if there are existing PRs open")
-            result = subprocess.run(
-                ["gh", "pr", "list", "-S", f"head:{repo.active_branch}"],
-                check=False,
-                stdin=subprocess.DEVNULL,
-                universal_newlines=True,
-                capture_output=True,
-            )
+            result = run_or_fail(["gh", "pr", "list", "-S", f"head:{repo.active_branch}"])
             if result.returncode == 0:
                 pr_list = []
                 for line in result.stdout.splitlines():
@@ -102,7 +95,7 @@ class GitTool(Tool):
                         "--body",
                         body,
                     ]
-                    result = run(cmd)
+                    result = run_or_fail(cmd, tee=True)
                     logging.debug(result.stdout)
                 elif len(pr_list) == 1:
                     logging.debug("PR #%s already exists, no need to create new one.", pr_list[0])

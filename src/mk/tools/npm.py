@@ -1,7 +1,7 @@
 import json
-import subprocess
 from typing import List
 
+from mk.exec import run, run_or_fail
 from mk.tools import Action, Tool
 
 
@@ -10,13 +10,8 @@ class NpmTool(Tool):
 
     def __init__(self, path=".") -> None:
         super().__init__(path=path)
-        cmd = ("git", "ls-files", "**/package.json", "package.json")
-        result = subprocess.run(
-            cmd,
-            stdout=subprocess.PIPE,
-            universal_newlines=True,
-            check=False,
-        )
+        cmd = ["git", "ls-files", "**/package.json", "package.json"]
+        result = run(cmd)
         if result.returncode != 0 or not result.stdout:
             self.present = False
             return
@@ -54,4 +49,4 @@ class NpmTool(Tool):
         else:
             cmd = ["npm", "run", action.name]
             cwd = action.cwd
-        subprocess.run(cmd, check=True, cwd=cwd)
+        run_or_fail(cmd, cwd=cwd, tee=True)

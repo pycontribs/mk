@@ -1,8 +1,8 @@
 import os
-import subprocess
 from configparser import ConfigParser
 from typing import List, Optional
 
+from mk.exec import run_or_fail
 from mk.tools import Action, Tool
 
 
@@ -18,7 +18,7 @@ class ToxTool(Tool):
         # -a is not supported by tox4!
         actions: List[Action] = []
         cp = ConfigParser(strict=False, interpolation=None)
-        tox_cfg = subprocess.check_output(["tox", "--showconfig"], universal_newlines=True)
+        tox_cfg = run_or_fail(["tox", "--showconfig"]).stdout
         cp.read_string(tox_cfg)
         for section in cp.sections():
             if section.startswith("testenv:"):
@@ -41,4 +41,4 @@ class ToxTool(Tool):
             cmd = ["tox"]
         else:
             cmd = ["tox", "-e", action.name]
-        subprocess.run(cmd, check=True)
+        run_or_fail(cmd, tee=True)

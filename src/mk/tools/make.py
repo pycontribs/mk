@@ -1,8 +1,8 @@
 import os
 import re
-import subprocess
 from typing import List, Optional
 
+from mk.exec import run_or_fail
 from mk.tools import Action, Tool
 
 
@@ -17,7 +17,7 @@ class MakeTool(Tool):
         cmd = ["make"]
         if action:
             cmd.append(action.name)
-        subprocess.run(cmd, check=True)
+        run_or_fail(cmd, tee=True)
 
     def is_present(self, path: str) -> bool:
         for name in ["Makefile", "makefile", "GNUmakefile"]:
