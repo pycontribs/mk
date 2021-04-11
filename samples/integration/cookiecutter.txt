@@ -1,3 +1,4 @@
+build
 clean
 clean-build
 clean-pyc
@@ -6,6 +7,7 @@ cov-report
 coverage
 docs
 docs2
+install
 lint
 lint2
 lint23
@@ -20,5 +22,6 @@ servedocs
 submodules
 test
 test-all
+uninstall
 up
 wheel

@@ -1,4 +1,5 @@
 import os
+import re
 from subprocess import run
 
 import pytest
@@ -30,7 +31,7 @@ def test_show_completion_script(shell, expected) -> None:
 @pytest.mark.parametrize(
     "shell,expected",
     (
-        pytest.param("zsh", "_arguments", id="zsh"),
+        pytest.param("zsh", '^_arguments.*\n"commands":', id="zsh"),
         pytest.param("bash", "commands\n", id="bash"),
     ),
 )
@@ -50,7 +51,7 @@ def test_show_completion_data(shell, expected) -> None:
     # working, disabling return code testing until we know why.
     # assert result.returncode == 0, result
     # very important as we could easily break it by sending data to stdout
-    assert result.stdout.startswith(expected)
+    assert re.search(expected, result.stdout, flags=re.MULTILINE)
 
 
 def test_help() -> None:
