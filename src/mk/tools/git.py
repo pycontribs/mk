@@ -77,8 +77,9 @@ class GitTool(Tool):
             result = run_or_fail(["gh", "pr", "list", "-S", f"head:{repo.active_branch}"])
             if result.returncode == 0:
                 pr_list = []
-                for line in result.stdout.splitlines():
-                    pr_list.append(line.split("\t")[0])
+                if result.stdout:
+                    for line in result.stdout.splitlines():
+                        pr_list.append(line.split("\t")[0])
                 if len(pr_list) == 0:
                     logging.debug("Existing PR not found, creating one.")
                     commit = repo.head.commit
