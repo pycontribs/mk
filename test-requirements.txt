@@ -100,6 +100,8 @@ six==1.15.0
     #   readme-renderer
 smmap==4.0.0
     # via gitdb
+subprocess-tee==0.3.1
+    # via mk (setup.cfg)
 toml==0.10.2
     # via
     #   build

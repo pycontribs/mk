@@ -1,8 +1,8 @@
 import os
-import subprocess
 import sys
 from typing import List, Optional
 
+from mk.exec import run_or_fail
 from mk.tools import Action, Tool
 
 
@@ -19,17 +19,15 @@ class PyPackageTool(Tool):
             return
         if action.name == "build":
             cmd = [sys.executable, "-m", "build", "--sdist", "--wheel", "--outdir", "dist"]
-            subprocess.run(cmd, check=True)
-            subprocess.run(f"{sys.executable} -m twine check dist/*", shell=True, check=True)
+            run_or_fail(cmd, tee=True)
+            run_or_fail(f"{sys.executable} -m twine check dist/*", tee=True)
         elif action.name == "install":
             cmd = [sys.executable, "-m", "pip", action.name, "-e", "."]
-            subprocess.run(cmd, check=True)
+            run_or_fail(cmd, tee=True)
         elif action.name == "uninstall":
-            pkg_name = subprocess.check_output(
-                [sys.executable, "setup.py", "--name"], universal_newlines=True
-            )
+            pkg_name = run_or_fail([sys.executable, "setup.py", "--name"], tee=False).stdout
             cmd = [sys.executable, "-m", "pip", action.name, "-y", pkg_name]
-            subprocess.run(cmd, check=True)
+            run_or_fail(cmd, tee=True)
 
     def is_present(self, path: str) -> bool:
         for name in ("setup.cfg", "setup.py", "pyproject.toml"):

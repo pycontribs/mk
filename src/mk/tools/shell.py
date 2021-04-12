@@ -1,8 +1,8 @@
 import glob
 import os
-import subprocess
 from typing import List, Optional
 
+from mk.exec import run_or_fail
 from mk.tools import Action, Tool
 
 
@@ -11,7 +11,7 @@ class ShellTool(Tool):
 
     def run(self, action: Optional[Action] = None) -> None:
         if action and action.filename:
-            subprocess.run([action.filename], check=True)
+            run_or_fail(action.filename, tee=True)
 
     def is_present(self, path: str) -> bool:
         return True

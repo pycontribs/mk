@@ -54,6 +54,7 @@ repos:
           - importlib-metadata
           - packaging
           - rich
+          - subprocess-tee
           - typer
   - repo: https://github.com/pycqa/pylint
     rev: pylint-3.0.0a1
@@ -65,4 +66,5 @@ repos:
           - importlib-metadata
           - pytest
           - rich
+          - subprocess-tee
           - typer
