@@ -4,10 +4,15 @@ clean
 docker
 docs
 gofmt
+help
 install
 lint
 local-cross
 package
 package-install
+podman-remote
+podman-remote-darwin
+podman-remote-linux
+podman-remote-windows
 test
 up
