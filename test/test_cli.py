@@ -1,6 +1,6 @@
 import os
 import re
-from subprocess import run
+from subprocess import CompletedProcess, run
 
 import pytest
 
@@ -26,6 +26,31 @@ def test_show_completion_script(shell, expected) -> None:
     assert result.returncode == 0, result
     # very important as we could easily break it by sending data to stdout
     assert expected in result.stdout
+
+
+@pytest.mark.benchmark(
+    group="completion",
+    min_rounds=5,
+    # timer=time.time,
+    disable_gc=True,
+    warmup=False,
+)
+def test_completion_speed(benchmark) -> None:
+    """Tests completion script speed."""
+
+    def do_complete() -> CompletedProcess:
+        return run(
+            ["mk", "--show-completion"],
+            universal_newlines=True,
+            capture_output=True,
+            check=True,
+        )
+
+    result = benchmark(do_complete)
+    assert result.returncode == 0
+
+    assert benchmark.stats["min"] > 0.100
+    assert benchmark.stats["mean"] < 0.900
 
 
 @pytest.mark.parametrize(

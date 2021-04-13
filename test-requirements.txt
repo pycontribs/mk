@@ -62,6 +62,8 @@ pluggy==0.13.1
     # via
     #   mk (setup.cfg)
     #   pytest
+py-cpuinfo==7.0.0
+    # via pytest-benchmark
 py==1.10.0
     # via pytest
 pygments==2.8.1
@@ -71,11 +73,14 @@ pygments==2.8.1
     #   rich
 pyparsing==2.4.7
     # via packaging
+pytest-benchmark==3.2.3
+    # via -r test-requirements.in
 pytest-plus==0.2
     # via -r test-requirements.in
 pytest==6.2.2
     # via
     #   -r test-requirements.in
+    #   pytest-benchmark
     #   pytest-plus
 pyyaml==5.4.1
     # via mk (setup.cfg)
