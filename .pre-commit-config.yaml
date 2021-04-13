@@ -47,10 +47,11 @@ repos:
     hooks:
       - id: mypy
         # mypy args needed in order to match mypy cli behavior
-        args: []
+        args: ['--python-version', '3.8']
         entry: mypy src/
         pass_filenames: false
         additional_dependencies:
+          - diskcache
           - importlib-metadata
           - packaging
           - rich
@@ -63,6 +64,7 @@ repos:
         additional_dependencies:
           - GitPython
           - click-help-colors
+          - diskcache
           - importlib-metadata
           - pytest
           - rich
