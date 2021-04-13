@@ -50,7 +50,7 @@ def test_completion_speed(benchmark) -> None:
     assert result.returncode == 0
 
     assert benchmark.stats["min"] > 0.100
-    assert benchmark.stats["mean"] < 0.900
+    assert benchmark.stats["mean"] < 0.300
 
 
 @pytest.mark.parametrize(
