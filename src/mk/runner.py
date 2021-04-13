@@ -1,3 +1,4 @@
+import hashlib
 import logging
 from functools import cached_property
 from pathlib import Path
@@ -23,13 +24,14 @@ class Runner:
             return
 
         self.root = Path(self.repo.working_dir)
-        self.cache = Cache(self.root / ".cache/mk/")
+        self.hash = hashlib.sha1(str(self.root).encode("UTF-8")).hexdigest()[:5]
+        self.cache = Cache(f"~/.cache/mk.{self.hash}/")
 
         if self.repo.is_dirty():
             logging.warning("Repo is dirty on %s", self.repo.active_branch)
 
     @cached_property
-    def pm(self):
+    def pm(self) -> pluggy.PluginManager:
         """Plugin manager."""
         pm = pluggy.PluginManager("mk_tools")
         pm.load_setuptools_entrypoints("mk_tools")
@@ -41,17 +43,14 @@ class Runner:
         if not self.root:
             return []
 
-        _actions: List["Action"] = self.cache.get("actions", [])
-
-        if not _actions:
-            for _, cls_name in self.pm.list_name_plugin():
-                # for c in Tool:
-                c = cls_name()
-                if c.is_present(self.root):
-                    logging.debug("Detected %s !", c)
-                    _actions.extend(c.actions())
-                else:
-                    logging.debug("%s not detected !", c)
+        _actions = []
+        for _, cls_name in self.pm.list_name_plugin():
+            c = cls_name()
+            if c.is_present(self.root):
+                logging.debug("Detected %s !", c)
+                _actions.extend(c.actions())
+            else:
+                logging.debug("%s not detected !", c)
 
         _actions.sort()
         self.cache.set("actions", _actions, expire=3600 * 24)

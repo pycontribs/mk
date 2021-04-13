@@ -1,6 +1,8 @@
 import os
 import re
-from subprocess import CompletedProcess, run
+import runpy
+from subprocess import run
+from typing import Optional
 
 import pytest
 
@@ -30,27 +32,36 @@ def test_show_completion_script(shell, expected) -> None:
 
 @pytest.mark.benchmark(
     group="completion",
-    min_rounds=5,
+    min_rounds=10,
     # timer=time.time,
     disable_gc=True,
     warmup=False,
 )
-def test_completion_speed(benchmark) -> None:
+def test_completion_speed(benchmark, monkeypatch) -> None:
     """Tests completion script speed."""
+    monkeypatch.setattr("sys.argv", ["mk", "commands"])
+    # monkeypatch.setenv("_MK_COMPLETE", "complete_zsh")
+    # monkeypatch.setenv("_TYPER_COMPLETE_ARGS", "c")
 
-    def do_complete() -> CompletedProcess:
-        return run(
-            ["mk", "--show-completion"],
-            universal_newlines=True,
-            capture_output=True,
-            check=True,
-        )
+    def do_complete() -> Optional[int]:
+        # shell execution can add considerable extra time that varies from
+        # system to system. We only benchmark our own module execution time
+        try:
+            return runpy.run_module("mk", run_name="__main__")
+        except SystemExit as exc:
+            return exc.code
+        # return run(
+        #     ["mk", "--show-completion"],
+        #     universal_newlines=True,
+        #     capture_output=True,
+        #     check=True,
+        # )
 
     result = benchmark(do_complete)
-    assert result.returncode == 0
 
-    assert benchmark.stats["min"] > 0.100
-    assert benchmark.stats["mean"] < 0.300
+    assert result == 0
+    assert benchmark.stats["min"] > 0.0010  # seconds
+    assert benchmark.stats["mean"] < 0.0035  # seconds
 
 
 @pytest.mark.parametrize(
