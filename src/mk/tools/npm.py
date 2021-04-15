@@ -20,7 +20,11 @@ class NpmTool(Tool):
             # we consider only up to one level deep files
             if line.count("/") > 1:
                 continue
-            cwd = line.split("/")[0]
+            parts = line.split("/")
+            if len(parts) == 1:
+                cwd = None
+            else:
+                cwd = parts[0]
             with open(line, "r") as package_json:
                 data = json.load(package_json)
                 if "scripts" in data:
