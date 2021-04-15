@@ -20,7 +20,6 @@ def run(args, *, check=False, cwd=None, tee=False) -> subprocess.CompletedProces
     logging.info("Executing: %s", cmd)
     result = subprocess_tee.run(
         args,
-        capture_output=True,
         check=check,
         shell=shell,
         universal_newlines=True,

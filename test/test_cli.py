@@ -1,10 +1,10 @@
 import os
 import re
 import runpy
-from subprocess import run
 from typing import Optional
 
 import pytest
+from subprocess_tee import run
 
 
 @pytest.mark.parametrize(
@@ -17,14 +17,8 @@ import pytest
 def test_show_completion_script(shell, expected) -> None:
     """Tests completion script generation."""
     env = os.environ.copy()
-    env["SHELL"] = f"/bin/{shell}"
-    result = run(
-        ["mk", "--show-completion"],
-        universal_newlines=True,
-        capture_output=True,
-        env=env,
-        check=False,
-    )
+    env["_TYPER_COMPLETE_TEST_DISABLE_SHELL_DETECTION"] = "True"
+    result = run(f"mk --show-completion {shell}", env=env, check=False, tee=False)
     assert result.returncode == 0, result
     # very important as we could easily break it by sending data to stdout
     assert expected in result.stdout
@@ -50,12 +44,6 @@ def test_completion_speed(benchmark, monkeypatch) -> None:
             return runpy.run_module("mk", run_name="__main__")
         except SystemExit as exc:
             return exc.code
-        # return run(
-        #     ["mk", "--show-completion"],
-        #     universal_newlines=True,
-        #     capture_output=True,
-        #     check=True,
-        # )
 
     result = benchmark(do_complete)
 
@@ -76,13 +64,7 @@ def test_show_completion_data(shell, expected) -> None:
     env = os.environ.copy()
     env["_MK_COMPLETE"] = f"complete_{shell}"
     env["_TYPER_COMPLETE_ARGS"] = ""
-    result = run(
-        ["mk", "--show-completion"],
-        universal_newlines=True,
-        capture_output=True,
-        env=env,
-        check=False,
-    )
+    result = run(["mk", "--show-completion"], env=env, check=False, tee=False)
     # Apparently test return an unexpected 1 even if completion seems to be
     # working, disabling return code testing until we know why.
     # assert result.returncode == 0, result
@@ -92,7 +74,7 @@ def test_show_completion_data(shell, expected) -> None:
 
 def test_help() -> None:
     """Tests display of help."""
-    result = run(["mk", "--help"], universal_newlines=True, capture_output=True, check=False)
+    result = run(["mk", "--help"], check=False, tee=False)
     assert result.returncode == 0, result
     # very important as we could easily break it by sending data to stdout
     assert result.stdout.startswith("Usage: mk")
@@ -100,6 +82,6 @@ def test_help() -> None:
 
 def test_no_git_repo() -> None:
     """Ensure error message is displayed outside git repos."""
-    result = run(["mk"], universal_newlines=True, capture_output=True, check=False, cwd="/")
+    result = run(["mk"], check=False, cwd="/", tee=False)
     assert result.returncode == 0, result
     assert "Current version of mk works only within git repos" in result.stderr
