@@ -1,6 +1,12 @@
 import hashlib
 import logging
-from functools import cached_property
+import sys
+
+try:
+    from functools import cached_property
+except ImportError:
+    from cached_property import cached_property  # type: ignore
+
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
@@ -24,7 +30,8 @@ class Runner:
             return
 
         self.root = Path(self.repo.working_dir)
-        self.hash = hashlib.sha1(str(self.root).encode("UTF-8")).hexdigest()[:5]
+        hash_key = f"{sys.version_info.major}{sys.version_info.minor}{self.root}"
+        self.hash = hashlib.sha1(hash_key.encode("UTF-8")).hexdigest()[:5]
         self.cache = Cache(f"~/.cache/mk.{self.hash}/")
 
         if self.repo.is_dirty():
