@@ -33,7 +33,7 @@ class NpmTool(Tool):
                             Action(
                                 name=k,
                                 tool=self,
-                                # description=cp[section]["description"],
+                                description=data["scripts"][k],
                                 args=[k],
                                 cwd=cwd,
                             )
