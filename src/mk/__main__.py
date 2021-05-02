@@ -45,6 +45,10 @@ def main(
     ),  # noqa: B008
     verbose: int = typer.Option(0, "--verbose", "-v", count=True, help="Increase verbosity."),
 ) -> None:
+    # enforce coloring because some tools like npm may auto disable it due to
+    # the lack of real tty.
+    os.environ["FORCE_COLOR"] = os.environ.get("FORCE_COLOR", "true")
+
     if verbose:
         log_level = logging.INFO if verbose == 1 else logging.DEBUG
         logging.getLogger().setLevel(log_level)
