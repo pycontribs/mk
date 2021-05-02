@@ -3,7 +3,6 @@ clean
 clean-build
 clean-pyc
 clean-tox
-cov-report
 coverage
 docs
 docs2
