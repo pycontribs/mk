@@ -1,27 +1,36 @@
-# Format and labels used aim to match those used by Ansible project
+name-template: "$RESOLVED_VERSION"
+tag-template: "$RESOLVED_VERSION"
+
 categories:
   - title: 'Major Changes'
     labels:
-      - 'major'  # c6476b
+      - 'major'
   - title: 'Minor Changes'
     labels:
-      - 'feature'  # 006b75
-      - 'enhancement'  # ededed
-      - 'performance'  # 555555
-  - title: 'Bugfixes'
+      - 'minor'
+      - 'enhancement'
+  - title: 'Patches'
     labels:
       - 'fix'
-      - 'bugfix'
-      - 'bug'  # fbca04
-      - 'docs'  # 4071a5
-      - 'packaging'  # 4071a5
-      - 'test'  # #0e8a16
-  - title: 'Deprecations'
-    labels:
-      - 'deprecated'  # fef2c0
+      - 'patch'
+      - 'bug'
+
 exclude-labels:
   - 'skip-changelog'
-template: |
-  ## Changes
 
+template: |
   $CHANGES
+
+version-resolver:
+  major:
+    labels:
+      - major
+  minor:
+    labels:
+      - minor
+      - enhancement
+  patch:
+    labels:
+      - patch
+      - bug
+  default: minor
