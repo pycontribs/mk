@@ -26,6 +26,7 @@ jobs:
         include:
           - tox_env: lint
           - tox_env: integration
+          - tox_env: packaging
           - tox_env: py36
           - tox_env: py37
           - tox_env: py38
@@ -67,47 +68,3 @@ jobs:
         run: |
           echo "${{ matrix.PREFIX }} tox -e ${{ matrix.tox_env }}"
           ${{ matrix.PREFIX }} tox -e ${{ matrix.tox_env }}
-
-  publish:
-    name: packaging
-    needs:
-      - build
-    runs-on: ubuntu-20.04
-
-    env:
-      FORCE_COLOR: 1
-      PY_COLORS: 1
-      TOXENV: packaging
-      TOX_PARALLEL_NO_SPINNER: 1
-
-    steps:
-      - name: Switch to using Python 3.8 by default
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install tox
-        run: >-
-          python3 -m
-          pip install
-          --user
-          tox
-      - name: Check out src from Git
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # needed by setuptools-scm
-      - name: Build dists
-        run: python -m tox -p auto --parallel-live -vvvv
-      # https://github.com/pypa/pypi-support/issues/995
-      # - name: Publish to test.pypi.org
-      #   if: >-  # "create" workflows run separately from "push" & "pull_request"
-      #     github.event_name == 'release'
-      #   uses: pypa/gh-action-pypi-publish@master
-      #   with:
-      #     password: ${{ secrets.testpypi_password }}
-      #     repository_url: https://test.pypi.org/legacy/
-      - name: Publish to pypi.org
-        if: >-  # "create" workflows run separately from "push" & "pull_request"
-          github.event_name == 'release'
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          password: ${{ secrets.pypi_password }}
