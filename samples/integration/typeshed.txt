@@ -4,4 +4,4 @@ install
 pre-commit
 uninstall
 up
-update-stubtest-whitelist
+update-stubtest-allowlist

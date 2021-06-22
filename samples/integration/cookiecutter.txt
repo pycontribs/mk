@@ -10,12 +10,14 @@ install
 lint
 lint2
 lint23
+packaging
 py36
 py37
 py38
 py39
 pypy3
 release
+safety
 sdist
 servedocs
 submodules
