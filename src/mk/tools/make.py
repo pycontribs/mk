@@ -30,7 +30,7 @@ class MakeTool(Tool):
     def actions(self) -> List[Action]:
         actions = []
 
-        with open(self.makefile, "r") as file:
+        with open(self.makefile, "r", encoding="utf-8") as file:
             for line in file.readlines():
                 # Current implementation assumes that descriptions are added
                 # using double ## after the target name.
