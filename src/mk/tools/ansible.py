@@ -25,7 +25,7 @@ class AnsibleTool(Tool):
             actions.append(
                 Action(
                     name=name,
-                    description="Run ansible-playbook %s" % filename,
+                    description=f"Run ansible-playbook {filename}",
                     tool=self,
                     filename=filename,
                 )

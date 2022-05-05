@@ -25,7 +25,7 @@ class NpmTool(Tool):
                 cwd = None
             else:
                 cwd = parts[0]
-            with open(line, "r") as package_json:
+            with open(line, "r", encoding="utf-8") as package_json:
                 data = json.load(package_json)
                 if "scripts" in data:
                     for k in data["scripts"].keys():

@@ -52,7 +52,7 @@ def main(
     if verbose:
         log_level = logging.INFO if verbose == 1 else logging.DEBUG
         logging.getLogger().setLevel(log_level)
-        logging.log(level=log_level, msg="Reconfigured logging level to %d" % log_level)
+        logging.log(level=log_level, msg=f"Reconfigured logging level to {log_level}")
     # click_ctx.invoked_subcommand can be the command or None
 
 
