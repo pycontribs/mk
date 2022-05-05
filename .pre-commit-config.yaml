@@ -3,20 +3,20 @@ repos:
     rev: v0.11.0
     hooks:
       - id: markdownlint
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.9.1
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
     hooks:
       - id: isort
         args:
           # https://github.com/pre-commit/mirrors-isort/issues/9#issuecomment-624404082
           - --filter-files
   - repo: https://github.com/psf/black
-    rev: 21.6b0
+    rev: 22.3.0
     hooks:
       - id: black
         args: [--safe]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.2.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
@@ -27,7 +27,7 @@ repos:
       - id: debug-statements
         language_version: python3
   - repo: https://github.com/pycqa/flake8.git
-    rev: 3.9.2
+    rev: 4.0.1
     hooks:
       - id: flake8
         additional_dependencies:
@@ -36,14 +36,14 @@ repos:
           - flake8-docstrings>=1.5.0
         language_version: python3
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.1
+    rev: v1.26.3
     hooks:
       - id: yamllint
         files: \.(yaml|yml)$
         types: [file, yaml]
         entry: yamllint --strict
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.902
+    rev: v0.950
     hooks:
       - id: mypy
         # mypy args needed in order to match mypy cli behavior
@@ -58,7 +58,7 @@ repos:
           - subprocess-tee
           - typer
   - repo: https://github.com/pycqa/pylint
-    rev: v2.8.3
+    rev: v2.13.8
     hooks:
       - id: pylint
         additional_dependencies:
