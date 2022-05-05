@@ -27,8 +27,6 @@ jobs:
           - tox_env: lint
           - tox_env: integration
           - tox_env: packaging
-          - tox_env: py36
-          - tox_env: py37
           - tox_env: py38
           - tox_env: py39
 
