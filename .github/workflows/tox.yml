@@ -28,6 +28,7 @@ jobs:
           - tox_env: py38
           - tox_env: py39
           - tox_env: py310
+          - tox_env: py311
 
     steps:
       - uses: actions/checkout@v2

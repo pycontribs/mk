@@ -1,5 +1,5 @@
 import json
-from typing import List
+from typing import List, Optional
 
 from mk.exec import run, run_or_fail
 from mk.tools import Action, Tool
@@ -46,7 +46,7 @@ class NpmTool(Tool):
     def actions(self) -> List[Action]:
         return self._actions
 
-    def run(self, action: Action = None) -> None:
+    def run(self, action: Optional[Action] = None) -> None:
         if not action:
             cmd = ["npm", "run"]
             cwd = None
