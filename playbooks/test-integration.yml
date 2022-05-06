@@ -10,7 +10,7 @@
       - name: podman
         url: https://github.com/containers/podman
       - name: ansible-lint
-        url: https://github.com/ansible-community/ansible-lint
+        url: https://github.com/ansible/ansible-lint
       - name: cookiecutter
         url: https://github.com/cookiecutter/cookiecutter.git
       - name: typeshed
