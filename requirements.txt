@@ -17,7 +17,7 @@ commonmark==0.9.1
 diskcache==5.2.1
 docutils==0.17
 gitdb==4.0.7
-gitpython==3.1.14
+gitpython==3.1.30
 idna==2.10
 importlib-metadata==3.10.0
 iniconfig==1.1.1
