@@ -21,7 +21,9 @@ if "_MK_COMPLETE" in os.environ:
     handlers = [logging.NullHandler()]
 else:
     level = logging.DEBUG
-    handlers = [RichHandler(console=console_err, show_time=False, show_path=False, markup=False)]
+    handlers = [
+        RichHandler(console=console_err, show_time=False, show_path=False, markup=False)
+    ]
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,7 +45,9 @@ def main(
     version: bool = typer.Option(
         None, "--version", callback=version_callback, is_eager=True
     ),  # noqa: B008
-    verbose: int = typer.Option(0, "--verbose", "-v", count=True, help="Increase verbosity."),
+    verbose: int = typer.Option(
+        0, "--verbose", "-v", count=True, help="Increase verbosity."
+    ),
 ) -> None:
     # enforce coloring because some tools like npm may auto disable it due to
     # the lack of real tty.
@@ -97,9 +101,9 @@ def cli() -> None:
                 action.tool,
                 action_name,
             )
-        app.command(name=action_name, short_help=action.description, help=action.description)(
-            action.run
-        )
+        app.command(
+            name=action_name, short_help=action.description, help=action.description
+        )(action.run)
         existing_commands.append(action_name)
     app()
 

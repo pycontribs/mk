@@ -26,11 +26,15 @@ class CustomTyper(typer.Typer):
             "help_option_names": ["-h", "--help"],
         },
         width: int = 80,
-        **kwargs
+        **kwargs,
     ) -> None:
         context_settings["max_content_width"] = width
         super().__init__(
-            *args, cls=cls, context_settings=context_settings, no_args_is_help=True, **kwargs
+            *args,
+            cls=cls,
+            context_settings=context_settings,
+            no_args_is_help=True,
+            **kwargs,
         )
 
     def command(
@@ -38,6 +42,8 @@ class CustomTyper(typer.Typer):
         *args,
         cls=None,  # cls=CustomHelpColorsCommand,
         context_settings={"help_option_names": ["-h", "--help"]},
-        **kwargs
+        **kwargs,
     ):
-        return super().command(*args, cls=cls, context_settings=context_settings, **kwargs)
+        return super().command(
+            *args, cls=cls, context_settings=context_settings, **kwargs
+        )

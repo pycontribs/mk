@@ -13,7 +13,12 @@ def fail(msg: str, code: int = 1) -> None:
 
 
 def run(
-    args, *, check=False, cwd=None, tee=False, env_overrides: Optional[Dict[str, str]] = None
+    args,
+    *,
+    check=False,
+    cwd=None,
+    tee=False,
+    env_overrides: Optional[Dict[str, str]] = None,
 ) -> subprocess.CompletedProcess:
     env: Optional[Dict[str, str]] = None
     if env_overrides:
@@ -28,7 +33,13 @@ def run(
         shell = False
     logging.info("Executing: %s", cmd)
     result = subprocess_tee.run(
-        args, check=check, shell=shell, universal_newlines=True, cwd=cwd, tee=tee, env=env
+        args,
+        check=check,
+        shell=shell,
+        universal_newlines=True,
+        cwd=cwd,
+        tee=tee,
+        env=env,
     )
     return result
 

@@ -9,3 +9,4 @@ src/mk.egg-info
 .vscode
 .DS_Store
 report.html
+src/mk/_version.py
