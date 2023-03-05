@@ -55,7 +55,7 @@ Commands:
   detect     Display detected information about current project.
   lint       ... (from pre-commit)
   lint2      ... (from tox)
-  packaging  ... (from tox)
+  pkg        ... (from tox)
   py         ... (from tox)
   up         Upload current change by creating or updating a CR/PR.
 ```
