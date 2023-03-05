@@ -39,7 +39,7 @@ jobs:
           other_names: |
             lint
             integration
-            packaging
+            pkg
 
           platforms: linux,macos
   build:
