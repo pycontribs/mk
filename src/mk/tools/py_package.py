@@ -18,14 +18,24 @@ class PyPackageTool(Tool):
         if not action:
             return
         if action.name == "build":
-            cmd = [sys.executable, "-m", "build", "--sdist", "--wheel", "--outdir", "dist"]
+            cmd = [
+                sys.executable,
+                "-m",
+                "build",
+                "--sdist",
+                "--wheel",
+                "--outdir",
+                "dist",
+            ]
             run_or_fail(cmd, tee=True)
             run_or_fail(f"{sys.executable} -m twine check dist/*", tee=True)
         elif action.name == "install":
             cmd = [sys.executable, "-m", "pip", action.name, "-e", "."]
             run_or_fail(cmd, tee=True)
         elif action.name == "uninstall":
-            pkg_name = run_or_fail([sys.executable, "setup.py", "--name"], tee=False).stdout
+            pkg_name = run_or_fail(
+                [sys.executable, "setup.py", "--name"], tee=False
+            ).stdout
             cmd = [sys.executable, "-m", "pip", action.name, "-y", pkg_name]
             run_or_fail(cmd, tee=True)
 

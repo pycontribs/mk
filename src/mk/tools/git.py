@@ -48,7 +48,8 @@ class GitTool(Tool):
             tracking_branch = str(repo.active_branch.tracking_branch())  # can be None
             if active_branch in ["main", "master"]:
                 fail(
-                    "Uploading from default branch is not allowed in order to avoid accidents.", 2
+                    "Uploading from default branch is not allowed in order to avoid accidents.",
+                    2,
                 )
 
             remotes = {r.name for r in repo.remotes}
@@ -67,14 +68,18 @@ class GitTool(Tool):
                 logging.debug("Performing a git push")
 
             logging.debug("Doing a git push")
-            run_or_fail(["git", "push", "--force-with-lease", "-u", "origin", "HEAD"], tee=False)
+            run_or_fail(
+                ["git", "push", "--force-with-lease", "-u", "origin", "HEAD"], tee=False
+            )
 
             # github for the moment
             # https://github.com/cli/cli/issues/1718
 
             # --web option is of not use because it happens too soon, confusing github
             logging.debug("Tryging to detect if there are existing PRs open")
-            result = run_or_fail(["gh", "pr", "list", "-S", f"head:{repo.active_branch}"])
+            result = run_or_fail(
+                ["gh", "pr", "list", "-S", f"head:{repo.active_branch}"]
+            )
             if result.returncode == 0:
                 pr_list = []
                 if result.stdout:
@@ -99,8 +104,11 @@ class GitTool(Tool):
                     result = run_or_fail(cmd, tee=True)
                     logging.debug(result.stdout)
                 elif len(pr_list) == 1:
-                    logging.debug("PR #%s already exists, no need to create new one.", pr_list[0])
+                    logging.debug(
+                        "PR #%s already exists, no need to create new one.", pr_list[0]
+                    )
                 else:
                     logging.warning(
-                        "Unable to decide which PR to use when multiple are found: %s", pr_list
+                        "Unable to decide which PR to use when multiple are found: %s",
+                        pr_list,
                     )

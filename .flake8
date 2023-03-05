@@ -1,0 +1,14 @@
+[flake8]
+max-complexity = 22
+
+ignore =
+    E203,
+    W503,
+    C901,
+    E402,
+    B011
+    E501,
+    # line too long (black takes care of these)
+    H301,
+    # temporary during initial development
+    D,

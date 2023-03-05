@@ -38,5 +38,7 @@ class MakeTool(Tool):
                 match = re.match(r"^([a-zA-Z_-]+):.*?## (.*)$$", line)
                 if match:
                     target, description = match.groups()
-                    actions.append(Action(name=target, tool=self, description=description))
+                    actions.append(
+                        Action(name=target, tool=self, description=description)
+                    )
         return actions
