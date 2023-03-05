@@ -14,7 +14,7 @@ from mk.ctx import ctx
 
 handlers: List[logging.Handler]
 console_err = Console(stderr=True)
-app = CustomTyper(width=console_err.width)
+app = CustomTyper(width=console_err.width, rich_markup_mode="rich")
 
 if "_MK_COMPLETE" in os.environ:
     level = logging.CRITICAL
@@ -101,8 +101,15 @@ def cli() -> None:
                 action.tool,
                 action_name,
             )
+        panel = "Detected commands" if action.tool else ""
+        short_help = action.description or ""
+        if action.tool:
+            short_help += f" [dim]({action.tool})[/dim]"
         app.command(
-            name=action_name, short_help=action.description, help=action.description
+            name=action_name,
+            short_help=short_help,
+            help=action.description,
+            rich_help_panel=panel,
         )(action.run)
         existing_commands.append(action_name)
     app()
