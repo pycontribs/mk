@@ -2,6 +2,34 @@
 ci:
   skip: [markdownlint_docker]
 repos:
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    # keep it before yamllint
+    rev: v3.0.0-alpha.4
+    hooks:
+      - id: prettier
+        # Temporary excludes so we can gradually normalize the formatting
+        exclude: >
+          (?x)^(
+            .*\.md$|
+            examples/other/some.j2.yaml|
+            examples/playbooks/example.yml|
+            examples/playbooks/multiline-brackets.*|
+            examples/playbooks/templates/not-valid.yaml|
+            examples/playbooks/with-umlaut-.*|
+            examples/playbooks/with-skip-tag-id.yml|
+            examples/yamllint/.*|
+            examples/playbooks/collections/.*|
+            test/fixtures/formatting-before/.*|
+            test/schemas/data/.*|
+            test/schemas/(negative_test|test)/.*\.md|
+            src/ansiblelint/schemas/(molecule|tasks|playbook|rulebook).json|
+            src/ansiblelint/schemas/ansible-navigator-config.json
+          )$
+        always_run: true
+        additional_dependencies:
+          - prettier
+          - prettier-plugin-toml
+          - prettier-plugin-sort-json
   - repo: https://github.com/markdownlint/markdownlint.git
     rev: v0.12.0
     hooks:
@@ -50,7 +78,7 @@ repos:
     hooks:
       - id: mypy
         # mypy args needed in order to match mypy cli behavior
-        args: ['--python-version', '3.8']
+        args: ["--python-version", "3.8"]
         entry: mypy src/
         pass_filenames: false
         additional_dependencies:

@@ -66,18 +66,18 @@ profile = "black"
 # increase from default is 50 which is too aggressive
 max-statements = 60
 disable = [
-      # Disabled on purpose (explain in comment)
-    "line-too-long",  # black managed
-    "wrong-import-position",  # isort managed
-    # TODO(ssbarnea): remove temporary skips adding during initial adoption:
-    "dangerous-default-value",
-    "invalid-name",
-    "missing-class-docstring",
-    "missing-function-docstring",
-    "missing-module-docstring",
-    "no-value-for-parameter",
-    "not-an-iterable",
-    "too-few-public-methods",
+  # Disabled on purpose (explain in comment)
+  "line-too-long", # black managed
+  "wrong-import-position", # isort managed
+  # TODO(ssbarnea): remove temporary skips adding during initial adoption:
+  "dangerous-default-value",
+  "invalid-name",
+  "missing-class-docstring",
+  "missing-function-docstring",
+  "missing-module-docstring",
+  "no-value-for-parameter",
+  "not-an-iterable",
+  "too-few-public-methods",
 ]
 
 [tool.setuptools.dynamic]
