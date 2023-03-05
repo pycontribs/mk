@@ -1,27 +1,11 @@
 import typer
 
-# from click_help_colors import HelpColorsCommand, HelpColorsGroup
-
-
-# class CustomHelpColorsGroup(HelpColorsGroup):
-#     def __init__(self, *args, **kwargs) -> None:
-#         super().__init__(*args, **kwargs)
-#         self.help_headers_color = "blue"
-#         self.help_options_color = "yellow"
-
-
-# class CustomHelpColorsCommand(HelpColorsCommand):
-#     def __init__(self, *args, **kwargs) -> None:
-#         super().__init__(*args, **kwargs)
-#         self.help_headers_color = "blue"
-#         self.help_options_color = "yellow"
-
 
 class CustomTyper(typer.Typer):
     def __init__(
         self,
         *args,
-        cls=None,  # CustomHelpColorsGroup,
+        cls=None,
         context_settings={
             "help_option_names": ["-h", "--help"],
         },
@@ -40,7 +24,7 @@ class CustomTyper(typer.Typer):
     def command(
         self,
         *args,
-        cls=None,  # cls=CustomHelpColorsCommand,
+        cls=None,
         context_settings={"help_option_names": ["-h", "--help"]},
         **kwargs,
     ):
