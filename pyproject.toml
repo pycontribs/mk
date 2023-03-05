@@ -2,6 +2,7 @@
 requires = [
   "setuptools >= 63.0.0", # required by pyproject+setuptools_scm integration
   "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
+
 ]
 build-backend = "setuptools.build_meta"
 
