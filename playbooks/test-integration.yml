@@ -19,9 +19,8 @@
       - name: flask-babel
         url: https://github.com/python-babel/flask-babel.git
   tasks:
-
     - name: Clone repo
-      ansible.builtin.git:  # noqa: git-latest
+      ansible.builtin.git: # noqa: git-latest
         repo: "{{ item.url }}"
         dest: "{{ (cache_dir, item.name) | path_join }}"
         update: true
