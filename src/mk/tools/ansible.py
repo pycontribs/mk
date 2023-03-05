@@ -11,7 +11,11 @@ class AnsibleTool(Tool):
 
     def run(self, action: Optional[Action] = None):
         if action and action.filename:
-            run_or_fail(["ansible-playbook", action.filename], tee=True)
+            run_or_fail(
+                ["ansible-playbook", action.filename],
+                tee=True,
+                env_overrides={"ANSIBLE_FORCE_COLOR": "1"},
+            )
 
     def is_present(self, path: str) -> bool:
         if os.path.isdir(os.path.join(path, "playbooks")):
