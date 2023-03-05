@@ -1,3 +1,4 @@
+---
 ci:
   skip: [markdownlint_docker]
 repos:

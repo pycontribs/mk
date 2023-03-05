@@ -1,3 +1,4 @@
+---
 extends: default
 ignore: |
   .tox
@@ -9,7 +10,14 @@ rules:
   brackets:
     max-spaces-inside: 1
     level: error
-  document-start: disable
+  comments:
+    # prettier compatibility
+    min-spaces-from-content: 1
+  document-start:
+    present: true
   line-length: disable
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
   truthy:
     allowed-values: ['true', 'false', 'on']
