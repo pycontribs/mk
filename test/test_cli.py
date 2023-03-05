@@ -57,7 +57,7 @@ def test_completion_speed(benchmark, monkeypatch) -> None:
 @pytest.mark.parametrize(
     "shell,expected",
     (
-        pytest.param("zsh", "_arguments \'", id="zsh"),
+        pytest.param("zsh", "_arguments '", id="zsh"),
         pytest.param("bash", "commands", id="bash"),
     ),
 )

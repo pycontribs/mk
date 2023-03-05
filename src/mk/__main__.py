@@ -73,7 +73,9 @@ def commands() -> None:
 def cli() -> None:
     existing_commands = []
     for command_info in app.registered_commands:
-        command = typer.main.get_command_from_info(command_info, pretty_exceptions_short=False, rich_markup_mode="rich")
+        command = typer.main.get_command_from_info(
+            command_info, pretty_exceptions_short=False, rich_markup_mode="rich"
+        )
         existing_commands.append(command.name)
 
     # command = get_command_from_info(command_info=command_info)
