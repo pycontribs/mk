@@ -1,7 +1,7 @@
 build
+create_baseline_stubs
 generate_proto_stubs
 install
-pre-commit
+lint
 uninstall
 up
-update-stubtest-allowlist

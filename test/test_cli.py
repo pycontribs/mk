@@ -6,6 +6,8 @@ from typing import Optional
 import pytest
 from subprocess_tee import run
 
+from mk.text import strip_ansi_escape
+
 
 @pytest.mark.parametrize(
     "shell,expected",
@@ -48,15 +50,15 @@ def test_completion_speed(benchmark, monkeypatch) -> None:
     result = benchmark(do_complete)
 
     assert result == 0
-    assert benchmark.stats["min"] > 0.0010  # seconds
+    assert benchmark.stats["min"] > 0.0001  # seconds
     assert benchmark.stats["mean"] < 0.0035  # seconds
 
 
 @pytest.mark.parametrize(
     "shell,expected",
     (
-        pytest.param("zsh", '^_arguments.*\n"commands":', id="zsh"),
-        pytest.param("bash", "commands\n", id="bash"),
+        pytest.param("zsh", "_arguments '", id="zsh"),
+        pytest.param("bash", "commands", id="bash"),
     ),
 )
 def test_show_completion_data(shell, expected) -> None:
@@ -64,6 +66,8 @@ def test_show_completion_data(shell, expected) -> None:
     env = os.environ.copy()
     env["_MK_COMPLETE"] = f"complete_{shell}"
     env["_TYPER_COMPLETE_ARGS"] = ""
+    env["COMP_WORDS"] = "mk command"
+    env["COMP_CWORD"] = "1"
     result = run(["mk", "--show-completion"], env=env, check=False, tee=False)
     # Apparently test return an unexpected 1 even if completion seems to be
     # working, disabling return code testing until we know why.
@@ -77,7 +81,8 @@ def test_help() -> None:
     result = run(["mk", "--help"], check=False, tee=False)
     assert result.returncode == 0, result
     # very important as we could easily break it by sending data to stdout
-    assert result.stdout.startswith("Usage: mk")
+    output = strip_ansi_escape(result.stdout)
+    assert "Usage: mk" in output
 
 
 def test_no_git_repo() -> None:

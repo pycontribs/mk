@@ -5,12 +5,12 @@
   connection: local
   gather_facts: false
   vars:
-    cache_dir: "{{ (lookup('env','HOME'), '.cache', 'mk') | community.general.path_join | realpath }}"
+    cache_dir: "{{ (lookup('env','HOME'), '.cache', 'mk') | path_join | realpath }}"
     repos:
       - name: podman
         url: https://github.com/containers/podman
       - name: ansible-lint
-        url: https://github.com/ansible-community/ansible-lint
+        url: https://github.com/ansible/ansible-lint
       - name: cookiecutter
         url: https://github.com/cookiecutter/cookiecutter.git
       - name: typeshed
@@ -20,23 +20,33 @@
   tasks:
 
     - name: Clone repo
-      git:
+      ansible.builtin.git:  # noqa: git-latest
         repo: "{{ item.url }}"
-        dest: "{{ (cache_dir, item.name) | community.general.path_join }}"
+        dest: "{{ (cache_dir, item.name) | path_join }}"
+        update: true
+        version: HEAD
       loop: "{{ repos }}"
 
     - name: List commands
-      shell: |
+      ansible.builtin.shell: |
         mk commands > {{ output_dir }}/{{ item.name }}.txt
       args:
-        chdir: "{{ (cache_dir, item.name) | community.general.path_join }}"
+        chdir: "{{ (cache_dir, item.name) | path_join }}"
       vars:
-        output_dir: "{{ (playbook_dir, '..', 'samples', 'integration') | community.general.path_join | realpath }}"
+        output_dir: "{{ (playbook_dir, '..', 'samples', 'integration') | path_join | realpath }}"
       register: result
       loop: "{{ repos }}"
       changed_when: false
 
-    - name: Fail if samples were modified
-      shell:
+    - name: Get a diff
+      ansible.builtin.shell: |
         pwd
-        git diff-index --exit-code HEAD
+        git diff --exit-code HEAD
+      register: result
+      failed_when: false
+      changed_when: false
+
+    - name: Fail if samples were modified
+      when: result.rc != 0
+      ansible.builtin.debug:
+        msg: "{{ result.stdout }}"

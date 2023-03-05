@@ -1,5 +1,4 @@
 build
 install
-test
 uninstall
 up
