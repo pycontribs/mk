@@ -28,7 +28,7 @@ def run(
         shell = False
     logging.info("Executing: %s", cmd)
     result = subprocess_tee.run(
-        args, check=check, shell=shell, universal_newlines=True, cwd=cwd, tee=tee, environ=env
+        args, check=check, shell=shell, universal_newlines=True, cwd=cwd, tee=tee, env=env
     )
     return result
 

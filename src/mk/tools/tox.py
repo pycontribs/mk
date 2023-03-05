@@ -21,11 +21,14 @@ class ToxTool(Tool):
         actions: List[Action] = []
         cp = ConfigParser(strict=False, interpolation=None)
         env_overrides = {"PY_COLORS": "0"}
-        tox_cfg = run_or_fail(
-            ["tox", "-qq", "--colored", "no", "--showconfig"],
-            env_overrides=env_overrides,
-            tee=False,
-        ).stdout
+        tox_cfg = (
+            run_or_fail(
+                ["tox", "-qq", "--colored", "no", "--showconfig"],
+                env_overrides=env_overrides,
+                tee=False,
+            ).stdout
+            or ""
+        )
 
         # workaround for https://github.com/tox-dev/tox/issues/2030
         # we remove all lines starting with .tox from output
