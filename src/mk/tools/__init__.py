@@ -27,7 +27,7 @@ class Action:
             self.tool.run(self)
 
 
-class Tool():
+class Tool:
     name = "tool-name"
 
     def __init__(self, path=".") -> None:
