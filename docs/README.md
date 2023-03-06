@@ -1,4 +1,4 @@
-# mk
+# Documentation of mk tool
 
 `mk` is a CLI tool that aims to ease contribution to any open-source project
 by hiding repository implementation details from the casual contributor.
@@ -38,27 +38,7 @@ pipx install mk
 
 ## Run it
 
-```text
-$ mk
-Usage: mk [OPTIONS] COMMAND [ARGS]...
-
-Options:
-  --version
-  -v, --verbose         Increase verbosity.  [default: 0]
-  --install-completion  Install completion for the current shell.
-  --show-completion     Show completion for the current shell, to copy it or
-                        customize the installation.
-
-  --help                Show this message and exit.
-
-Commands:
-  detect     Display detected information about current project.
-  lint       ... (from pre-commit)
-  lint2      ... (from tox)
-  pkg        ... (from tox)
-  py         ... (from tox)
-  up         Upload current change by creating or updating a CR/PR.
-```
+![](images/mk-social-preview.png)
 
 ## How it works
 

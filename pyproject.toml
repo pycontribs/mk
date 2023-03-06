@@ -12,7 +12,7 @@ requires-python = ">=3.8"
 dynamic = ["version", "dependencies", "optional-dependencies"]
 name = "mk"
 description = "mk"
-readme = "README.md"
+readme = "docs/README.md"
 authors = [{ "name" = "Sorin Sbarnea", "email" = "sorin.sbarnea@gmail.com" }]
 license = { text = "MIT" }
 classifiers = [
@@ -82,6 +82,7 @@ disable = [
 
 [tool.setuptools.dynamic]
 optional-dependencies.test = { file = [".config/requirements-test.txt"] }
+optional-dependencies.docs = { file = [".config/requirements-docs.txt"] }
 dependencies = { file = [".config/requirements.in"] }
 
 [tool.setuptools_scm]
