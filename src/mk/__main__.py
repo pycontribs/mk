@@ -1,4 +1,5 @@
 """Main module."""
+import argparse
 import itertools
 import logging
 import os
@@ -26,7 +27,7 @@ else:
     ]
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.WARNING,
     format="%(message)s",
     handlers=handlers,
 )
@@ -53,10 +54,6 @@ def main(
     # the lack of real tty.
     os.environ["FORCE_COLOR"] = os.environ.get("FORCE_COLOR", "true")
 
-    if verbose:
-        log_level = logging.INFO if verbose == 1 else logging.DEBUG
-        logging.getLogger().setLevel(log_level)
-        logging.log(level=log_level, msg=f"Reconfigured logging level to {log_level}")
     # click_ctx.invoked_subcommand can be the command or None
 
 
@@ -75,6 +72,20 @@ def commands() -> None:
 
 
 def cli() -> None:
+    parser = argparse.ArgumentParser(
+        description="Preprocess arguments to set log level.",
+        add_help=False,
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="append_const", const=1, dest="verbosity"
+    )
+    opt, _ = parser.parse_known_args()
+    opt.verbosity = 0 if opt.verbosity is None else sum(opt.verbosity)
+    if opt.verbosity:
+        log_level = logging.INFO if opt.verbosity == 1 else logging.DEBUG
+        logging.getLogger().setLevel(log_level)
+        logging.log(level=log_level, msg=f"Reconfigured logging level to {log_level}")
+
     existing_commands = []
     for command_info in app.registered_commands:
         command = typer.main.get_command_from_info(
