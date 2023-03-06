@@ -9,10 +9,10 @@ strange requirements.
 If you ever asked yourself one of the below questions, probably you would
 want to try `mk` and if it can help you
 
-* How do I run tests locally?
-* Which are the test suites I can run?
-* Is my change ready to be reviewed?
-* How can I propose a change for review?
+- How do I run tests locally?
+- Which are the test suites I can run?
+- Is my change ready to be reviewed?
+- How can I propose a change for review?
 
 Run `mk` inside any cloned repository to display which options you have. No
 configuration file is needed as the tool will look for
@@ -20,11 +20,11 @@ common tools used by the repository and expose their commands.
 
 `mk` is inspired by the tools listed below, but it does not aim to replace them.
 
-* [make](https://www.gnu.org/software/make/)
-* [waf](https://gitlab.com/ita1024/waf)
-* [tox](https://github.com/tox-dev/tox/) and [nox](https://nox.thea.codes/en/stable/)
-* [npm](https://www.npmjs.com/) and [yarn](https://yarnpkg.com/)
-* [pre-commit](https://pre-commit.com/)
+- [make](https://www.gnu.org/software/make/)
+- [waf](https://gitlab.com/ita1024/waf)
+- [tox](https://github.com/tox-dev/tox/) and [nox](https://nox.thea.codes/en/stable/)
+- [npm](https://www.npmjs.com/) and [yarn](https://yarnpkg.com/)
+- [pre-commit](https://pre-commit.com/)
 
 ## Installation
 
@@ -94,15 +94,15 @@ not in dirty status or that the testing did not leave untracked files on disk.
 
 ## Planned features
 
-* Allow command aliases like git. If you type `mk l` it should directly run
+- Allow command aliases like git. If you type `mk l` it should directly run
   lint unless there is another command starting with `l`. (#19)
-* Persistent state of each command run - This means that it will know if a
+- Persistent state of each command run - This means that it will know if a
   specific command was run and if it failed or not. The state would be linked
   to the repository state, so modifying a tracked file would reset the state
   to be unknown. (#20)
-* Configuration file where additional actions can be added. (#21)
-* Dependencies between commands. While some tools support dependencies,
+- Configuration file where additional actions can be added. (#21)
+- Dependencies between commands. While some tools support dependencies,
   many do not. You should be able to declare that a specific command would
   run only after another one already passed. (#22)
-* Ability to generate CI/CD pipelines so the user would spend less time writing
+- Ability to generate CI/CD pipelines so the user would spend less time writing
   non-portable configuration. (#23)
