@@ -1,7 +1,7 @@
 {
-  "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false,
-  "python.testing.nosetestsEnabled": false,
   "editor.formatOnSave": true,
-  "prettier.proseWrap": "always"
+  "prettier.proseWrap": "always",
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false
 }
