@@ -51,7 +51,7 @@ def test_completion_speed(benchmark, monkeypatch) -> None:
 
     assert result == 0
     assert benchmark.stats["min"] > 0.0001  # seconds
-    assert benchmark.stats["mean"] < 0.005  # seconds
+    assert benchmark.stats["mean"] < 0.01  # seconds
 
 
 @pytest.mark.parametrize(

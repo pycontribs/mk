@@ -3,7 +3,7 @@ import argparse
 import itertools
 import logging
 import os
-from typing import List
+from typing import Any, Dict, List
 
 import typer
 from rich.console import Console
@@ -95,6 +95,7 @@ def cli() -> None:
 
     # command = get_command_from_info(command_info=command_info)
 
+    action_map: Dict[str, Any] = {}
     for action in ctx.runner.actions:
         # Currently we rename action that overlap but in the future we may
         # want to allow one to shadow others or we may want to chain them
@@ -122,7 +123,23 @@ def cli() -> None:
             help=action.description,
             rich_help_panel=panel,
         )(action.run)
+        action_map[action_name] = action
         existing_commands.append(action_name)
+    # Add aliases for 1-3 letter commands
+    for alias_len in (1, 2, 3):
+        for x, action in action_map.items():
+            alias = x[0:alias_len]
+            # pylint: disable=consider-iterating-dictionary
+            if alias in action_map.keys():
+                continue
+            if sum(1 for name in action_map.keys() if name.startswith(alias)) == 1:
+                app.command(
+                    name=alias,
+                    short_help=f"Alias for [dim]mk {x}[/dim]",
+                    rich_help_panel="aliases",
+                    hidden=bool(opt.verbosity < 1),
+                )(action.run)
+
     app()
 
 
