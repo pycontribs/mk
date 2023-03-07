@@ -26,6 +26,11 @@ than happy to add support for loading descriptions too.
 All shell scripts found inside the repository root and`(scripts|tools|bin)/`
 sub-folders will be exposed as commands.
 
+## taskfile
+
+[Taskfile](https://taskfile.dev/#/) is a task runner that uses YAML files. It is
+similar to make, but it is written in Go and it is more flexible.
+
 ## tox
 
 All tox environments will be exposed as commands and their descriptions will
