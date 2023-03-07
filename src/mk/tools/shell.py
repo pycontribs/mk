@@ -34,7 +34,7 @@ class ShellTool(Tool):
                 actions.append(
                     Action(
                         name=name,
-                        description="Run {filename}",
+                        description=f"[dim]./{filename}[/dim]",
                         tool=self,
                         filename=filename,
                     )

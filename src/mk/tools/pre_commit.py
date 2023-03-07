@@ -17,4 +17,6 @@ class PreCommitTool(Tool):
         return False
 
     def actions(self) -> List[Action]:
-        return [Action(name="lint", tool=self)]
+        return [
+            Action(name="lint", description="[dim]pre-commit run -a[/dim]", tool=self)
+        ]
