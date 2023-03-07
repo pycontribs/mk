@@ -5,8 +5,8 @@ from mk.exec import run, run_or_fail
 from mk.tools import Action, Tool
 
 
-class NpmTool(Tool):
-    name = "npm"
+class NodeTool(Tool):
+    name = "node"
 
     def __init__(self, path=".") -> None:
         super().__init__(path=path)
