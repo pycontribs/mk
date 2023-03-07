@@ -4,7 +4,7 @@ ci:
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
     # keep it before yamllint
-    rev: v3.0.0-alpha.4
+    rev: v3.0.0-alpha.6
     hooks:
       - id: prettier
         always_run: true
@@ -71,7 +71,7 @@ repos:
           - subprocess-tee
           - typer>=0.7.0
   - repo: https://github.com/pycqa/pylint
-    rev: v2.16.3
+    rev: v2.16.4
     hooks:
       - id: pylint
         additional_dependencies:
