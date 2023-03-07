@@ -1,4 +1,5 @@
 import logging
+import shutil
 import sys
 from typing import List, Optional
 
@@ -20,18 +21,22 @@ class GitTool(Tool):
             raise NotImplementedError(f"Action {action} is not supported.")
 
     def is_present(self, path: str) -> bool:
+        if not shutil.which("gh"):
+            logging.warning("Unable to find gh tool. See https://cli.github.com/")
+            return False
         return True
 
     def actions(self) -> List[Action]:
         actions: List[Action] = []
-        actions.append(
-            Action(
-                name="up",
-                description="Upload current change by creating or updating a CR/PR.",
-                tool=self,
-                # runner=self,
+        if self.is_present(self.path):
+            actions.append(
+                Action(
+                    name="up",
+                    description="Upload current change by creating or updating a CR/PR.",
+                    tool=self,
+                    # runner=self,
+                )
             )
-        )
         return actions
 
     # pylint: disable=too-many-branches
