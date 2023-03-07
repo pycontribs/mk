@@ -29,7 +29,7 @@ class AnsibleTool(Tool):
             actions.append(
                 Action(
                     name=name,
-                    description=f"Run ansible-playbook {filename}",
+                    description=f"[dim]ansible-playbook {filename}[/dim]",
                     tool=self,
                     filename=filename,
                 )
