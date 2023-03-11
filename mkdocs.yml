@@ -12,9 +12,11 @@ extra_css:
 
 theme:
   name: "material"
+  custom_dir: docs/.overrides
   logo: images/logo.svg
   favicon: images/favicon.ico
   features:
+    - announce.dismiss
     - content.code.copy
     - content.action.edit
     - navigation.expand
