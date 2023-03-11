@@ -5,6 +5,8 @@ hiding repository implementation details from the casual contributor. With it,
 you can contribute without having to know all the build and testing tools that
 the project team already uses, which often have strange requirements.
 
+![mk-command-line-screenshot](images/mk-social-preview.png)
+
 If you ever asked yourself one of the below questions, probably you would want
 to try `mk` and if it can help you
 
@@ -17,28 +19,20 @@ Run `mk` inside any cloned repository to display which options you have. No
 configuration file is needed as the tool will look for common tools used by the
 repository and expose their commands.
 
-`mk` is inspired by the tools listed below, but it does not aim to replace them.
-
-- [make](https://www.gnu.org/software/make/)
-- [waf](https://gitlab.com/ita1024/waf)
-- [tox](https://github.com/tox-dev/tox/) and
-  [nox](https://nox.thea.codes/en/stable/)
-- [npm](https://www.npmjs.com/) and [yarn](https://yarnpkg.com/)
-- [pre-commit](https://pre-commit.com/)
+`mk` is inspired by tools as [make](make), [waf](waf), [taskfile](taskfile),
+[tox](tox), [npm](npm), [yarn](yarn) and [pre-commit](pre-commit), but **it does
+not aim to replace them**. Instead, it aims to provide a unified interface for
+calling them that is friendly even for those that never used these tools.
 
 ## Installation
 
 We recommend using [`pipx`](https://pipxproject.github.io/pipx/) to install `mk`
-in order to avoid potential dependency conflicts. You can use `pip3 install mk`
-as well.
+to avoid potential dependency conflicts. You can use `pip3 install --user mk` as
+well.
 
 ```shell
 pipx install mk
 ```
-
-## Run it
-
-![](images/mk-social-preview.png)
 
 ## How it works
 
@@ -64,7 +58,7 @@ One of the benefits of `mk` is that it should reduce the amount of
 how-to-contribute documentation the author needs to write.
 
 A considerable amount of maintainer effort can go into producing documentation
-that makes it easier for someone to make a contribution to a project.
+that makes it easier for someone to contribute.
 
 Some projects are less affected than others. That is usually related to how well
 do the potential contributors know the practices used by the project. Still, if
@@ -88,7 +82,7 @@ three letters prefixes.
 ## Using mk to propose changes to projects
 
 Instead of writing long list of tasks to follow, we can use a tool that tells
-him what to do next. For example, `mk` has a build-in command named `up(load)`
+him what to do next. For example, `mk` has a built-in command named `up(load)`
 that aims to ease preparing a local change from being proposed to the project.
 
 This command detects if it should use GitHub workflow or Gerrit and will run the
@@ -97,7 +91,7 @@ upload a change only after passing the minimal set of local tests, preventing
 noisy mistakes or clog CI/CD pipelines.
 
 In addition to linting, it will also check that the repository is not in dirty
-status or that the testing did not leave untracked files on disk.
+status or that the testing did not leave untracked files.
 
 ## Planned features
 
@@ -110,4 +104,13 @@ status or that the testing did not leave untracked files on disk.
   not. You should be able to declare that a specific command would run only
   after another one already passed. (#22)
 - Ability to generate CI/CD pipelines so the user would spend less time writing
-  non-portable configuration. (#23)
+  non-portable configurations. (#23)
+
+[make]: https://www.gnu.org/software/make/
+[nox]: https://nox.thea.codes/en/stable/
+[npm]: https://www.npmjs.com/
+[pre-commit]: https://pre-commit.com/
+[taskfile]: https://taskfile.dev/#/
+[tox]: https://github.com/tox-dev/tox/
+[waf]: https://waf.io/
+[yarn]: https://yarnpkg.com/
