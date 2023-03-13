@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -39,7 +40,7 @@ class PyPackageTool(Tool):
             cmd = [sys.executable, "-m", "pip", action.name, "-y", pkg_name]
             run_or_fail(cmd, tee=True)
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         for name in ("setup.cfg", "setup.py", "pyproject.toml"):
             if os.path.isfile(name):
                 return True

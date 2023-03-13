@@ -1,6 +1,7 @@
 import logging
 import shutil
 import sys
+from pathlib import Path
 from typing import List, Optional
 
 from mk.ctx import ctx
@@ -20,7 +21,7 @@ class GitTool(Tool):
         else:
             raise NotImplementedError(f"Action {action} is not supported.")
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         if not shutil.which("gh"):
             logging.warning("Unable to find gh tool. See https://cli.github.com/")
             return False

@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run, run_or_fail
@@ -40,7 +41,7 @@ class NodeTool(Tool):
                         )
         self.present = bool(self._actions)
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         return self.present
 
     def actions(self) -> List[Action]:

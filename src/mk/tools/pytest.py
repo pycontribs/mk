@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -20,11 +21,11 @@ class PyTestTool(Tool):
         if action.name == "test":
             cmd = [sys.executable, "-m", "pytest"]
             run_or_fail(cmd, tee=True)
+        return
 
-    def is_present(self, path: str) -> bool:
-        for name in ("pytest.ini",):
-            if os.path.isfile(name):
-                return True
+    def is_present(self, path: Path) -> bool:
+        if os.path.isfile(path / "pytest.ini"):
+            return True
         return False
 
     def actions(self) -> List[Action]:
