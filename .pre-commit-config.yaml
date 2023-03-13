@@ -56,7 +56,7 @@ repos:
         types: [file, yaml]
         entry: yamllint --strict
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.0.1
+    rev: v1.1.1
     hooks:
       - id: mypy
         # mypy args needed in order to match mypy cli behavior
@@ -64,6 +64,7 @@ repos:
         entry: mypy src/
         pass_filenames: false
         additional_dependencies:
+          - build
           - diskcache
           - importlib-metadata
           - packaging
@@ -71,7 +72,7 @@ repos:
           - subprocess-tee
           - typer>=0.7.0
   - repo: https://github.com/pycqa/pylint
-    rev: v2.16.4
+    rev: v2.17.0
     hooks:
       - id: pylint
         additional_dependencies:

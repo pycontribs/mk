@@ -1,7 +1,4 @@
-build
 create_baseline_stubs
 generate_proto_stubs
-install
 lint
-uninstall
 up
