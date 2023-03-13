@@ -3,6 +3,7 @@ import argparse
 import itertools
 import logging
 import os
+import shlex
 from typing import Any, Dict, List
 
 import typer
@@ -113,10 +114,14 @@ def cli() -> None:
                 action.tool,
                 action_name,
             )
-        panel = "Detected commands" if action.tool else ""
+        # panel = "Detected commands" if action.tool else ""
+        panel = str(action.tool) or "foo"
         short_help = action.description or ""
         if action.tool:
-            short_help += f" [dim]({action.tool})[/dim]"
+            if action.args:
+                short_help += f" [dim]({shlex.join(action.args)})[/dim]"
+            else:
+                short_help += f" [dim]{action.tool}[/dim]"
         app.command(
             name=action_name,
             short_help=short_help,
