@@ -3,6 +3,7 @@ import logging
 import os
 import shutil
 import sys
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -17,7 +18,7 @@ class TaskfileTool(Tool):
         super().__init__(path)
         self.executable = ""
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         if os.path.isfile(os.path.join(path, "taskfile.yml")):
             # On some Linux distros might be exposed as taskfile in order to
             # avoid clashing with the other Task Warrior executable https://taskwarrior.org/

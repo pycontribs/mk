@@ -1,5 +1,6 @@
 import glob
 import os
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -17,7 +18,7 @@ class AnsibleTool(Tool):
                 env_overrides={"ANSIBLE_FORCE_COLOR": "1"},
             )
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         if os.path.isdir(os.path.join(path, "playbooks")):
             return True
         return False

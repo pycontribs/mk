@@ -1,6 +1,7 @@
 import os
 import re
 from configparser import ConfigParser
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -11,7 +12,7 @@ from mk.tools import Action, Tool
 class ToxTool(Tool):
     name = "tox"
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         if os.path.isfile(os.path.join(path, "tox.ini")):
             return True
         return False

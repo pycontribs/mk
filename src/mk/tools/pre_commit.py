@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -11,7 +12,7 @@ class PreCommitTool(Tool):
     def run(self, action: Optional[Action] = None):
         run_or_fail(["pre-commit", "run", "-a"], tee=True)
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         if os.path.isfile(os.path.join(path, ".pre-commit-config.yaml")):
             return True
         return False

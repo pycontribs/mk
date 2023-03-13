@@ -1,5 +1,6 @@
 import os
 import re
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -19,7 +20,7 @@ class MakeTool(Tool):
             cmd.append(action.name)
         run_or_fail(cmd, tee=True)
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         for name in ["Makefile", "makefile", "GNUmakefile"]:
             makefile = os.path.join(path, name)
             if os.path.isfile(makefile):

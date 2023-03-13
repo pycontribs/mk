@@ -1,5 +1,6 @@
 import glob
 import os
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -13,7 +14,7 @@ class ShellTool(Tool):
         if action and action.filename:
             run_or_fail(action.filename, tee=True)
 
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
         return True
 
     def actions(self) -> List[Action]:

@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, List, Optional
 
 
@@ -34,7 +35,8 @@ class Tool:
         self.path = path
 
     # pylint: disable=unused-argument
-    def is_present(self, path: str) -> bool:
+    def is_present(self, path: Path) -> bool:
+        """Return True if the tool configuration is present in the given path."""
         return False
 
     def actions(self) -> List[Action]:
