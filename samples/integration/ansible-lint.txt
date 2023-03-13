@@ -11,6 +11,7 @@ pkg
 py
 py-devel
 schemas
+test
 test-setup
 uninstall
 up
