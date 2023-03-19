@@ -30,6 +30,7 @@ class ShellTool(Tool):
                 os.path.isfile(filename)
                 and os.access(filename, os.X_OK)
                 and filename not in exclude_list
+                and not filename.endswith(".so")
             ):
                 name = os.path.splitext(os.path.basename(filename))[0]
                 actions.append(
