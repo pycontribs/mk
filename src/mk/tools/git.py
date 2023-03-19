@@ -1,3 +1,6 @@
+"""Expose features related to git repositories."""
+from __future__ import annotations
+
 import logging
 import shutil
 import sys
@@ -29,14 +32,18 @@ class GitTool(Tool):
 
     def actions(self) -> List[Action]:
         actions: List[Action] = []
-        if self.is_present(self.path):
-            actions.append(
-                Action(
-                    name="up",
-                    description="Upload current change by creating or updating a CR/PR.",
-                    tool=self,
-                    # runner=self,
+        if ctx.runner.branch not in ["main", "master"]:
+            if self.is_present(self.path):
+                actions.append(
+                    Action(
+                        name="up",
+                        description="Upload current change by creating or updating a CR/PR.",
+                        tool=self,
+                    )
                 )
+        else:
+            logging.info(
+                "Not adding 'up' action as it does not work when current branch is main/master"
             )
         return actions
 

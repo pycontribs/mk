@@ -14,5 +14,4 @@ schemas
 test
 test-setup
 uninstall
-up
 update-version

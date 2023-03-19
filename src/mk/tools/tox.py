@@ -1,6 +1,10 @@
+"""Implementation of the tox tool support."""
+import logging
 import os
 import re
-from configparser import ConfigParser
+import shlex
+import sys
+from configparser import ConfigParser, ParsingError
 from pathlib import Path
 from typing import List, Optional
 
@@ -22,21 +26,28 @@ class ToxTool(Tool):
         actions: List[Action] = []
         cp = ConfigParser(strict=False, interpolation=None)
         env_overrides = {"PY_COLORS": "0"}
-        tox_cfg = (
-            run_or_fail(
-                ["tox", "-qq", "--colored", "no", "--showconfig"],
-                env_overrides=env_overrides,
-                tee=False,
-            ).stdout
-            or ""
+        result = run_or_fail(
+            ["tox", "-qq", "--colored", "no", "--hashseed", "1", "--showconfig"],
+            env_overrides=env_overrides,
+            tee=False,
         )
+        tox_cfg = result.stdout or ""
 
         # workaround for https://github.com/tox-dev/tox/issues/2030
         # we remove all lines starting with .tox from output
-        tox_cfg = re.sub(r"\.tox.*\n?", "", strip_ansi_escape(tox_cfg), re.MULTILINE)
+        tox_cfg = re.sub(
+            r"^\.tox[^\r\n]*\n$", "", strip_ansi_escape(tox_cfg), re.MULTILINE
+        )
 
         # now tox_cfg should have a valid ini content
-        cp.read_string(tox_cfg)
+        try:
+            cp.read_string(tox_cfg)
+        except ParsingError:
+            logging.fatal(
+                "Unable to parse tox output from command: %s", shlex.join(result.args)
+            )
+            print(tox_cfg, file=sys.stderr)
+            sys.exit(22)
         for section in cp.sections():
             if section.startswith("testenv:"):
                 _, env_name = section.split(":")

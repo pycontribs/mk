@@ -13,7 +13,7 @@ class AnsibleTool(Tool):
     def run(self, action: Optional[Action] = None):
         if action and action.filename:
             run_or_fail(
-                ["ansible-playbook", action.filename],
+                ["ansible-playbook", "-vv", action.filename],
                 tee=True,
                 env_overrides={"ANSIBLE_FORCE_COLOR": "1"},
             )

@@ -1,15 +1,17 @@
 ---
 - name: >
-    Tests that running mk in some popular repos does detect
-    what we would expect.
+    Tests that running mk in some popular repos does detect what we would
+    expect.
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
-    cache_dir: "{{ (lookup('env','HOME'), '.cache', 'mk') | path_join | realpath }}"
+    cache_dir: >-
+      {{ (lookup('env','HOME'), '.cache', 'mk') | path_join | realpath }}
     repos:
       - name: podman
         url: https://github.com/containers/podman
+        branch: my-branch
       - name: ansible-lint
         url: https://github.com/ansible/ansible-lint
       - name: cookiecutter
@@ -19,13 +21,30 @@
       - name: flask-babel
         url: https://github.com/python-babel/flask-babel.git
   tasks:
-    - name: Clone repo
-      ansible.builtin.git: # noqa: git-latest
+    - name: Show cache directory
+      ansible.builtin.debug:
+        msg: Using {{ cache_dir }} for temporary files
+
+    - name: Clone repo # noqa: git-latest
+      ansible.builtin.git:
         repo: "{{ item.url }}"
         dest: "{{ (cache_dir, item.name) | path_join }}"
         update: true
         version: HEAD
       loop: "{{ repos }}"
+
+    - name: Create new branch if needed # noqa: command-instead-of-shell
+      loop: "{{ repos }}"
+      when: item.branch is defined
+      ansible.builtin.shell: |
+        BRANCH=$(git symbolic-ref --short -q HEAD)
+        if [[ $BRANCH != '{{ item.branch }}' ]]; then
+          git checkout -B {{ item.branch }}
+        fi
+      args:
+        executable: /bin/bash
+        chdir: "{{ (cache_dir, item.name) | path_join }}"
+      changed_when: false
 
     - name: List commands
       ansible.builtin.shell: |
@@ -33,7 +52,9 @@
       args:
         chdir: "{{ (cache_dir, item.name) | path_join }}"
       vars:
-        output_dir: "{{ (playbook_dir, '..', 'samples', 'integration') | path_join | realpath }}"
+        output_dir:
+          "{{ (playbook_dir, '..', 'samples', 'integration') | path_join |
+          realpath }}"
       register: result
       loop: "{{ repos }}"
       changed_when: false
