@@ -2,4 +2,3 @@ create_baseline_stubs
 generate_proto_stubs
 lint
 sync_tensorflow_protobuf_stubs
-up

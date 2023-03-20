@@ -23,5 +23,4 @@ submodules
 test
 test-all
 uninstall
-up
 wheel

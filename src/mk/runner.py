@@ -28,6 +28,13 @@ class Runner:
             logging.fatal("Current version of mk works only within git repos.")
             self.repo = None
             return
+        self.branch = ""
+        if self.repo:
+            try:
+                self.branch = self.repo.active_branch.name
+                logging.info("Detected active branch '%s'", self.branch)
+            except TypeError:
+                logging.warning("No branch detected.")
 
         self.root = Path(self.repo.working_dir)
         hash_key = f"{sys.version_info.major}{sys.version_info.minor}{self.root}"
