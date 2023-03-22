@@ -48,6 +48,7 @@ mk = "mk.__main__:cli"
 
 [project.entry-points."mk_tools"]
 ansible = "mk.tools.ansible:AnsibleTool"
+cmake = "mk.tools.cmake:CMakeTool"
 git = "mk.tools.git:GitTool"
 make = "mk.tools.make:MakeTool"
 node = "mk.tools.node:NodeTool"
