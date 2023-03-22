@@ -14,3 +14,4 @@ src/mk.egg-info
 src/mk/_version.py
 .coverage
 coverage.xml
+CMakeFiles
