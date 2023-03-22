@@ -1,7 +1,7 @@
 import logging
 import os
-from pathlib import Path
 import shutil
+from pathlib import Path
 from typing import List, Optional
 
 from mk.exec import run_or_fail
@@ -31,10 +31,14 @@ class CMakeTool(Tool):
             if os.path.isfile(configfile):
                 self.configfile = configfile
                 if not shutil.which("cmake"):
-                    logging.warning("Unable to find cmake tool. See https://cmake.org/download/")
+                    logging.warning(
+                        "Unable to find cmake tool. See https://cmake.org/download/"
+                    )
                     self._is_present = False
                     break
-                logging.warning("cmake is not fully supported yet by mk. See https://github.com/pycontribs/mk/issues/135")
+                logging.warning(
+                    "cmake is not fully supported yet by mk. See https://github.com/pycontribs/mk/issues/135"
+                )
                 self._is_present = True
                 break
         return self._is_present
@@ -42,7 +46,5 @@ class CMakeTool(Tool):
     def actions(self) -> List[Action]:
         actions = []
         if self.is_present(Path(".")):
-            actions.append(
-                Action(name=".", tool=self, description="Run 'cmake .'")
-                )
+            actions.append(Action(name=".", tool=self, description="Run 'cmake .'"))
         return actions
