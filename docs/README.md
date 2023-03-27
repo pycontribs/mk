@@ -61,7 +61,7 @@ A considerable amount of maintainer effort can go into producing documentation
 that makes it easier for someone to contribute.
 
 Some projects are less affected than others. That is usually related to how well
-do the potential contributors know the practices used by the project. Still, if
+the potential contributors know the practices used by the project. Still, if
 your project has a wide range of uses, you will quickly discover that newbie
 contributors may hit a knowledge wall. Such a barrier will likely prevent most
 of them from becoming active contributors. The remaining ones will flood the
@@ -81,7 +81,7 @@ three letters prefixes.
 
 ## Using mk to propose changes to projects
 
-Instead of writing long list of tasks to follow, we can use a tool that tells
+Instead of writing a long list of tasks to follow, we can use a tool that tells
 him what to do next. For example, `mk` has a built-in command named `up(load)`
 that aims to ease preparing a local change from being proposed to the project.
 
@@ -95,7 +95,7 @@ status or that the testing did not leave untracked files.
 
 ## Planned features
 
-- Persistent state of each command run - This means that it will know if a
+- A persistent state of each command run - This means that it will know if a
   specific command was run and if it failed or not. The state would be linked to
   the repository state, so modifying a tracked file would reset the state to be
   unknown. (#20)

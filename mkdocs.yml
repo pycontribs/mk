@@ -1,6 +1,6 @@
 ---
 site_name: mk tool documentation
-site_url: https://mk2.readthedocs.io/
+site_url: https://mk.readthedocs.io/
 repo_url: https://github.com/pycontribs/mk
 edit_uri: blob/main/docs/
 copyright: Copyright © 2021-2023 Sorin Sbarnea
