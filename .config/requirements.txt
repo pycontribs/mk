@@ -29,7 +29,7 @@ packaging==23.0
 pkginfo==1.9.6
 pluggy==1.0.0
 pycparser==2.21
-pygments==2.14.0
+pygments==2.15.0
 pyproject-hooks==1.0.0
 pyyaml==6.0
 readme-renderer==37.3
