@@ -18,7 +18,7 @@ docutils==0.19
 gitdb==4.0.10
 gitpython==3.1.31
 idna==3.4
-importlib-metadata==6.2.0
+importlib-metadata==6.4.1
 jaraco-classes==3.2.3
 jeepney==0.8.0
 keyring==23.13.1
