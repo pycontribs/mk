@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 import logging
 import os
 import shutil
 from pathlib import Path
-from typing import List, Optional
 
 from mk.exec import run_or_fail
 from mk.tools import Action, Tool
@@ -11,12 +12,12 @@ from mk.tools import Action, Tool
 class CMakeTool(Tool):
     name = "cmake"
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(self)
-        self.configfile = None
-        self._is_present = None
+        self.configfile: str | None = None
+        self._is_present: bool | None = None
 
-    def run(self, action: Optional[Action] = None) -> None:
+    def run(self, action: Action | None = None) -> None:
         cmd = ["cmake"]
         if action:
             cmd.append(action.name)
@@ -32,18 +33,18 @@ class CMakeTool(Tool):
                 self.configfile = configfile
                 if not shutil.which("cmake"):
                     logging.warning(
-                        "Unable to find cmake tool. See https://cmake.org/download/"
+                        "Unable to find cmake tool. See https://cmake.org/download/",
                     )
                     self._is_present = False
                     break
                 logging.warning(
-                    "cmake is not fully supported yet by mk. See https://github.com/pycontribs/mk/issues/135"
+                    "cmake is not fully supported yet by mk. See https://github.com/pycontribs/mk/issues/135",
                 )
                 self._is_present = True
                 break
-        return self._is_present
+        return bool(self._is_present)
 
-    def actions(self) -> List[Action]:
+    def actions(self) -> list[Action]:
         actions = []
         if self.is_present(Path(".")):
             actions.append(Action(name=".", tool=self, description="Run 'cmake .'"))

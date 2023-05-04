@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import hashlib
 import logging
 import sys
@@ -8,7 +10,7 @@ except ImportError:
     from cached_property import cached_property  # type: ignore
 
 from pathlib import Path
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from mk.tools import Action
@@ -21,7 +23,7 @@ from git.exc import GitError
 
 class Runner:
     def __init__(self) -> None:
-        self.root: Optional[Path] = None
+        self.root: Path | None = None
         try:
             self.repo = Repo(".", search_parent_directories=True)
         except GitError:
@@ -38,7 +40,7 @@ class Runner:
 
         self.root = Path(self.repo.working_dir)
         hash_key = f"{sys.version_info.major}{sys.version_info.minor}{self.root}"
-        self.hash = hashlib.sha1(hash_key.encode("UTF-8")).hexdigest()[:5]
+        self.hash = hashlib.sha256(hash_key.encode("UTF-8")).hexdigest()[:5]
         self.cache = Cache(f"~/.cache/mk.{self.hash}/")
 
         if self.repo.is_dirty():
@@ -52,7 +54,7 @@ class Runner:
         return pm
 
     @cached_property
-    def actions(self) -> List["Action"]:
+    def actions(self) -> list[Action]:
         """List of discovered actions."""
         if not self.root:
             return []

@@ -1,10 +1,11 @@
+from __future__ import annotations
+
 import json
 import logging
 import os
 import shutil
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 from mk.exec import run_or_fail
 from mk.tools import Action, Tool
@@ -25,14 +26,14 @@ class TaskfileTool(Tool):
             self.executable = shutil.which("taskfile") or shutil.which("task") or ""
             if not self.executable:
                 logging.error(
-                    "taskfile.yml config found but the tool is not installed. See https://taskfile.dev/installation/"
+                    "taskfile.yml config found but the tool is not installed. See https://taskfile.dev/installation/",
                 )
                 sys.exit(1)
             return True
         return False
 
-    def actions(self) -> List[Action]:
-        actions: List[Action] = []
+    def actions(self) -> list[Action]:
+        actions: list[Action] = []
         tasks_json = (
             run_or_fail(
                 ["task", "--list", "--json"],
@@ -51,13 +52,10 @@ class TaskfileTool(Tool):
                     tool=self,
                     description=desc,
                     args=[task["name"]],
-                )
+                ),
             )
         return actions
 
-    def run(self, action: Optional[Action] = None) -> None:
-        if not action:
-            cmd = ["task"]
-        else:
-            cmd = ["task", action.name]
+    def run(self, action: Action | None = None) -> None:
+        cmd = ["task"] if not action else ["task", action.name]
         run_or_fail(cmd, tee=True)

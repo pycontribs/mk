@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 import logging
 import subprocess
 import sys
 from os import environ
-from typing import Dict, Optional
 
 import subprocess_tee
 
@@ -18,9 +19,9 @@ def run(
     check=False,
     cwd=None,
     tee=False,
-    env_overrides: Optional[Dict[str, str]] = None,
+    env_overrides: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess:
-    env: Optional[Dict[str, str]] = None
+    env: dict[str, str] | None = None
     if env_overrides:
         env = environ.copy()
         env.update(env_overrides)
@@ -49,7 +50,10 @@ def run_or_raise(*args, cwd=None, tee=False) -> subprocess.CompletedProcess:
 
 
 def run_or_fail(
-    *args, cwd=None, tee=False, env_overrides: Optional[Dict[str, str]] = None
+    *args,
+    cwd=None,
+    tee=False,
+    env_overrides: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess:
     try:
         return run(*args, check=True, cwd=cwd, tee=tee, env_overrides=env_overrides)

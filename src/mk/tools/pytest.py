@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import os
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 from mk.exec import run_or_fail
 from mk.loaders import load_toml
@@ -16,7 +17,7 @@ class PyTestTool(Tool):
     def __init__(self) -> None:
         super().__init__(self)
 
-    def run(self, action: Optional[Action] = None) -> None:
+    def run(self, action: Action | None = None) -> None:
         if not action:
             return
         if action.name == "test":
@@ -32,14 +33,14 @@ class PyTestTool(Tool):
             return True
         return False
 
-    def actions(self) -> List[Action]:
+    def actions(self) -> list[Action]:
         actions = []
         actions.append(
             Action(
                 name="test",
                 tool=self,
                 description="Run pytest",
-            )
+            ),
         )
 
         return actions

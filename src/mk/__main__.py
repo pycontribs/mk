@@ -1,10 +1,12 @@
 """Main module."""
+from __future__ import annotations
+
 import argparse
 import itertools
 import logging
 import os
 import shlex
-from typing import Any, Dict, List
+from typing import Any
 
 import typer
 from rich.console import Console
@@ -14,7 +16,7 @@ from mk import __version__
 from mk._typer import CustomTyper
 from mk.ctx import ctx
 
-handlers: List[logging.Handler]
+handlers: list[logging.Handler]
 console_err = Console(stderr=True)
 app = CustomTyper(width=console_err.width, rich_markup_mode="rich")
 
@@ -24,7 +26,12 @@ if "_MK_COMPLETE" in os.environ:
 else:
     level = logging.DEBUG
     handlers = [
-        RichHandler(console=console_err, show_time=False, show_path=False, markup=False)
+        RichHandler(
+            console=console_err,
+            show_time=False,
+            show_path=False,
+            markup=False,
+        ),
     ]
 
 logging.basicConfig(
@@ -37,7 +44,7 @@ logging.basicConfig(
 def version_callback(value: bool) -> None:
     if value:
         typer.echo(f"mk {__version__}")
-        raise typer.Exit()
+        raise typer.Exit
 
 
 @app.callback(invoke_without_command=True)
@@ -45,10 +52,17 @@ def main(
     click_ctx: typer.Context,
     # pylint: disable=unused-argument
     version: bool = typer.Option(
-        None, "--version", callback=version_callback, is_eager=True
-    ),  # noqa: B008
+        None,
+        "--version",
+        callback=version_callback,
+        is_eager=True,
+    ),
     verbose: int = typer.Option(
-        0, "--verbose", "-v", count=True, help="Increase verbosity."
+        0,
+        "--verbose",
+        "-v",
+        count=True,
+        help="Increase verbosity.",
     ),
 ) -> None:
     # enforce coloring because some tools like npm may auto disable it due to
@@ -72,31 +86,38 @@ def commands() -> None:
         print(action.name)
 
 
-def cli() -> None:
+def cli() -> None:  # pylint: disable=too-many-locals
     parser = argparse.ArgumentParser(
         description="Preprocess arguments to set log level.",
         add_help=False,
     )
     parser.add_argument(
-        "-v", "--verbose", action="append_const", const=1, dest="verbosity"
+        "-v",
+        "--verbose",
+        action="append_const",
+        const=1,
+        dest="verbosity",
     )
     opt, _ = parser.parse_known_args()
     opt.verbosity = 0 if opt.verbosity is None else sum(opt.verbosity)
     if opt.verbosity:
         log_level = logging.INFO if opt.verbosity == 1 else logging.DEBUG
         logging.getLogger().setLevel(log_level)
-        logging.log(level=log_level, msg=f"Reconfigured logging level to {log_level}")
+        msg = f"Reconfigured logging level to {log_level}"
+        logging.log(level=log_level, msg=msg)
 
     existing_commands = []
     for command_info in app.registered_commands:
         command = typer.main.get_command_from_info(
-            command_info, pretty_exceptions_short=False, rich_markup_mode="rich"
+            command_info,
+            pretty_exceptions_short=False,
+            rich_markup_mode="rich",
         )
         existing_commands.append(command.name)
 
     # command = get_command_from_info(command_info=command_info)
 
-    action_map: Dict[str, Any] = {}
+    action_map: dict[str, Any] = {}
     for action in ctx.runner.actions:
         # Currently we rename action that overlap but in the future we may
         # want to allow one to shadow others or we may want to chain them
@@ -135,9 +156,9 @@ def cli() -> None:
         for x, action in action_map.items():
             alias = x[0:alias_len]
             # pylint: disable=consider-iterating-dictionary
-            if alias in action_map.keys():
+            if alias in action_map:
                 continue
-            if sum(1 for name in action_map.keys() if name.startswith(alias)) == 1:
+            if sum(1 for name in action_map if name.startswith(alias)) == 1:
                 app.command(
                     name=alias,
                     short_help=f"Alias for [dim]mk {x}[/dim]",

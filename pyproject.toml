@@ -85,6 +85,13 @@ show_missing = true
 [tool.isort]
 profile = "black"
 
+[tool.mypy]
+python_version = 3.9
+strict = true
+color_output = true
+error_summary = true
+no_incremental = true
+
 [tool.pylint."MESSAGES CONTROL"]
 # increase from default is 50 which is too aggressive
 max-statements = 60
@@ -102,6 +109,41 @@ disable = [
   "not-an-iterable",
   "too-few-public-methods",
 ]
+
+[tool.ruff]
+ignore = [
+  # temporary disabled until we fix them:
+  "ANN",
+  "B",
+  "T",
+  "D",
+  "E",
+  "PT",
+  "ERA",
+  "PTH",
+  "C901",
+  "ARG",
+  "FBT",
+  "SIM",
+  "PGH",
+  "TCH",
+  "PLR",
+  "INP",
+  "RET",
+]
+select = ["ALL"]
+target-version = "py39"
+# Same as Black.
+line-length = 88
+
+[tool.ruff.flake8-pytest-style]
+parametrize-values-type = "tuple"
+
+[tool.ruff.isort]
+known-first-party = ["mk"]
+
+[tool.ruff.per-file-ignores]
+"test/**/*.py" = ["S"]
 
 [tool.setuptools.dynamic]
 optional-dependencies.test = { file = [".config/requirements-test.txt"] }

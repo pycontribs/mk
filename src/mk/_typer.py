@@ -29,5 +29,8 @@ class CustomTyper(typer.Typer):
         **kwargs,
     ):
         return super().command(
-            *args, cls=cls, context_settings=context_settings, **kwargs
+            *args,
+            cls=cls,
+            context_settings=context_settings,
+            **kwargs,
         )

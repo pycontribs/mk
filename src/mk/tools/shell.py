@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import glob
 import os
 from pathlib import Path
-from typing import List, Optional
 
 from mk.exec import run_or_fail
 from mk.tools import Action, Tool
@@ -10,15 +11,15 @@ from mk.tools import Action, Tool
 class ShellTool(Tool):
     name = "shell"
 
-    def run(self, action: Optional[Action] = None) -> None:
+    def run(self, action: Action | None = None) -> None:
         if action and action.filename:
             run_or_fail(f"./{action.filename}", tee=True)
 
     def is_present(self, path: Path) -> bool:
         return True
 
-    def actions(self) -> List[Action]:
-        actions: List[Action] = []
+    def actions(self) -> list[Action]:
+        actions: list[Action] = []
         exclude_list = ["setup.py"]
         for filename in [
             *glob.glob("*"),
@@ -39,6 +40,6 @@ class ShellTool(Tool):
                         description=f"[dim]./{filename}[/dim]",
                         tool=self,
                         filename=filename,
-                    )
+                    ),
                 )
         return actions
