@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import os
 import re
 from pathlib import Path
-from typing import List, Optional
 
 from mk.exec import run_or_fail
 from mk.tools import Action, Tool
@@ -10,11 +11,11 @@ from mk.tools import Action, Tool
 class MakeTool(Tool):
     name = "make"
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(self)
-        self.makefile = None
+        self.makefile: str | None = None
 
-    def run(self, action: Optional[Action] = None) -> None:
+    def run(self, action: Action | None = None) -> None:
         cmd = ["make"]
         if action:
             cmd.append(action.name)
@@ -28,10 +29,12 @@ class MakeTool(Tool):
                 return True
         return False
 
-    def actions(self) -> List[Action]:
+    def actions(self) -> list[Action]:
         actions = []
-
-        with open(self.makefile, "r", encoding="utf-8") as file:
+        if not self.makefile:
+            msg = "Makefile not found"
+            raise RuntimeError(msg)
+        with open(self.makefile, encoding="utf-8") as file:
             for line in file.readlines():
                 # Current implementation assumes that descriptions are added
                 # using double ## after the target name.
@@ -40,6 +43,6 @@ class MakeTool(Tool):
                 if match:
                     target, description = match.groups()
                     actions.append(
-                        Action(name=target, tool=self, description=description)
+                        Action(name=target, tool=self, description=description),
                     )
         return actions

@@ -5,7 +5,6 @@ import logging
 import shutil
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 from mk.ctx import ctx
 from mk.exec import fail, run_or_fail
@@ -15,14 +14,15 @@ from mk.tools import Action, Tool
 class GitTool(Tool):
     name = "git"
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(self)
 
-    def run(self, action: Optional[Action] = None) -> None:
+    def run(self, action: Action | None = None) -> None:
         if action and action.name == "up":
             self.up()
         else:
-            raise NotImplementedError(f"Action {action} is not supported.")
+            msg = f"Action {action} is not supported."
+            raise NotImplementedError(msg)
 
     def is_present(self, path: Path) -> bool:
         if not shutil.which("gh"):
@@ -30,8 +30,8 @@ class GitTool(Tool):
             return False
         return True
 
-    def actions(self) -> List[Action]:
-        actions: List[Action] = []
+    def actions(self) -> list[Action]:
+        actions: list[Action] = []
         if ctx.runner.branch not in ["main", "master"]:
             if self.is_present(self.path):
                 actions.append(
@@ -39,11 +39,11 @@ class GitTool(Tool):
                         name="up",
                         description="Upload current change by creating or updating a CR/PR.",
                         tool=self,
-                    )
+                    ),
                 )
         else:
             logging.info(
-                "Not adding 'up' action as it does not work when current branch is main/master"
+                "Not adding 'up' action as it does not work when current branch is main/master",
             )
         return actions
 
@@ -68,7 +68,7 @@ class GitTool(Tool):
             remotes = {r.name for r in repo.remotes}
             if not {"origin", "upstream"}.issubset(remotes):
                 logging.debug(
-                    "Assuring you have two remotes, your fork as [blue]origin[/] and [blue]upstream[/]"
+                    "Assuring you have two remotes, your fork as [blue]origin[/] and [blue]upstream[/]",
                 )
                 run_or_fail(["gh", "repo", "fork", "--remote=true"], tee=True)
                 remotes = {r.name for r in repo.remotes}
@@ -82,7 +82,8 @@ class GitTool(Tool):
 
             logging.debug("Doing a git push")
             run_or_fail(
-                ["git", "push", "--force-with-lease", "-u", "origin", "HEAD"], tee=False
+                ["git", "push", "--force-with-lease", "-u", "origin", "HEAD"],
+                tee=False,
             )
 
             # github for the moment
@@ -91,7 +92,7 @@ class GitTool(Tool):
             # --web option is of not use because it happens too soon, confusing github
             logging.debug("Tryging to detect if there are existing PRs open")
             result = run_or_fail(
-                ["gh", "pr", "list", "-S", f"head:{repo.active_branch}"]
+                ["gh", "pr", "list", "-S", f"head:{repo.active_branch}"],
             )
             if result.returncode == 0:
                 pr_list = []
@@ -118,7 +119,8 @@ class GitTool(Tool):
                     logging.debug(result.stdout)
                 elif len(pr_list) == 1:
                     logging.debug(
-                        "PR #%s already exists, no need to create new one.", pr_list[0]
+                        "PR #%s already exists, no need to create new one.",
+                        pr_list[0],
                     )
                 else:
                     logging.warning(

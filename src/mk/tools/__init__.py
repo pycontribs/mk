@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any
 
 
 @dataclass(order=True)
@@ -8,11 +10,11 @@ class Action:
     name: str
     _name: str = field(default="undefined", init=False, compare=True, repr=False)
 
-    tool: Optional["Tool"] = field(default=None, compare=False)
-    description: Optional[str] = field(default="...", compare=False)
-    cwd: Optional[str] = field(default=None, compare=False)
-    filename: Optional[str] = field(default=None, compare=False)
-    args: Optional[List[Any]] = field(default_factory=list, compare=False)
+    tool: Tool | None = field(default=None, compare=False)
+    description: str | None = field(default="...", compare=False)
+    cwd: str | None = field(default=None, compare=False)
+    filename: str | None = field(default=None, compare=False)
+    args: list[Any] | None = field(default_factory=list, compare=False)
 
     # https://github.com/florimondmanca/www/issues/102#issuecomment-817279834
     @property  # type: ignore
@@ -39,13 +41,13 @@ class Tool:
         """Return True if the tool configuration is present in the given path."""
         return False
 
-    def actions(self) -> List[Action]:
+    def actions(self) -> list[Action]:
         return []
 
-    def run(self, action: Optional[Action] = None):
+    def run(self, action: Action | None = None):
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.name
 
     def __rich__(self):

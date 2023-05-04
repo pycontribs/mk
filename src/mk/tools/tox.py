@@ -1,4 +1,6 @@
 """Implementation of the tox tool support."""
+from __future__ import annotations
+
 import logging
 import os
 import re
@@ -6,7 +8,6 @@ import shlex
 import sys
 from configparser import ConfigParser, ParsingError
 from pathlib import Path
-from typing import List, Optional
 
 from mk.exec import run_or_fail
 from mk.text import strip_ansi_escape
@@ -21,9 +22,9 @@ class ToxTool(Tool):
             return True
         return False
 
-    def actions(self) -> List[Action]:
+    def actions(self) -> list[Action]:
         # -a is not supported by tox4!
-        actions: List[Action] = []
+        actions: list[Action] = []
         cp = ConfigParser(strict=False, interpolation=None)
         env_overrides = {"PY_COLORS": "0"}
         result = run_or_fail(
@@ -36,7 +37,10 @@ class ToxTool(Tool):
         # workaround for https://github.com/tox-dev/tox/issues/2030
         # we remove all lines starting with .tox from output
         tox_cfg = re.sub(
-            r"^\.tox[^\r\n]*\n$", "", strip_ansi_escape(tox_cfg), re.MULTILINE
+            r"^\.tox[^\r\n]*\n$",
+            "",
+            strip_ansi_escape(tox_cfg),
+            re.MULTILINE,
         )
 
         # now tox_cfg should have a valid ini content
@@ -44,7 +48,8 @@ class ToxTool(Tool):
             cp.read_string(tox_cfg)
         except ParsingError:
             logging.fatal(
-                "Unable to parse tox output from command: %s", shlex.join(result.args)
+                "Unable to parse tox output from command: %s",
+                shlex.join(result.args),
             )
             print(tox_cfg, file=sys.stderr)
             sys.exit(22)
@@ -59,14 +64,11 @@ class ToxTool(Tool):
                             tool=self,
                             description=cp[section]["description"],
                             args=[env_name],
-                        )
+                        ),
                     )
 
         return actions
 
-    def run(self, action: Optional[Action] = None) -> None:
-        if not action:
-            cmd = ["tox"]
-        else:
-            cmd = ["tox", "-e", action.name]
+    def run(self, action: Action | None = None) -> None:
+        cmd = ["tox"] if not action else ["tox", "-e", action.name]
         run_or_fail(cmd, tee=True)
