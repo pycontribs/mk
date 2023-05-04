@@ -12,6 +12,7 @@ py
 py-devel
 schemas
 test
+test-hook
 test-setup
 uninstall
 update-version

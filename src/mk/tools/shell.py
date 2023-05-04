@@ -12,7 +12,7 @@ class ShellTool(Tool):
 
     def run(self, action: Optional[Action] = None) -> None:
         if action and action.filename:
-            run_or_fail(action.filename, tee=True)
+            run_or_fail(f"./{action.filename}", tee=True)
 
     def is_present(self, path: Path) -> bool:
         return True
