@@ -5,6 +5,7 @@ click >= 7.1.2
 colorama  # for Windows
 diskcache >= 5.2.1
 importlib-metadata
+packaging
 pip>=21.0.1  # py_package
 pluggy
 pygments

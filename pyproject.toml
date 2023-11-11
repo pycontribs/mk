@@ -58,6 +58,7 @@ pre-commit = "mk.tools.pre_commit:PreCommitTool"
 shell = "mk.tools.shell:ShellTool"
 taskfile = "mk.tools.taskfile:TaskfileTool"
 tox = "mk.tools.tox:ToxTool"
+nox = "mk.tools.nox:NoxTool"
 
 [tool.black]
 
