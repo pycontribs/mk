@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-  "setuptools >= 63.0.0", # required by pyproject+setuptools_scm integration
+  "setuptools >= 63.0.0",          # required by pyproject+setuptools_scm integration
   "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
 
 ]
@@ -50,6 +50,7 @@ mk = "mk.__main__:cli"
 ansible = "mk.tools.ansible:AnsibleTool"
 cmake = "mk.tools.cmake:CMakeTool"
 git = "mk.tools.git:GitTool"
+just = "mk.tools.just:JustTool"
 make = "mk.tools.make:MakeTool"
 node = "mk.tools.node:NodeTool"
 pypackage = "mk.tools.py_package:PyPackageTool"
@@ -97,7 +98,7 @@ no_incremental = true
 max-statements = 60
 disable = [
   # Disabled on purpose (explain in comment)
-  "line-too-long", # black managed
+  "line-too-long",         # black managed
   "wrong-import-position", # isort managed
   # TODO(ssbarnea): remove temporary skips adding during initial adoption:
   "dangerous-default-value",
