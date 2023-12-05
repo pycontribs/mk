@@ -19,6 +19,8 @@
         url: https://github.com/python/typeshed.git
       - name: flask-babel
         url: https://github.com/python-babel/flask-babel.git
+      - name: just
+        url: https://github.com/casey/just
   tasks:
     - name: Show cache directory
       ansible.builtin.debug:
