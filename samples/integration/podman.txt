@@ -1,5 +1,6 @@
 binaries
 binaries2
+binaries23
 clean
 clean-binaries
 docker
@@ -8,8 +9,7 @@ help
 install
 lint
 local-cross
-package
-package-install
 podman-mac-helper
+rpm
+rpm-install
 test
-up

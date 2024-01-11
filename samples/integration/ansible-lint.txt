@@ -1,6 +1,7 @@
 build
 docs
 eco
+generate_docs
 get-version
 hook
 install
@@ -8,10 +9,12 @@ install-reqs
 lint
 lint2
 pkg
+pre
 py
 py-devel
 schemas
 test
+test-eco
 test-hook
 test-setup
 uninstall
