@@ -97,8 +97,9 @@ class GitTool(Tool):
             if result.returncode == 0:
                 pr_list = []
                 if result.stdout:
-                    for line in result.stdout.splitlines():
-                        pr_list.append(line.split("\t")[0])
+                    pr_list = [
+                        line.split("\t")[0] for line in result.stdout.splitlines()
+                    ]
                 if len(pr_list) == 0:
                     logging.debug("Existing PR not found, creating one.")
                     commit = repo.head.commit

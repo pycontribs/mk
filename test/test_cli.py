@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import os
 import re
 import runpy
-from typing import Optional
 
 import pytest
 from subprocess_tee import run
@@ -39,7 +40,7 @@ def test_completion_speed(benchmark, monkeypatch) -> None:
     # monkeypatch.setenv("_MK_COMPLETE", "complete_zsh")
     # monkeypatch.setenv("_TYPER_COMPLETE_ARGS", "c")
 
-    def do_complete() -> Optional[int]:
+    def do_complete() -> int | None:
         # shell execution can add considerable extra time that varies from
         # system to system. We only benchmark our own module execution time
         try:
