@@ -34,7 +34,7 @@ jobs:
         id: generate_matrix
         uses: coactions/dynamic-matrix@v1
         with:
-          min_python: "3.8"
+          min_python: "3.9"
           max_python: "3.12"
           other_names: |
             lint
