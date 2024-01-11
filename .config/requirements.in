@@ -10,6 +10,7 @@ pluggy
 pygments
 pyyaml
 rich >= 9.0
+setuptools  # py_package due to running setup.py
 shellingham
 subprocess-tee >= 0.3.1
 tomli >= 1.1.0 ; python_version < "3.11"

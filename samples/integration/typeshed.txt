@@ -1,4 +1,5 @@
 create_baseline_stubs
 generate_proto_stubs
 lint
+runtests
 sync_tensorflow_protobuf_stubs
