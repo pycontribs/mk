@@ -20,16 +20,29 @@ class TaskfileTool(Tool):
         self.executable = ""
 
     def is_present(self, path: Path) -> bool:
-        if os.path.isfile(os.path.join(path, "taskfile.yml")):
-            # On some Linux distros might be exposed as taskfile in order to
-            # avoid clashing with the other Task Warrior executable https://taskwarrior.org/
-            self.executable = shutil.which("taskfile") or shutil.which("task") or ""
-            if not self.executable:
-                logging.error(
-                    "taskfile.yml config found but the tool is not installed. See https://taskfile.dev/installation/",
-                )
-                sys.exit(1)
-            return True
+        valid_taskfiles = [
+            "Taskfile.yml"
+            "taskfile.yml"
+            "Taskfile.yaml"
+            "taskfile.yaml"
+            "Taskfile.dist.yml"
+            "taskfile.dist.yml"
+            "Taskfile.dist.yaml"
+            "taskfile.dist.yaml",
+        ]
+
+        for taskfile in valid_taskfiles:
+            if os.path.isfile(os.path.join(path, taskfile)):
+                # On some Linux distros might be exposed as taskfile in order to
+                # avoid clashing with the other Task Warrior executable https://taskwarrior.org/
+                self.executable = shutil.which(taskfile) or shutil.which("task") or ""
+                if not self.executable:
+                    logging.error(
+                        "%s config found but the tool is not installed. See https://taskfile.dev/installation/",
+                        taskfile,
+                    )
+                    sys.exit(1)
+                return True
         return False
 
     def actions(self) -> list[Action]:
