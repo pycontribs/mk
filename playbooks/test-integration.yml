@@ -11,7 +11,6 @@
     repos:
       - name: podman
         url: https://github.com/containers/podman
-        branch: my-branch
       - name: ansible-lint
         url: https://github.com/ansible/ansible-lint
       - name: cookiecutter
