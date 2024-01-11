@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-  "setuptools >= 63.0.0", # required by pyproject+setuptools_scm integration
+  "setuptools >= 65.3.0", # required by pyproject+setuptools_scm integration
   "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
 
 ]
@@ -29,6 +29,7 @@ classifiers = [
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python",
   "Topic :: Software Development :: Quality Assurance",
