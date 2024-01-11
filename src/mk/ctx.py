@@ -1,11 +1,11 @@
-from typing import Optional
+from __future__ import annotations
 
 from mk.runner import Runner
 
 
 class Context:
     def __init__(self) -> None:
-        self._runner: Optional[Runner] = None
+        self._runner: Runner | None = None
 
     @property
     def runner(self) -> Runner:
