@@ -1,7 +1,6 @@
 GitPython
 build>=0.3.1.post1  # py_package
 diskcache >= 5.2.1
-importlib-metadata
 packaging
 pip>=21.0.1  # py_package
 pluggy
