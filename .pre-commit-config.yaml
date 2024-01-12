@@ -3,13 +3,13 @@ ci:
   skip: [markdownlint_docker]
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.0.264"
+    rev: "v0.1.11"
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
   - repo: https://github.com/pre-commit/mirrors-prettier
     # keep it before yamllint
-    rev: v3.0.0-alpha.9-for-vscode
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
         always_run: true
@@ -22,12 +22,12 @@ repos:
     hooks:
       - id: markdownlint_docker
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 23.12.1
     hooks:
       - id: black
         args: [--safe]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
@@ -38,18 +38,18 @@ repos:
       - id: debug-statements
         language_version: python3
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.31.0
+    rev: v1.33.0
     hooks:
       - id: yamllint
         files: \.(yaml|yml)$
         types: [file, yaml]
         entry: yamllint --strict
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.2.0
+    rev: v1.8.0
     hooks:
       - id: mypy
         # mypy args needed in order to match mypy cli behavior
-        args: ["--python-version", "3.8"]
+        args: ["--python-version", "3.9"]
         entry: mypy src/
         pass_filenames: false
         additional_dependencies:
@@ -61,7 +61,7 @@ repos:
           - subprocess-tee
           - typer>=0.7.0
   - repo: https://github.com/pycqa/pylint
-    rev: v3.0.0a6
+    rev: v3.0.3
     hooks:
       - id: pylint
         additional_dependencies:
