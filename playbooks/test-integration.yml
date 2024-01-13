@@ -19,8 +19,6 @@
         url: https://github.com/python/typeshed.git
       - name: flask-babel
         url: https://github.com/python-babel/flask-babel.git
-      - name: just
-        url: https://github.com/casey/just
       - name: nox
         url: https://github.com/wntrblm/nox
   tasks:

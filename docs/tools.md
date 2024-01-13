@@ -10,6 +10,13 @@ the command will not be exposed, as we assume that this is an internal target.
 A good example of a project using this pattern is
 [podman](https://github.com/containers/podman).
 
+## Justfile
+
+If a [justfile](https://github.com/casey/just/tree/master/examples) is found on
+the repository root, the tool will expose all its targets that have a trailing
+comment with a double hash - `## <description>`. If the comment is not found,
+the command will not be exposed, as we assume that this is an internal target.
+
 ## npm
 
 If a [package.json](https://docs.npmjs.com/cli/v7/configuring-npm/package-json)
