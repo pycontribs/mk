@@ -1,15 +1,9 @@
 GitPython
-blessings
 build>=0.3.1.post1  # py_package
-click >= 7.1.2
-colorama  # for Windows
 diskcache >= 5.2.1
-importlib-metadata
 packaging
 pip>=21.0.1  # py_package
 pluggy
-pygments
-pyyaml
 rich >= 9.0
 setuptools  # py_package due to running setup.py
 shellingham
