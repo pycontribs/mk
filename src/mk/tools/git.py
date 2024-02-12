@@ -1,4 +1,5 @@
 """Expose features related to git repositories."""
+
 from __future__ import annotations
 
 import logging
