@@ -1,4 +1,5 @@
 """Wrappers for loading different configuration files."""
+
 from pathlib import Path
 
 try:

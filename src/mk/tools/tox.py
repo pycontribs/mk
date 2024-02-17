@@ -1,4 +1,5 @@
 """Implementation of the tox tool support."""
+
 from __future__ import annotations
 
 import logging

@@ -1,4 +1,5 @@
 """init code of mk module."""
+
 from importlib.metadata import PackageNotFoundError, version
 
 try:
