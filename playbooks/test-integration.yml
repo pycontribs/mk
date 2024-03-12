@@ -32,6 +32,7 @@
         dest: "{{ (cache_dir, item.name) | path_join }}"
         update: true
         version: HEAD
+        force: true
       loop: "{{ repos }}"
 
     - name: Create new branch if needed # noqa: command-instead-of-shell

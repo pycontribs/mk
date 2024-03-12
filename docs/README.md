@@ -19,8 +19,8 @@ Run `mk` inside any cloned repository to display which options you have. No
 configuration file is needed as the tool will look for common tools used by the
 repository and expose their commands.
 
-`mk` is inspired by tools as [make](make), [waf](waf), [taskfile](taskfile),
-[tox](tox), [npm](npm), [yarn](yarn) and [pre-commit](pre-commit), but **it does
+`mk` is inspired by tools such [make][make], [waf][waf], [taskfile][taskfile],
+[tox][tox], [npm][npm], [yarn][yarn] and [pre-commit][pre-commit], but **it does
 not aim to replace them**. Instead, it aims to provide a unified interface for
 calling them that is friendly even for those that never used these tools.
 
