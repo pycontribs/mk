@@ -46,6 +46,7 @@ jobs:
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os || 'ubuntu-22.04' }}
+    environment: test
     needs: pre
     defaults:
       run:
@@ -99,14 +100,14 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           name: ${{ matrix.passed_name }}
-          fail_ci_if_error: false # see https://github.com/codecov/codecov-action/issues/598
+          fail_ci_if_error: true # see https://github.com/codecov/codecov-action/issues/598
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true # optional (default = false)
 
       - name: Archive logs
         uses: actions/upload-artifact@v4
         with:
-          name: logs.zip
+          name: logs-${{ matrix.name }}.zip
           path: .tox/**/log/
         # https://github.com/actions/upload-artifact/issues/123
         continue-on-error: true
