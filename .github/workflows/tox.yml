@@ -28,8 +28,9 @@ jobs:
         id: generate_matrix
         uses: coactions/dynamic-matrix@v1
         with:
-          min_python: "3.9"
-          max_python: "3.12"
+          min_python: "3.10"
+          default_python: "3.10"
+          max_python: "3.13"
           other_names: |
             lint
             docs
@@ -64,12 +65,12 @@ jobs:
           sudo apt-get update \
           && sudo apt-get install -y libvirt-dev zsh
 
-      - name: Set up Python ${{ matrix.python_version || '3.9' }}
+      - name: Set up Python ${{ matrix.python_version || '3.10' }}
         if: "!contains(matrix.shell, 'wsl')"
         uses: actions/setup-python@v5
         with:
           cache: pip
-          python-version: ${{ matrix.python_version || '3.9' }}
+          python-version: ${{ matrix.python_version || '3.10' }}
 
       - name: Install tox
         run: |
@@ -145,7 +146,7 @@ jobs:
 
       - name: Check for expected number of coverage.xml reports
         run: |
-          JOBS_PRODUCING_COVERAGE=4
+          JOBS_PRODUCING_COVERAGE=6
           if [ "$(find . -name coverage.xml | wc -l | bc)" -ne "${JOBS_PRODUCING_COVERAGE}" ]; then
             echo "::error::Number of coverage.xml files was not the expected one (${JOBS_PRODUCING_COVERAGE}): $(find . -name coverage.xml |xargs echo)"
             exit 1
