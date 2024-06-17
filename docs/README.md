@@ -1,7 +1,7 @@
 # Documentation of mk tool
 
-`mk` is a CLI tool that aims to ease contribution to any open-source project by
-hiding repository implementation details from the casual contributor. With it,
+`mk` is a CLI tool that aims to ease contribution and maintenance for projects
+by hiding repository implementation details from the casual contributor. With it,
 you can contribute without having to know all the build and testing tools that
 the project team already uses, which often have strange requirements.
 

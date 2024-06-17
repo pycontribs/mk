@@ -10,6 +10,8 @@ jobs:
     name: Publish to PyPI registry
     environment: release
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
 
     env:
       FORCE_COLOR: 1
@@ -17,10 +19,10 @@ jobs:
       TOXENV: pkg
 
     steps:
-      - name: Switch to using Python 3.9 by default
+      - name: Switch to using Python 3.10 by default
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: "3.10"
 
       - name: Install tox
         run: python3 -m pip install --user "tox>=4.0.0"
@@ -32,11 +34,9 @@ jobs:
           submodules: true
 
       - name: Build dists
-        run: python -m tox
+        run: python3 -m tox
 
       - name: Publish to pypi.org
         if: >- # "create" workflows run separately from "push" & "pull_request"
           github.event_name == 'release'
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.pypi_password }}
