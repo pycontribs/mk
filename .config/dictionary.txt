@@ -10,6 +10,7 @@ Sorin
 autorefs
 basepython
 cairosvg
+clib
 codenotify
 codespell
 configfile
@@ -23,6 +24,7 @@ envname
 facelessuser
 fontawesome
 gerrit
+gitpython
 gitreview
 hashseed
 htmlproofer
@@ -49,7 +51,10 @@ pymdown
 pymdownx
 pypa
 pypackage
+resolvelib
+ruamel
 setenv
+shellingham
 showconfig
 showlocals
 ssbarnea
@@ -62,3 +67,4 @@ toxinidir
 typer
 typeshed
 usedevelop
+wcmatch
