@@ -13,6 +13,7 @@ rules:
   comments:
     # prettier compatibility
     min-spaces-from-content: 1
+  comments-indentation: false
   document-start:
     present: true
   line-length: disable
@@ -20,4 +21,4 @@ rules:
     forbid-implicit-octal: true
     forbid-explicit-octal: true
   truthy:
-    allowed-values: ['true', 'false', 'on']
+    check-keys: false

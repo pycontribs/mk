@@ -1,14 +1,16 @@
 ---
 ci:
-  skip: [markdownlint_docker]
+  skip:
+    - markdownlint_docker
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.4.9"
+    rev: v0.4.9
     hooks:
       - id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
+        args:
+          - --fix
+          - --exit-non-zero-on-fix
   - repo: https://github.com/pre-commit/mirrors-prettier
-    # keep it before yamllint
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
@@ -17,6 +19,14 @@ repos:
           - prettier
           - prettier-plugin-toml
           - prettier-plugin-sort-json
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v8.8.2
+    hooks:
+      - id: cspell
+        # entry: codespell --relative
+        args: [--relative, --no-progress, --no-summary]
+        name: Spell check with cspell
+
   - repo: https://github.com/markdownlint/markdownlint.git
     rev: v0.12.0
     hooks:
@@ -25,7 +35,8 @@ repos:
     rev: 24.4.2
     hooks:
       - id: black
-        args: [--safe]
+        args:
+          - --safe
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
@@ -37,19 +48,25 @@ repos:
       - id: check-merge-conflict
       - id: debug-statements
         language_version: python3
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v24.6.0
+    hooks:
+      - id: ansible-lint
+        args: [--fix]
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.35.1
     hooks:
       - id: yamllint
         files: \.(yaml|yml)$
-        types: [file, yaml]
+        types:
+          - file
+          - yaml
         entry: yamllint --strict
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.10.0
     hooks:
       - id: mypy
-        # mypy args needed in order to match mypy cli behavior
-        args: ["--python-version", "3.10"]
+        args: [--python-version, "3.10"]
         entry: mypy src/
         pass_filenames: false
         additional_dependencies:
