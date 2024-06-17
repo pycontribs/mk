@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 # https://peps.python.org/pep-0621/#readme
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dynamic = ["version", "dependencies", "optional-dependencies"]
 name = "mk"
 description = "mk"
@@ -24,10 +24,10 @@ classifiers = [
   "Operating System :: MacOS",
   "Operating System :: POSIX",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python",
   "Topic :: Software Development :: Quality Assurance",
@@ -90,7 +90,7 @@ concurrency = ["multiprocessing", "thread"]
 profile = "black"
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 strict = true
 color_output = true
 error_summary = true
@@ -115,7 +115,7 @@ disable = [
 ]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 # Same as Black.
 line-length = 88
 lint.ignore = [
