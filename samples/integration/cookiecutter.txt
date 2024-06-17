@@ -24,6 +24,7 @@ sdist
 servedocs
 submodules
 test
+test2
 test-all
 uninstall
 wheel

@@ -8,6 +8,7 @@ install
 install-reqs
 lint
 lint2
+lower
 pkg
 pre
 py

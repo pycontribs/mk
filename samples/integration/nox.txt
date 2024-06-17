@@ -1,8 +1,5 @@
 build
-conda_tests-3.10
-conda_tests-3.7
-conda_tests-3.8
-conda_tests-3.9
+conda_tests
 cover
 docs
 install
@@ -15,7 +12,6 @@ tests(python='3.11', tox_version='<4')
 tests(python='3.11', tox_version='latest')
 tests(python='3.12', tox_version='<4')
 tests(python='3.12', tox_version='latest')
-tests(python='3.7', tox_version='<4')
 tests(python='3.8', tox_version='<4')
 tests(python='3.8', tox_version='latest')
 tests(python='3.9', tox_version='<4')
