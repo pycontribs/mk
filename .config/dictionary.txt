@@ -7,9 +7,11 @@ PYTHONPYCACHEPREFIX
 REQPASS
 Sbarnea
 Sorin
+autohide
 autorefs
 basepython
 cairosvg
+cidrblock
 clib
 codenotify
 codespell
@@ -21,6 +23,7 @@ distros
 envdir
 envlist
 envname
+exceptiongroup
 facelessuser
 fontawesome
 gerrit
@@ -29,6 +32,7 @@ gitreview
 hashseed
 htmlproofer
 inlinehilite
+jeepney
 linejoin
 linenums
 magiclink
@@ -53,15 +57,18 @@ pypa
 pypackage
 resolvelib
 ruamel
+secretstorage
 setenv
 shellingham
 showconfig
 showlocals
 ssbarnea
 superfences
+tablerender
 taskfile
 taskfiles
 testenv
+timeago
 toxenv
 toxinidir
 typer
