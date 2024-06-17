@@ -6,5 +6,6 @@ The only supported version is the latest release.
 
 ## Reporting a Vulnerability
 
-Send an email to sorin.sbarnea@gmail.com if you found any security
-vulnerability that is better to not have a public bug raise right away.
+Use [github reporting](https://github.com/pycontribs/mk/security) if you
+found any security vulnerability that is better to not have a public bug raised
+right away.

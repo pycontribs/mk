@@ -12,6 +12,6 @@ report.html
 site
 src/mk.egg-info
 src/mk/_version.py
-.coverage
+.coverage*
 coverage.xml
 CMakeFiles
