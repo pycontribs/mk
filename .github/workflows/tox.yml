@@ -36,6 +36,7 @@ jobs:
             docs
             integration
             pkg
+            lower
 
           platforms: linux,macos
   build:
