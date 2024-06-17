@@ -20,9 +20,10 @@ configuration file is needed as the tool will look for common tools used by the
 repository and expose their commands.
 
 `mk` is inspired by tools such [make][make], [waf][waf], [taskfile][taskfile],
-[tox][tox], [npm][npm], [yarn][yarn] and [pre-commit][pre-commit], but **it does
-not aim to replace them**. Instead, it aims to provide a unified interface for
-calling them that is friendly even for those that never used these tools.
+[tox][tox], [nox][nox], [npm][npm], [yarn][yarn] and [pre-commit][pre-commit],
+but **it does not aim to replace them**. Instead, it aims to provide a unified
+interface for calling them that is friendly even for those that never used
+these tools.
 
 ## Installation
 
@@ -101,7 +102,7 @@ status or that the testing did not leave untracked files.
   unknown. (#20)
 - Configuration file where additional actions can be added. (#21)
 - Dependencies between commands. While some tools support dependencies, many do
-  not. You should be able to declare that a specific command would run only
+  not. You should be able to declare that a specific command will run only
   after another one already passed. (#22)
 - Ability to generate CI/CD pipelines so the user would spend less time writing
   non-portable configurations. (#23)
