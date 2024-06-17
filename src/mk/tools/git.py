@@ -77,7 +77,7 @@ class GitTool(Tool):
                 fail("Failed to create upstream")
 
             if tracking_branch is None:
-                logging.debug("We do not have atracking branch")
+                logging.debug("We do not have a tracking branch")
             else:
                 logging.debug("Performing a git push")
 
@@ -91,7 +91,7 @@ class GitTool(Tool):
             # https://github.com/cli/cli/issues/1718
 
             # --web option is of not use because it happens too soon, confusing github
-            logging.debug("Tryging to detect if there are existing PRs open")
+            logging.debug("Trying to detect if there are existing PRs open")
             result = run_or_fail(
                 ["gh", "pr", "list", "-S", f"head:{repo.active_branch}"],
             )

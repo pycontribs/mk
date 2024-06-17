@@ -1,0 +1,4 @@
+---
+exclude_paths:
+  - .cache/ # implicit unless exclude_paths is defined in config
+  - mkdocs.yml # https://github.com/ansible/ansible-lint/issues/4222

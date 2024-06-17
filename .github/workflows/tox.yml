@@ -4,10 +4,10 @@ name: tox
 on:
   push: # only publishes pushes to the main branch to TestPyPI
     branches: # any integration branch but not tag
-      - "main"
+      - main
   pull_request:
     branches:
-      - "main"
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
@@ -105,8 +105,7 @@ jobs:
             printf '### Failed as git reported modified and/or untracked files\n```\n%s\n```\n' "$(git status -s)" | tee -a "$GITHUB_STEP_SUMMARY"
             exit 99
           fi
-        # https://github.com/actions/toolkit/issues/193
-
+  # https://github.com/actions/toolkit/issues/193
   check: # This job does nothing and is only used for the branch protection
     if: always()
     permissions:

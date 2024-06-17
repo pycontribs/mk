@@ -11,7 +11,7 @@ extra_css:
   - stylesheets/extra.css
 
 theme:
-  name: "material"
+  name: material
   custom_dir: docs/.overrides
   logo: images/logo.svg
   favicon: images/favicon.ico
