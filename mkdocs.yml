@@ -3,7 +3,7 @@ site_name: mk tool documentation
 site_url: https://mk.readthedocs.io/
 repo_url: https://github.com/pycontribs/mk
 edit_uri: blob/main/docs/
-copyright: Copyright © 2021-2023 Sorin Sbarnea
+copyright: Copyright © Sorin Sbarnea
 docs_dir: docs
 strict: true
 
@@ -17,13 +17,27 @@ theme:
   favicon: images/favicon.ico
   features:
     - announce.dismiss
-    - content.code.copy
     - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+    - content.tooltips
+    - header.autohide
     - navigation.expand
-    - navigation.sections
-    - navigation.instant
+    - navigation.footer
     - navigation.indexes
+    - navigation.instant
+    - navigation.path
+    - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
     - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
     - toc.integrate
   palette:
     # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
@@ -60,10 +74,12 @@ plugins:
   - autorefs
   - markdown-exec
   - search
-  - social
-  - tags
+  - material/social
+  - material/tags
   # https://github.com/manuzhang/mkdocs-htmlproofer-plugin
-  - htmlproofer
+  - htmlproofer:
+      raise_error_excludes:
+        404: ["https://github.com/*/security/*"]
 
 markdown_extensions:
   - admonition

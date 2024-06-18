@@ -1,0 +1,12 @@
+---
+repos:
+  - ansible/ansible-compat
+  - ansible/ansible-lint
+  - ansible/ansible-navigator
+  - ansible/ansible-creator
+  - ansible/molecule
+  - ansible/tox-ansible
+  - ansible/pytest-ansible
+  - ansible/ansible-development-environment
+  - ansible/ansible-dev-tools
+  - ansible/creator-ee

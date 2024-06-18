@@ -38,6 +38,7 @@ keywords = ["mk"]
 
 [project.scripts]
 mk = "mk.__main__:cli"
+pre = "mk.pre:app"
 
 [project.entry-points."mk_tools"]
 ansible = "mk.tools.ansible:AnsibleTool"
@@ -52,6 +53,7 @@ shell = "mk.tools.shell:ShellTool"
 taskfile = "mk.tools.taskfile:TaskfileTool"
 tox = "mk.tools.tox:ToxTool"
 nox = "mk.tools.nox:NoxTool"
+pre = "mk.tools.pre:PreTool"
 
 [project.urls]
 homepage = "https://github.com/pycontribs/mk"
@@ -95,6 +97,23 @@ strict = true
 color_output = true
 error_summary = true
 no_incremental = true
+
+[tool.pip-tools]
+no_annotate = true
+quiet = true
+
+[tool.pip-tools.compile]
+all_extras = true
+output_file = ".config/constraints.txt"
+strip_extras = true
+unsafe_package = [
+  "backports-tarfile",
+  "cryptography",
+  "exceptiongroup",
+  "jeepney",
+  "secretstorage",
+  "twine",
+]
 
 [tool.pylint."MESSAGES CONTROL"]
 # increase from default is 50 which is too aggressive
@@ -140,10 +159,10 @@ lint.ignore = [
 ]
 lint.select = ["ALL"]
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint.flake8-pytest-style]
 parametrize-values-type = "tuple"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["mk"]
 
 [tool.ruff.lint.per-file-ignores]

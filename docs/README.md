@@ -1,9 +1,9 @@
 # Documentation of mk tool
 
 `mk` is a CLI tool that aims to ease contribution and maintenance for projects
-by hiding repository implementation details from the casual contributor. With it,
-you can contribute without having to know all the build and testing tools that
-the project team already uses, which often have strange requirements.
+by hiding repository implementation details from the casual contributor. With
+it, you can contribute without having to know all the build and testing tools
+that the project team already uses, which often have strange requirements.
 
 ![mk-command-line-screenshot](images/mk-social-preview.png)
 
@@ -22,8 +22,8 @@ repository and expose their commands.
 `mk` is inspired by tools such [make][make], [waf][waf], [taskfile][taskfile],
 [tox][tox], [nox][nox], [npm][npm], [yarn][yarn] and [pre-commit][pre-commit],
 but **it does not aim to replace them**. Instead, it aims to provide a unified
-interface for calling them that is friendly even for those that never used
-these tools.
+interface for calling them that is friendly even for those that never used these
+tools.
 
 ## Installation
 
@@ -102,8 +102,8 @@ status or that the testing did not leave untracked files.
   unknown. (#20)
 - Configuration file where additional actions can be added. (#21)
 - Dependencies between commands. While some tools support dependencies, many do
-  not. You should be able to declare that a specific command will run only
-  after another one already passed. (#22)
+  not. You should be able to declare that a specific command will run only after
+  another one already passed. (#22)
 - Ability to generate CI/CD pipelines so the user would spend less time writing
   non-portable configurations. (#23)
 
