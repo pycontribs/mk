@@ -49,7 +49,7 @@ def drafts() -> None:
         result = run(
             f'gh api repos/{repo}/releases --jq "[.[] | select(.draft)"]',
             text=True,
-            shell=True,  # noqa: S602
+            shell=True,
             capture_output=True,
             check=True,
         )
@@ -107,7 +107,7 @@ def alerts() -> None:
         result = run(
             cmd,
             text=True,
-            shell=True,  # noqa: S602
+            shell=True,
             capture_output=True,
             check=False,
         )
