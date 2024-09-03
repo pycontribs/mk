@@ -1,10 +1,13 @@
+alerts
 build
 conda_tests
 cover
 docs
+drafts
 install
 lint
 lint2
+prs
 test
 tests(python='3.10', tox_version='<4')
 tests(python='3.10', tox_version='latest')

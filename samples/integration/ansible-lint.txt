@@ -1,5 +1,7 @@
+alerts
 build
 docs
+drafts
 eco
 generate_docs
 get-version
@@ -11,6 +13,7 @@ lint2
 lower
 pkg
 pre
+prs
 py
 py-devel
 schemas
