@@ -2,6 +2,7 @@ alerts
 binaries
 binaries2
 binaries23
+changelog
 clean
 clean-binaries
 docs

@@ -14,6 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   FORCE_COLOR: 1 # tox, pytest, ansible-lint
   PY_COLORS: 1
 

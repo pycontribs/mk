@@ -1,5 +1,6 @@
 alerts
 build
+changelog
 drafts
 install
 prs
