@@ -46,10 +46,10 @@ def drafts() -> None:
     """Pre helps you chain releases on github."""
     for repo in app.repos:
         repo_link = f"[markdown.link][link=https://github.com/{repo}]{repo}[/][/]"
-        result = run(
+        result = run(  # noqa: S602
             f'gh api repos/{repo}/releases --jq "[.[] | select(.draft)"]',
             text=True,
-            shell=True,  # noqa: S602
+            shell=True,
             capture_output=True,
             check=True,
         )
@@ -104,10 +104,10 @@ def alerts() -> None:
         cmd = "GH_PAGER= gh "
         cmd += f"api /repos/{repo}/dependabot/alerts"
         cmd += " --jq='.[] | select(.state!=\"fixed\") | .html_url'"
-        result = run(
+        result = run(  # noqa: S602
             cmd,
             text=True,
-            shell=True,  # noqa: S602
+            shell=True,
             capture_output=True,
             check=False,
         )
