@@ -35,7 +35,7 @@ class MakeTool(Tool):
             msg = "Makefile not found"
             raise RuntimeError(msg)
         with open(self.makefile, encoding="utf-8") as file:
-            for line in file.readlines():
+            for line in file:
                 # Current implementation assumes that descriptions are added
                 # using double ## after the target name.
                 # Inspired by https://github.com/containers/podman/blob/master/Makefile#L127
