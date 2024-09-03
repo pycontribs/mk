@@ -14,7 +14,7 @@ from rich.console import Console
 from rich.panel import Panel
 from typer_config.decorators import use_yaml_config
 
-CFG_FILE = "~/.config/mk/mk.yml"
+CFG_FILE = os.environ.get("MK_CONFIG_FILE", "~/.config/mk/mk.yml")
 
 
 class TyperApp(typer.Typer):

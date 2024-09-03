@@ -1,3 +1,4 @@
+alerts
 build
 clean-build
 clean-coverage
@@ -8,14 +9,15 @@ clean-tox
 coverage
 docs
 docs2
+drafts
 install
 lint
 lint2
 lint23
+prs
 py310
 py311
 py312
-py37
 py38
 py39
 release
