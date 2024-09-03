@@ -1,14 +1,17 @@
+alerts
 binaries
 binaries2
 binaries23
 clean
 clean-binaries
 docs
+drafts
 help
 install
 lint
 local-cross
 podman-mac-helper
+prs
 rpm
 rpm-install
 test

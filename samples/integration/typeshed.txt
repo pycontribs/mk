@@ -1,4 +1,7 @@
+alerts
 create_baseline_stubs
+drafts
 generate_proto_stubs
 lint
+prs
 sync_tensorflow_protobuf_stubs
