@@ -10,6 +10,9 @@ build:
   tools:
     python: "3.11"
   commands:
+    - asdf --version
+    - asdf plugin add github-cli
+    - asdf install
     - pip install --user tox
     - python3 -m tox -e docs -- --strict --site-dir=_readthedocs/html/
 python:

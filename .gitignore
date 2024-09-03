@@ -15,3 +15,4 @@ src/mk/_version.py
 .coverage*
 coverage.xml
 CMakeFiles
+CHANGELOG.md

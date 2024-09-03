@@ -1,5 +1,6 @@
 alerts
 build
+changelog
 clean-build
 clean-coverage
 clean-docs-build
