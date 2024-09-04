@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 # https://peps.python.org/pep-0621/#readme
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 dynamic = ["version", "dependencies", "optional-dependencies"]
 name = "mk"
 description = "mk"
@@ -24,6 +24,7 @@ classifiers = [
   "Operating System :: MacOS",
   "Operating System :: POSIX",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -92,7 +93,7 @@ concurrency = ["multiprocessing", "thread"]
 profile = "black"
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.9"
 strict = true
 color_output = true
 error_summary = true
