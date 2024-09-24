@@ -55,7 +55,8 @@ class PreTool(Tool):
         result = result.rstrip("\r\n") + "\n"
         result = result.replace("\r\n", "\n")
         result = re.sub(r"\n{3,}", "\n\n", result, re.MULTILINE)
-        with open("CHANGELOG.md", "w", encoding="utf-8") as f:
+        filename = os.environ.get("CHANGELOG_FILE", "CHANGELOG.md")
+        with open(filename, "w", encoding="utf-8") as f:
             f.write(result)
             logging.info("Wrote CHANGELOG.md")
 
