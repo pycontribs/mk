@@ -69,3 +69,11 @@ basic commands:
 
 If a [pytest](https://docs.pytest.org/en/stable/) configuration file is found, a
 `test` command will be exposed that runs `pytest`.
+
+## changelog (github)
+
+`changelog` command will produce a `CHANGELOG.md` file based on Github Releases.
+You can define `CHANGELOG_FILE` environment variable to make it generate the
+file in a different location.
+
+This command is available only when `gh` command line utility is installed.
