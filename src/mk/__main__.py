@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import argparse
 import itertools
+import json
 import logging
 import os
 import shlex
-from typing import Any
+import shutil
+from typing import Annotated, Any, Optional
 
 import typer
 from rich.console import Console
@@ -16,6 +18,7 @@ from rich.logging import RichHandler
 from mk import __version__
 from mk._typer import CustomTyper
 from mk.ctx import ctx
+from mk.exec import run_or_fail
 
 handlers: list[logging.Handler]
 console_err = Console(stderr=True)
@@ -85,6 +88,54 @@ def commands() -> None:
     """List all commands available."""
     for action in ctx.runner.actions:
         print(action.name)
+
+
+@app.command()
+def containers(
+    command: Annotated[
+        Optional[str],
+        typer.Argument(help="Command to run, possible values: check"),
+    ] = None,
+    image: Annotated[
+        str,
+        typer.Argument(help="Specify image name or identifier"),
+    ] = "",
+    engine: Annotated[
+        str,
+        typer.Option(help="Comma separated list of container engines to look for."),
+    ] = "docker,podman",
+    max_size: Annotated[int, typer.Option(help="Maximum image size in MB")] = 0,
+    max_layers: Annotated[int, typer.Option(help="Maximum number of layers")] = 0,
+) -> None:
+    """Provide some container related helpers."""
+    if command != "check":
+        typer.echo("Invalid command.")
+        raise typer.Exit(code=1)
+    if image:
+        executable = None
+        for v in engine.split(","):
+            if shutil.which(v):
+                executable = v
+                break
+        if not engine:
+            typer.echo(f"Failed to find any container engine. ({engine})")
+            raise typer.Exit(code=1)
+        result = run_or_fail(f"{executable} image inspect {image}")
+        inspect_json = json.loads(result.stdout)
+        size = int(inspect_json[0]["Size"] / 1024 / 1024)
+        layers = len(inspect_json[0]["RootFS"]["Layers"])
+        failed = False
+        if max_layers and layers > max_layers:
+            typer.echo(f"Image has too many layers: {layers} > {max_layers}")
+            failed = True
+        if max_size and size > max_size:
+            typer.echo(
+                f"Image size exceeded the max required size (MB): {size} > {max_size}",
+            )
+            failed = True
+        if failed:
+            raise typer.Exit(code=1)
+        typer.echo("Image check passed")
 
 
 def cli() -> None:  # pylint: disable=too-many-locals

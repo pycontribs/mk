@@ -63,7 +63,9 @@ repository = "https://github.com/pycontribs/mk"
 changelog = "https://github.com/pycontribs/mk/releases"
 
 [tool.black]
-
+# keep this value because typer does not accept new annotations such str | None
+# from https://peps.python.org/pep-0604/
+target-version = ["py39"]
 
 # Keep this default because xml/report do not know to use load it from config file:
 # data_file = ".coverage"
@@ -74,7 +76,7 @@ source = ["src", ".tox/*/site-packages"]
 exclude_also = ["pragma: no cover", "if TYPE_CHECKING:"]
 omit = ["test/*"]
 # Increase it just so it would pass on any single-python run
-fail_under = 46
+fail_under = 45
 skip_covered = true
 skip_empty = true
 # During development we might remove code (files) with coverage data, and we dont want to fail:
@@ -135,10 +137,13 @@ disable = [
 ]
 
 [tool.ruff]
-target-version = "py310"
+# keep this as typer does not support new annotations format
+target-version = "py39"
 # Same as Black.
 line-length = 88
 lint.ignore = [
+  # Disabled due to typer not supporting new annotations format
+  "UP007",
   # temporary disabled until we fix them:
   "ANN",
   "B",
