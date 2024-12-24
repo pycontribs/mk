@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Determine matrix
         id: generate_matrix
-        uses: coactions/dynamic-matrix@v3
+        uses: coactions/dynamic-matrix@v4
         with:
           min_python: "3.9"
           default_python: |
@@ -163,7 +163,7 @@ jobs:
           fi
 
       - name: Upload coverage data
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           name: ${{ matrix.passed_name }}
           # verbose: true # optional (default = false)

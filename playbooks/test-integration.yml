@@ -19,8 +19,9 @@
         url: https://github.com/python/typeshed
       - name: flask-babel
         url: https://github.com/python-babel/flask-babel
-      - name: nox
-        url: https://github.com/wntrblm/nox
+  # - name: nox
+  #   url: https://github.com/wntrblm/nox
+  # disabled because presence of conda change the output
   tasks:
     - name: Show cache directory
       ansible.builtin.debug:
