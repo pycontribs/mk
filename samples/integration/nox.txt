@@ -1,9 +1,6 @@
 alerts
 build
 changelog
-conda_tests
-cover
-docs
 drafts
 install
 lint
