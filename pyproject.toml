@@ -1,13 +1,13 @@
 [build-system]
 requires = [
   "setuptools >= 65.3.0", # required by pyproject+setuptools_scm integration and editable installs
-  "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
+  "setuptools_scm[toml] >= 7.0.5" # required for "no-local-version" scheme
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 # https://peps.python.org/pep-0621/#readme
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dynamic = ["version", "dependencies", "optional-dependencies"]
 name = "mk"
 description = "mk"
@@ -24,7 +24,6 @@ classifiers = [
   "Operating System :: MacOS",
   "Operating System :: POSIX",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -33,7 +32,7 @@ classifiers = [
   "Programming Language :: Python",
   "Topic :: Software Development :: Quality Assurance",
   "Topic :: Software Development :: Testing",
-  "Topic :: Utilities",
+  "Topic :: Utilities"
 ]
 keywords = ["mk"]
 
@@ -95,7 +94,7 @@ concurrency = ["multiprocessing", "thread"]
 profile = "black"
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 strict = true
 color_output = true
 error_summary = true
@@ -115,7 +114,7 @@ unsafe_package = [
   "exceptiongroup",
   "jeepney",
   "secretstorage",
-  "twine",
+  "twine"
 ]
 
 [tool.pylint."MESSAGES CONTROL"]
@@ -133,7 +132,7 @@ disable = [
   "missing-module-docstring",
   "no-value-for-parameter",
   "not-an-iterable",
-  "too-few-public-methods",
+  "too-few-public-methods"
 ]
 
 [tool.ruff]
@@ -161,7 +160,7 @@ lint.ignore = [
   "TCH",
   "PLR",
   "INP",
-  "RET",
+  "RET"
 ]
 lint.select = ["ALL"]
 
@@ -191,5 +190,5 @@ git_describe_command = [
   "--tags",
   "--long",
   "--match",
-  "v*.*",
+  "v*.*"
 ]
