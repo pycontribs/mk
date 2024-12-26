@@ -1,7 +1,7 @@
 ---
 ci:
   skip:
-    - lock
+    - pip-compile
     - deps
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -92,31 +92,27 @@ repos:
           - subprocess-tee
           - typer-config
           - typer>=0.12.2
-  - repo: https://github.com/jazzband/pip-tools
-    rev: 7.4.1
+
+  # keep at bottom as these are slower
+  - repo: local
     hooks:
-      - id: pip-compile
-        name: lock
-        alias: lock
-        always_run: true
-        # keyring excluded in order to keep lockfile portable between linux and macos
-        entry: pip-compile pyproject.toml
-        files: ^.config\/.*requirements.*$
+      - id: deps
+        name: Upgrade constraints files and requirements
+        files: ^(pyproject\.toml|requirements\.txt)$
         language: python
         language_version: "3.10" # minimal we support officially
+        entry: python3 -m uv pip compile -q --universal --all-extras --output-file=.config/constraints.txt pyproject.toml --upgrade
         pass_filenames: false
-        stages: [manual]
+        stages:
+          - manual
         additional_dependencies:
-          - pip>=22.3.1
+          - uv>=0.4.3
       - id: pip-compile
-        name: deps
-        alias: deps
-        always_run: true
-        entry: pip-compile pyproject.toml --upgrade
-        files: ^.config\/.*requirements.*$
+        name: Check constraints files and requirements
+        files: ^(pyproject\.toml|requirements\.txt)$
         language: python
         language_version: "3.10" # minimal we support officially
+        entry: python3 -m uv pip compile -q --universal --all-extras --output-file=.config/constraints.txt pyproject.toml
         pass_filenames: false
-        stages: [manual]
         additional_dependencies:
-          - pip>=22.3.1
+          - uv>=0.4.3
