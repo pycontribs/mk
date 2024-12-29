@@ -9,10 +9,10 @@ cairosvg==2.7.1 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 certifi==2024.12.14 ; sys_platform != 'win32'  # via requests
 cffi==1.17.1 ; sys_platform != 'win32'  # via cairocffi, cryptography
 chardet==5.2.0 ; sys_platform != 'win32'  # via tox
-charset-normalizer==3.4.0 ; sys_platform != 'win32'  # via requests
+charset-normalizer==3.4.1 ; sys_platform != 'win32'  # via requests
 click==8.1.8 ; sys_platform != 'win32'  # via mkdocs, typer
 colorama==0.4.6 ; sys_platform != 'win32'  # via build, mkdocs-material, tox
-coverage==7.6.9 ; sys_platform != 'win32'  # via mk (pyproject.toml)
+coverage==7.6.10 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 cssselect2==0.7.0 ; sys_platform != 'win32'  # via cairosvg
 defusedxml==0.7.1 ; sys_platform != 'win32'  # via cairosvg
 diskcache==5.6.3 ; sys_platform != 'win32'  # via mk (pyproject.toml)
@@ -29,7 +29,7 @@ jaraco-classes==3.4.0 ; platform_machine != 'ppc64le' and platform_machine != 's
 jaraco-context==6.0.1 ; platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via keyring
 jaraco-functools==4.1.0 ; platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via keyring
 jinja2==3.1.5 ; sys_platform != 'win32'  # via mkdocs, mkdocs-material
-keyring==25.5.0 ; platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via twine
+keyring==25.6.0 ; platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via twine
 markdown==3.7 ; sys_platform != 'win32'  # via mkdocs, mkdocs-autorefs, mkdocs-htmlproofer-plugin, mkdocs-material, pymdown-extensions
 markdown-exec==1.10.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 markdown-it-py==3.0.0 ; sys_platform != 'win32'  # via rich
@@ -56,7 +56,7 @@ pluggy==1.5.0 ; sys_platform != 'win32'  # via pytest, tox, mk (pyproject.toml)
 py-cpuinfo==9.0.0 ; sys_platform != 'win32'  # via pytest-benchmark
 pycparser==2.22 ; sys_platform != 'win32'  # via cffi
 pygments==2.18.0 ; sys_platform != 'win32'  # via mkdocs-material, readme-renderer, rich
-pymdown-extensions==10.12 ; sys_platform != 'win32'  # via markdown-exec, mkdocs-material, mk (pyproject.toml)
+pymdown-extensions==10.13 ; sys_platform != 'win32'  # via markdown-exec, mkdocs-material, mk (pyproject.toml)
 pyproject-api==1.8.0 ; sys_platform != 'win32'  # via tox
 pyproject-hooks==1.2.0 ; sys_platform != 'win32'  # via build
 pytest==8.3.4 ; sys_platform != 'win32'  # via pytest-benchmark, pytest-plus, mk (pyproject.toml)
@@ -82,7 +82,7 @@ tomli==2.0.1 ; python_full_version < '3.11' and sys_platform != 'win32'  # via b
 tox==4.23.2 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 typer==0.15.1 ; sys_platform != 'win32'  # via typer-config, mk (pyproject.toml)
 typer-config==1.4.2 ; sys_platform != 'win32'  # via mk (pyproject.toml)
-urllib3==2.2.3 ; sys_platform != 'win32'  # via requests, twine
+urllib3==2.3.0 ; sys_platform != 'win32'  # via requests, twine
 virtualenv==20.28.0 ; sys_platform != 'win32'  # via tox
 watchdog==6.0.0 ; sys_platform != 'win32'  # via mkdocs
 webencodings==0.5.1 ; sys_platform != 'win32'  # via cssselect2, tinycss2
