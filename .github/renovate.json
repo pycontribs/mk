@@ -1,0 +1,9 @@
+{
+  "autoApprove": true,
+  "automerge": true,
+  "automergeStrategy": "squash",
+  "configMigration": true,
+  "pre-commit": {
+    "enabled": true
+  }
+}

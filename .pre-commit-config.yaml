@@ -4,6 +4,11 @@ ci:
     - pip-compile
     - deps
 repos:
+  - repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 39.85.0
+    hooks:
+      - id: renovate-config-validator
+        args: [--strict]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.8.4
     hooks:
@@ -49,7 +54,7 @@ repos:
       - id: debug-statements
         language_version: python3
   - repo: https://github.com/ansible/ansible-lint
-    rev: v24.7.0
+    rev: v24.12.2
     hooks:
       - id: ansible-lint
         language_version: python3.10 # minimal supported officially
