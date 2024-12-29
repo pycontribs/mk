@@ -3,6 +3,9 @@
   "automerge": true,
   "automergeStrategy": "squash",
   "configMigration": true,
+  "extends": ["helpers:pinGitHubActionDigests"],
+  "labels": ["dependencies", "skip-changelog"],
+  "packageRules": [],
   "pre-commit": {
     "enabled": true
   }
