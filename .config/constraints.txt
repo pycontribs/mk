@@ -20,8 +20,8 @@ distlib==0.3.9 ; sys_platform != 'win32'  # via virtualenv
 docutils==0.21.2 ; sys_platform != 'win32'  # via readme-renderer
 filelock==3.16.1 ; sys_platform != 'win32'  # via tox, virtualenv
 ghp-import==2.1.0 ; sys_platform != 'win32'  # via mkdocs
-gitdb==4.0.11 ; sys_platform != 'win32'  # via gitpython
-gitpython==3.1.43 ; sys_platform != 'win32'  # via mk (pyproject.toml)
+gitdb==4.0.12 ; sys_platform != 'win32'  # via gitpython
+gitpython==3.1.44 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 idna==3.10 ; sys_platform != 'win32'  # via requests
 importlib-metadata==8.5.0 ; python_full_version < '3.12' and platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via keyring
 iniconfig==2.0.0 ; sys_platform != 'win32'  # via pytest
@@ -37,26 +37,26 @@ markupsafe==3.0.2 ; sys_platform != 'win32'  # via jinja2, mkdocs, mkdocs-autore
 mdurl==0.1.2 ; sys_platform != 'win32'  # via markdown-it-py
 mergedeep==1.3.4 ; sys_platform != 'win32'  # via mkdocs, mkdocs-get-deps
 mkdocs==1.6.1 ; sys_platform != 'win32'  # via mkdocs-autorefs, mkdocs-gen-files, mkdocs-htmlproofer-plugin, mkdocs-material, mk (pyproject.toml)
-mkdocs-autorefs==1.2.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
+mkdocs-autorefs==1.3.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 mkdocs-gen-files==0.5.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 mkdocs-get-deps==0.2.0 ; sys_platform != 'win32'  # via mkdocs
 mkdocs-htmlproofer-plugin==1.3.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
-mkdocs-material==9.5.49 ; sys_platform != 'win32'  # via mk (pyproject.toml)
+mkdocs-material==9.5.50 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 mkdocs-material-extensions==1.3.1 ; sys_platform != 'win32'  # via mkdocs-material, mk (pyproject.toml)
-more-itertools==10.5.0 ; platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via jaraco-classes, jaraco-functools
+more-itertools==10.6.0 ; platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via jaraco-classes, jaraco-functools
 nh3==0.2.20 ; sys_platform != 'win32'  # via readme-renderer
 packaging==24.2 ; sys_platform != 'win32'  # via build, mkdocs, pipdeptree, pyproject-api, pytest, tox, twine, mk (pyproject.toml)
 paginate==0.5.7 ; sys_platform != 'win32'  # via mkdocs-material
 pathspec==0.12.1 ; sys_platform != 'win32'  # via mkdocs
-pillow==11.0.0 ; sys_platform != 'win32'  # via cairosvg, mk (pyproject.toml)
+pillow==11.1.0 ; sys_platform != 'win32'  # via cairosvg, mk (pyproject.toml)
 pipdeptree==2.24.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 pkginfo==1.12.0 ; sys_platform != 'win32'  # via twine
 platformdirs==4.3.6 ; sys_platform != 'win32'  # via mkdocs-get-deps, tox, virtualenv
 pluggy==1.5.0 ; sys_platform != 'win32'  # via pytest, tox, mk (pyproject.toml)
 py-cpuinfo==9.0.0 ; sys_platform != 'win32'  # via pytest-benchmark
 pycparser==2.22 ; sys_platform != 'win32'  # via cffi
-pygments==2.18.0 ; sys_platform != 'win32'  # via mkdocs-material, readme-renderer, rich
-pymdown-extensions==10.13 ; sys_platform != 'win32'  # via markdown-exec, mkdocs-material, mk (pyproject.toml)
+pygments==2.19.1 ; sys_platform != 'win32'  # via mkdocs-material, readme-renderer, rich
+pymdown-extensions==10.14 ; sys_platform != 'win32'  # via markdown-exec, mkdocs-material, mk (pyproject.toml)
 pyproject-api==1.8.0 ; sys_platform != 'win32'  # via tox
 pyproject-hooks==1.2.0 ; sys_platform != 'win32'  # via build
 pytest==8.3.4 ; sys_platform != 'win32'  # via pytest-benchmark, pytest-plus, mk (pyproject.toml)
@@ -71,10 +71,10 @@ requests==2.32.3 ; sys_platform != 'win32'  # via mkdocs-htmlproofer-plugin, mkd
 requests-toolbelt==1.0.0 ; sys_platform != 'win32'  # via twine
 rfc3986==2.0.0 ; sys_platform != 'win32'  # via twine
 rich==13.9.4 ; sys_platform != 'win32'  # via twine, typer, mk (pyproject.toml)
-setuptools==75.6.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
+setuptools==75.8.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 shellingham==1.5.4 ; sys_platform != 'win32'  # via typer, mk (pyproject.toml)
 six==1.17.0 ; sys_platform != 'win32'  # via python-dateutil
-smmap==5.0.1 ; sys_platform != 'win32'  # via gitdb
+smmap==5.0.2 ; sys_platform != 'win32'  # via gitdb
 soupsieve==2.6 ; sys_platform != 'win32'  # via beautifulsoup4
 subprocess-tee==0.4.2 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 tinycss2==1.4.0 ; sys_platform != 'win32'  # via cairosvg, cssselect2
@@ -83,7 +83,7 @@ tox==4.23.2 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 typer==0.15.1 ; sys_platform != 'win32'  # via typer-config, mk (pyproject.toml)
 typer-config==1.4.2 ; sys_platform != 'win32'  # via mk (pyproject.toml)
 urllib3==2.3.0 ; sys_platform != 'win32'  # via requests, twine
-virtualenv==20.28.0 ; sys_platform != 'win32'  # via tox
+virtualenv==20.29.1 ; sys_platform != 'win32'  # via tox
 watchdog==6.0.0 ; sys_platform != 'win32'  # via mkdocs
 webencodings==0.5.1 ; sys_platform != 'win32'  # via cssselect2, tinycss2
 zipp==3.21.0 ; python_full_version < '3.12' and platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via importlib-metadata
