@@ -1,6 +1,10 @@
 alerts
+build
 changelog
 create_baseline_stubs
 drafts
+install
 lint
 prs
+stubsabot
+uninstall

@@ -16,3 +16,4 @@ prs
 rpm
 rpm-install
 test
+validatepr
