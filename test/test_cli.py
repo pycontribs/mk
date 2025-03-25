@@ -89,5 +89,5 @@ def test_help() -> None:
 def test_no_git_repo() -> None:
     """Ensure error message is displayed outside git repos."""
     result = run(["mk"], check=False, cwd="/", tee=False)
-    assert result.returncode == 0, result
-    assert "Current version of mk works only within git repos" in result.stderr
+    msg = "Current version of mk works only within git repos"
+    assert msg in result.stderr

@@ -3,14 +3,15 @@ ci:
   skip:
     - pip-compile
     - deps
+    - renovate-config-validator # container limits
 repos:
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 39.213.4
+    rev: 40.49.9
     hooks:
       - id: renovate-config-validator
         args: [--strict]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.2
+    rev: v0.11.13
     hooks:
       - id: ruff
         args:
@@ -23,17 +24,16 @@ repos:
         always_run: true
         additional_dependencies:
           - prettier
-          - prettier-plugin-toml
           - prettier-plugin-sort-json
   - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v8.17.3
+    rev: v9.0.1
     hooks:
       - id: cspell
         # entry: codespell --relative
         args: [--relative, --no-progress, --no-summary]
         name: Spell check with cspell
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.44.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint
   - repo: https://github.com/psf/black
@@ -42,9 +42,14 @@ repos:
       - id: black
         args:
           - --safe
-  - repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v5.0.0
     hooks:
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: debug-statements
+      - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: mixed-line-ending
@@ -54,22 +59,31 @@ repos:
       - id: debug-statements
         language_version: python3
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.1.3
+    rev: v25.5.0
     hooks:
       - id: ansible-lint
         language_version: python3.10 # minimal supported officially
         args: [--fix]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.0
+    rev: v1.37.1
     hooks:
       - id: yamllint
         files: \.(yaml|yml)$
-        types:
-          - file
-          - yaml
+        types: [file, yaml]
         entry: yamllint --strict
+  - repo: https://github.com/pappasam/toml-sort
+    rev: v0.24.2
+    hooks:
+      - id: toml-sort-fix
+        alias: toml
+
+  - repo: https://github.com/tox-dev/tox-ini-fmt
+    rev: 1.5.0
+    hooks:
+      - id: tox-ini-fmt
+
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
+    rev: v1.16.0
     hooks:
       - id: mypy
         entry: mypy src/
@@ -84,9 +98,11 @@ repos:
           - typer-config
           - typer>=0.12.2
   - repo: https://github.com/pycqa/pylint
-    rev: v3.3.6
+    rev: v3.3.7
     hooks:
       - id: pylint
+        args:
+          - --output-format=colorized
         additional_dependencies:
           - click-help-colors
           - diskcache
@@ -103,21 +119,20 @@ repos:
     hooks:
       - id: deps
         name: Upgrade constraints files and requirements
-        files: ^(pyproject\.toml|requirements\.txt)$
+        files: ^(pyproject\.toml|.config/.*)$
+        always_run: true
         language: python
-        language_version: "3.10" # minimal we support officially
-        entry: python3 -m uv pip compile -q --universal --all-extras --output-file=.config/constraints.txt pyproject.toml --upgrade
+        entry: python3 -m uv pip compile -q --all-extras --python-version=3.10 --output-file=.config/constraints.txt pyproject.toml --upgrade
         pass_filenames: false
         stages:
           - manual
         additional_dependencies:
-          - uv>=0.4.3
+          - uv>=0.6.6
       - id: pip-compile
         name: Check constraints files and requirements
-        files: ^(pyproject\.toml|requirements\.txt)$
+        files: ^(pyproject\.toml|\.config/.*)$
         language: python
-        language_version: "3.10" # minimal we support officially
-        entry: python3 -m uv pip compile -q --universal --all-extras --output-file=.config/constraints.txt pyproject.toml
+        entry: uv pip compile -q --all-extras --python-version=3.10 --output-file=.config/constraints.txt pyproject.toml
         pass_filenames: false
         additional_dependencies:
-          - uv>=0.4.3
+          - uv>=0.6.6

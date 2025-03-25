@@ -12,4 +12,4 @@ subprocess-tee>=0.4.1
 tomli>=2.0.1 ; python_version < "3.11"  # tox
 twine>=3.4.1  # py_package
 typer-config>=1.4.0
-typer>=0.12.2  # completion tests will fail with older
+typer>=0.16.0  # completion tests will fail with older

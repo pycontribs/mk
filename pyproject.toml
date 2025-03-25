@@ -1,19 +1,12 @@
 [build-system]
+build-backend = "setuptools.build_meta"
 requires = [
   "setuptools >= 65.3.0", # required by pyproject+setuptools_scm integration and editable installs
   "setuptools_scm[toml] >= 7.0.5" # required for "no-local-version" scheme
 ]
-build-backend = "setuptools.build_meta"
 
 [project]
-# https://peps.python.org/pep-0621/#readme
-requires-python = ">=3.10"
-dynamic = ["version", "dependencies", "optional-dependencies"]
-name = "mk"
-description = "mk"
-readme = "docs/README.md"
-authors = [{"name" = "Sorin Sbarnea", "email" = "sorin.sbarnea@gmail.com"}]
-license = {text = "MIT"}
+authors = [{"email" = "sorin.sbarnea@gmail.com", "name" = "Sorin Sbarnea"}]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Console",
@@ -34,11 +27,13 @@ classifiers = [
   "Topic :: Software Development :: Testing",
   "Topic :: Utilities"
 ]
+description = "mk"
+dynamic = ["version", "dependencies", "optional-dependencies"]
 keywords = ["mk"]
-
-[project.scripts]
-mk = "mk.__main__:cli"
-pre = "mk.pre:app"
+name = "mk"
+readme = "docs/README.md"
+# https://peps.python.org/pep-0621/#readme
+requires-python = ">=3.10"
 
 [project.entry-points."mk_tools"]
 ansible = "mk.tools.ansible:AnsibleTool"
@@ -46,20 +41,24 @@ cmake = "mk.tools.cmake:CMakeTool"
 git = "mk.tools.git:GitTool"
 make = "mk.tools.make:MakeTool"
 node = "mk.tools.node:NodeTool"
+nox = "mk.tools.nox:NoxTool"
+pre = "mk.tools.pre:PreTool"
+pre-commit = "mk.tools.pre_commit:PreCommitTool"
 pypackage = "mk.tools.py_package:PyPackageTool"
 pytest = "mk.tools.pytest:PyTestTool"
-pre-commit = "mk.tools.pre_commit:PreCommitTool"
 shell = "mk.tools.shell:ShellTool"
 taskfile = "mk.tools.taskfile:TaskfileTool"
 tox = "mk.tools.tox:ToxTool"
-nox = "mk.tools.nox:NoxTool"
-pre = "mk.tools.pre:PreTool"
+
+[project.scripts]
+mk = "mk.__main__:cli"
+pre = "mk.pre:app"
 
 [project.urls]
-homepage = "https://github.com/pycontribs/mk"
-documentation = "https://mk.readthedocs.io/"
-repository = "https://github.com/pycontribs/mk"
 changelog = "https://github.com/pycontribs/mk/releases"
+documentation = "https://mk.readthedocs.io/"
+homepage = "https://github.com/pycontribs/mk"
+repository = "https://github.com/pycontribs/mk"
 
 [tool.black]
 # keep this value because typer does not accept new annotations such str | None
@@ -73,36 +72,34 @@ source = ["src", ".tox/*/site-packages"]
 
 [tool.coverage.report]
 exclude_also = ["pragma: no cover", "if TYPE_CHECKING:"]
-omit = ["test/*"]
 # Increase it just so it would pass on any single-python run
 fail_under = 45
-skip_covered = true
-skip_empty = true
 # During development we might remove code (files) with coverage data, and we dont want to fail:
 ignore_errors = true
+omit = ["test/*"]
 show_missing = true
+skip_covered = true
+skip_empty = true
 
 [tool.coverage.run]
-source = ["src"]
+concurrency = ["multiprocessing", "thread"]
 # Do not use branch until bug is fixes:
 # https://github.com/nedbat/coveragepy/issues/605
 # branch = true
 parallel = true
-concurrency = ["multiprocessing", "thread"]
+source = ["src"]
 
 [tool.isort]
 profile = "black"
 
 [tool.mypy]
-python_version = "3.10"
-strict = true
 color_output = true
 error_summary = true
 no_incremental = true
+python_version = "3.10"
+strict = true
 
 [tool.pylint."MESSAGES CONTROL"]
-# increase from default is 50 which is too aggressive
-max-statements = 60
 disable = [
   # Disabled on purpose (explain in comment)
   "line-too-long", # black managed
@@ -117,13 +114,17 @@ disable = [
   "not-an-iterable",
   "too-few-public-methods"
 ]
+# increase from default is 50 which is too aggressive
+max-statements = 60
 
 [tool.ruff]
-# keep this as typer does not support new annotations format
-target-version = "py39"
 # Same as Black.
 line-length = 88
-lint.ignore = [
+# keep this as typer does not support new annotations format
+target-version = "py39"
+
+[tool.ruff.lint]
+ignore = [
   # Disabled due to typer not supporting new annotations format
   "UP007",
   "LOG015",
@@ -146,7 +147,7 @@ lint.ignore = [
   "INP",
   "RET"
 ]
-lint.select = ["ALL"]
+select = ["ALL"]
 
 [tool.ruff.lint.flake8-pytest-style]
 parametrize-values-type = "tuple"
@@ -157,15 +158,15 @@ known-first-party = ["mk"]
 [tool.ruff.lint.per-file-ignores]
 "test/**/*.py" = ["S"]
 
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
 [tool.setuptools.dynamic]
 dependencies = {file = [".config/requirements.txt"]}
-optional-dependencies.test = {file = [".config/requirements-test.txt"]}
 optional-dependencies.docs = {file = [".config/requirements-docs.txt"]}
+optional-dependencies.test = {file = [".config/requirements-test.txt"]}
 
 [tool.setuptools_scm]
-local_scheme = "no-local-version"
-tag_regex = "^(?P<prefix>v)?(?P<version>[0-9.]+)(?P<suffix>.*)?$"
-write_to = "src/mk/_version.py"
 # To prevent accidental pick of mobile version tags such 'v6'
 git_describe_command = [
   "git",
@@ -176,6 +177,14 @@ git_describe_command = [
   "--match",
   "v*.*"
 ]
+local_scheme = "no-local-version"
+tag_regex = "^(?P<prefix>v)?(?P<version>[0-9.]+)(?P<suffix>.*)?$"
+write_to = "src/mk/_version.py"
+
+[tool.tomlsort]
+in_place = true
+sort_inline_tables = true
+sort_table_keys = true
 
 [tool.uv]
 # incompatible with Windows
