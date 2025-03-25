@@ -22,6 +22,7 @@ filelock==3.16.1 ; sys_platform != 'win32'  # via tox, virtualenv
 ghp-import==2.1.0 ; sys_platform != 'win32'  # via mkdocs
 gitdb==4.0.11 ; sys_platform != 'win32'  # via gitpython
 gitpython==3.1.43 ; sys_platform != 'win32'  # via mk (pyproject.toml)
+id==1.5.0 ; sys_platform != 'win32'  # via twine
 idna==3.10 ; sys_platform != 'win32'  # via requests
 importlib-metadata==8.5.0 ; python_full_version < '3.12' and platform_machine != 'ppc64le' and platform_machine != 's390x' and sys_platform != 'win32'  # via keyring
 iniconfig==2.0.0 ; sys_platform != 'win32'  # via pytest
@@ -50,7 +51,6 @@ paginate==0.5.7 ; sys_platform != 'win32'  # via mkdocs-material
 pathspec==0.12.1 ; sys_platform != 'win32'  # via mkdocs
 pillow==11.0.0 ; sys_platform != 'win32'  # via cairosvg, mk (pyproject.toml)
 pipdeptree==2.24.0 ; sys_platform != 'win32'  # via mk (pyproject.toml)
-pkginfo==1.12.0 ; sys_platform != 'win32'  # via twine
 platformdirs==4.3.6 ; sys_platform != 'win32'  # via mkdocs-get-deps, tox, virtualenv
 pluggy==1.5.0 ; sys_platform != 'win32'  # via pytest, tox, mk (pyproject.toml)
 py-cpuinfo==9.0.0 ; sys_platform != 'win32'  # via pytest-benchmark
@@ -67,7 +67,7 @@ pyyaml==6.0.2 ; sys_platform != 'win32'  # via mkdocs, mkdocs-get-deps, pymdown-
 pyyaml-env-tag==0.1 ; sys_platform != 'win32'  # via mkdocs
 readme-renderer==44.0 ; sys_platform != 'win32'  # via twine
 regex==2024.11.6 ; sys_platform != 'win32'  # via mkdocs-material
-requests==2.32.3 ; sys_platform != 'win32'  # via mkdocs-htmlproofer-plugin, mkdocs-material, requests-toolbelt, twine
+requests==2.32.3 ; sys_platform != 'win32'  # via id, mkdocs-htmlproofer-plugin, mkdocs-material, requests-toolbelt, twine
 requests-toolbelt==1.0.0 ; sys_platform != 'win32'  # via twine
 rfc3986==2.0.0 ; sys_platform != 'win32'  # via twine
 rich==13.9.4 ; sys_platform != 'win32'  # via twine, typer, mk (pyproject.toml)
