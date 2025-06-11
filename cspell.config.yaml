@@ -10,6 +10,7 @@ dictionaries:
   - words
   - python
   - python-common
+enabled: true
 ignorePaths:
   - cspell.config.yaml
   # The requirements file
@@ -19,3 +20,4 @@ ignorePaths:
   - .config/requirements.in
   # Other
   - "*.svg"
+  - ".vscode/**"

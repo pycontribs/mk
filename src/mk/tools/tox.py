@@ -41,7 +41,7 @@ class ToxTool(Tool):
             r"^\.tox[^\r\n]*\n$",
             "",
             strip_ansi_escape(tox_cfg),
-            re.MULTILINE,
+            flags=re.MULTILINE,
         )
 
         # now tox_cfg should have a valid ini content

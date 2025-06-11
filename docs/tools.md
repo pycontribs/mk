@@ -43,11 +43,10 @@ A good example of a project using this pattern is
 If a [package.json](https://docs.npmjs.com/cli/v7/configuring-npm/package-json)
 file is found, the tool will expose all the scripts defined in the `scripts`.
 
-Due to the
-[lack of comments inside the package.json](https://stackoverflow.com/questions/14221579/how-do-i-add-comments-to-package-json-for-npm-install)
-files, we are unable to provide descriptions for exposed commands. Still, if
-others will find a good way to do it that gets some adoption, we will be more
-than happy to add support for loading descriptions too.
+Due to the lack of comments inside the package.json files, we are unable to
+provide descriptions for exposed commands. Still, if others will find a good way
+to do it that gets some adoption, we will be more than happy to add support for
+loading descriptions too.
 
 ### shell
 

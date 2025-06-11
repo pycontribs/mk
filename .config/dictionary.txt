@@ -9,6 +9,7 @@ Sbarnea
 Sorin
 autohide
 autorefs
+autoupdate
 basepython
 cairosvg
 cidrblock
@@ -71,6 +72,7 @@ testenv
 timeago
 toxenv
 toxinidir
+tomlsort
 typer
 typeshed
 usedevelop

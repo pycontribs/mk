@@ -5,7 +5,7 @@ build==0.3.1.post1  # py_package
 diskcache==5.2.1
 gitpython==3.1.26
 packaging==22
-pip==23.2  # py_package (before installation might fail, including with tox)
+pip==24.0  # py_package (before installation might fail, including with tox)
 pluggy==1.5.0
 pyyaml==5.1
 rich==10.11.0  # typer indirect
@@ -15,4 +15,4 @@ subprocess-tee==0.4.1
 tomli >= 2.0.1 ; python_version < "3.11"  # tox v4
 twine==3.4.1  # py_package
 typer-config==1.4.0
-typer==0.12.2
+typer==0.16.0
