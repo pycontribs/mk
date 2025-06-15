@@ -13,7 +13,7 @@ chardet==5.2.0            # via tox
 charset-normalizer==3.4.2  # via requests
 click==8.2.1              # via mkdocs, typer
 colorama==0.4.6           # via mkdocs-material, tox
-coverage==7.8.2           # via mk (pyproject.toml)
+coverage==7.9.1           # via mk (pyproject.toml)
 cssselect2==0.8.0         # via cairosvg
 defusedxml==0.7.1         # via cairosvg
 diskcache==5.6.3          # via mk (pyproject.toml)
