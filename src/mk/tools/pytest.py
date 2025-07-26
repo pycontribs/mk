@@ -15,7 +15,7 @@ class PyTestTool(Tool):
     name = "pytest"
 
     def __init__(self) -> None:
-        super().__init__(self)
+        super().__init__()
 
     def run(self, action: Action | None = None) -> None:
         if not action:

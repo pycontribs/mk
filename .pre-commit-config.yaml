@@ -6,19 +6,12 @@ ci:
     - renovate-config-validator # container limits
 repos:
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 40.49.9
+    rev: 41.43.0
     hooks:
       - id: renovate-config-validator
         args: [--strict]
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.13
-    hooks:
-      - id: ruff
-        args:
-          - --fix
-          - --exit-non-zero-on-fix
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.5.3
+    rev: v3.6.2
     hooks:
       - id: prettier
         always_run: true
@@ -26,7 +19,7 @@ repos:
           - prettier
           - prettier-plugin-sort-json
   - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v9.0.1
+    rev: v9.2.0
     hooks:
       - id: cspell
         # entry: codespell --relative
@@ -36,12 +29,6 @@ repos:
     rev: v0.45.0
     hooks:
       - id: markdownlint
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
-        args:
-          - --safe
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v5.0.0
     hooks:
@@ -53,13 +40,13 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: mixed-line-ending
-      - id: check-byte-order-marker
+      - id: fix-byte-order-marker
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
       - id: debug-statements
         language_version: python3
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.5.0
+    rev: v25.6.1
     hooks:
       - id: ansible-lint
         language_version: python3.10 # minimal supported officially
@@ -82,33 +69,30 @@ repos:
     hooks:
       - id: tox-ini-fmt
 
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.5
+    hooks:
+      - id: ruff-format
+        alias: ruff
+      - id: ruff-check
+        args: ["--fix"]
+        alias: ruff
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.16.0
+    rev: v1.17.0
     hooks:
       - id: mypy
-        entry: mypy src/
+        # "." and pass_files are used to make pre-commit mypy behave the same as standalone mypy
+        args: ["."]
         pass_filenames: false
         additional_dependencies:
+          - ansible-lint
           - build
-          - diskcache
-          - importlib-metadata
-          - packaging
-          - rich
-          - subprocess-tee
-          - typer-config
-          - typer>=0.12.2
-  - repo: https://github.com/pycqa/pylint
-    rev: v3.3.7
-    hooks:
-      - id: pylint
-        args:
-          - --output-format=colorized
-        additional_dependencies:
-          - click-help-colors
           - diskcache
           - gitpython
           - importlib-metadata
+          - packaging
           - pytest
+          - pytest-benchmark
           - rich
           - subprocess-tee
           - typer-config

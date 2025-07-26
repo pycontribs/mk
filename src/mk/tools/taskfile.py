@@ -14,7 +14,7 @@ from mk.tools import Action, Tool
 class TaskfileTool(Tool):
     name = "taskfile"
 
-    def __init__(self, path=".") -> None:
+    def __init__(self, path: str = ".") -> None:
         """Initialize."""
         super().__init__(path)
         self.executable = ""

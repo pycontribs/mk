@@ -9,7 +9,7 @@ import logging
 import os
 import shlex
 import shutil
-from typing import Annotated, Any, Optional
+from typing import Annotated, Any
 
 import typer
 from rich.console import Console
@@ -54,7 +54,6 @@ def version_callback(value: bool) -> None:
 @app.callback(invoke_without_command=True)
 def main(
     click_ctx: typer.Context,
-    # pylint: disable=unused-argument
     version: bool = typer.Option(
         None,
         "--version",
@@ -93,7 +92,7 @@ def commands() -> None:
 @app.command()
 def containers(
     command: Annotated[
-        Optional[str],
+        str | None,
         typer.Argument(help="Command to run, possible values: check"),
     ] = None,
     image: Annotated[
@@ -138,7 +137,7 @@ def containers(
         typer.echo("Image check passed")
 
 
-def cli() -> None:  # pylint: disable=too-many-locals
+def cli() -> None:
     parser = argparse.ArgumentParser(
         description="Preprocess arguments to set log level.",
         add_help=False,
@@ -207,7 +206,6 @@ def cli() -> None:  # pylint: disable=too-many-locals
     for alias_len in (1, 2, 3):
         for x, action in action_map.items():
             alias = x[0:alias_len]
-            # pylint: disable=consider-iterating-dictionary
             if alias in action_map:
                 continue
             if sum(1 for name in action_map if name.startswith(alias)) == 1:

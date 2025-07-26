@@ -16,7 +16,7 @@ from mk.tools import Action, Tool
 class PreTool(Tool):
     name = "pre"
 
-    def run(self, action: Action | None = None):
+    def run(self, action: Action | None = None) -> None:
         if action:
             if action.name in ["changelog"]:
                 self.changelog()

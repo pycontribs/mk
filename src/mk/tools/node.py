@@ -10,7 +10,7 @@ from mk.tools import Action, Tool
 class NodeTool(Tool):
     name = "node"
 
-    def __init__(self, path=".") -> None:
+    def __init__(self, path: str = ".") -> None:
         super().__init__(path=path)
         cmd = ["git", "ls-files", "**/package.json", "package.json"]
         result = run(cmd)

@@ -18,7 +18,7 @@ class Action:
 
     # https://github.com/florimondmanca/www/issues/102#issuecomment-817279834
     @property  # type: ignore
-    def name(self) -> str:  # pylint: disable=function-redefined
+    def name(self) -> str:
         return self._name
 
     @name.setter
@@ -33,10 +33,9 @@ class Action:
 class Tool:
     name = "tool-name"
 
-    def __init__(self, path=".") -> None:
+    def __init__(self, path: str = ".") -> None:
         self.path = path
 
-    # pylint: disable=unused-argument
     def is_present(self, path: Path) -> bool:
         """Return True if the tool configuration is present in the given path."""
         return False
@@ -44,11 +43,11 @@ class Tool:
     def actions(self) -> list[Action]:
         return []
 
-    def run(self, action: Action | None = None):
+    def run(self, action: Action | None = None) -> None:
         pass
 
     def __repr__(self) -> str:
         return self.name
 
-    def __rich__(self):
+    def __rich__(self) -> str:
         return f"[magenta]{self.name}[/]"

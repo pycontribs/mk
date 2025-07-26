@@ -4,6 +4,8 @@ import hashlib
 import logging
 import sys
 
+from mk.tools import Tool
+
 try:
     from functools import cached_property
 except ImportError:
@@ -26,10 +28,10 @@ class Runner:
         self.root: Path | None = None
         try:
             self.repo = Repo(".", search_parent_directories=True)
-        except GitError:
-            logging.fatal("Current version of mk works only within git repos.")
-            self.repo = None
-            return
+        except GitError as exc:
+            msg = "Current version of mk works only within git repos."
+            logging.fatal(msg)
+            raise RuntimeError(msg) from exc
         self.branch = ""
         if self.repo:
             try:
@@ -59,19 +61,26 @@ class Runner:
         if not self.root:
             return []
 
-        _actions = []
-        for _, cls_name in self.pm.list_name_plugin():
+        result: list[Action] = []
+        value = self.pm.list_name_plugin()  # pyright: ignore[reportAttributeAccessIssue]
+        for _, cls_name in value:
+            if not callable(cls_name):
+                msg = f"Invalid plugin: {cls_name}"
+                raise TypeError(msg)
             c = cls_name()
+            if not isinstance(c, Tool):
+                msg = f"Invalid plugin: {c}"
+                raise TypeError(msg)
             if c.is_present(self.root):
                 logging.debug("Detected %s !", c)
-                _actions.extend(c.actions())
+                result.extend(c.actions())
             else:
                 logging.debug("%s not detected !", c)
 
-        _actions.sort()
-        self.cache.set("actions", _actions, expire=3600 * 24)
+        result.sort()
+        self.cache.set("actions", result, expire=3600 * 24)
 
-        return _actions
+        return result
 
     def info(self) -> None:
         logging.info("Actions identified: %s", self.actions)

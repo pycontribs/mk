@@ -4,6 +4,7 @@ import logging
 import subprocess
 import sys
 from os import environ
+from typing import Any
 
 import subprocess_tee
 
@@ -14,13 +15,13 @@ def fail(msg: str, code: int = 1) -> None:
 
 
 def run(
-    args,
+    args: str | list[str],
     *,
-    check=False,
-    cwd=None,
-    tee=False,
+    check: bool = False,
+    cwd: str | None = None,
+    tee: bool = False,
     env_overrides: dict[str, str] | None = None,
-) -> subprocess.CompletedProcess:
+) -> subprocess.CompletedProcess[str]:
     env: dict[str, str] | None = None
     if env_overrides:
         env = environ.copy()
@@ -45,16 +46,18 @@ def run(
     return result
 
 
-def run_or_raise(*args, cwd=None, tee=False) -> subprocess.CompletedProcess:
+def run_or_raise(
+    *args: Any, cwd: str | None = None, tee: bool = False
+) -> subprocess.CompletedProcess[str]:
     return run(*args, check=True, cwd=cwd, tee=tee)
 
 
 def run_or_fail(
-    *args,
-    cwd=None,
-    tee=False,
+    *args: Any,
+    cwd: str | None = None,
+    tee: bool = False,
     env_overrides: dict[str, str] | None = None,
-) -> subprocess.CompletedProcess:
+) -> subprocess.CompletedProcess[str]:
     try:
         return run(*args, check=True, cwd=cwd, tee=tee, env_overrides=env_overrides)
     except subprocess.CalledProcessError as exc:
