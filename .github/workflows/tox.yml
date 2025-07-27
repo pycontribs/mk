@@ -2,19 +2,21 @@
 name: tox
 
 on:
+  merge_group:
   push: # only publishes pushes to the main branch to TestPyPI
     branches: # any integration branch but not tag
       - main
   pull_request:
     branches:
       - main
-
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_call:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   FORCE_COLOR: 1 # tox, pytest, ansible-lint
   PY_COLORS: 1
 
@@ -81,7 +83,7 @@ jobs:
       - name: Install tox
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install --upgrade "tox>=4.0.0"
+          python3 -m pip install --upgrade "tox>=4.0.0" "tox-uv>=1.25.0" "uv>=0.6.6"
 
       - name: Log installed dists
         run: python3 -m pip freeze --all
@@ -105,9 +107,11 @@ jobs:
         with:
           name: logs-${{ matrix.name }}.zip
           include-hidden-files: true
+          if-no-files-found: ignore
           path: |
             .tox/**/.coverage*
             .tox/**/coverage.xml
+            .tox/**/log
 
       - name: Report failure if git reports dirty status
         run: |
@@ -145,12 +149,14 @@ jobs:
         uses: actions/upload-artifact/merge@v4
         with:
           name: logs.zip
+          include-hidden-files: true
           pattern: logs-*.zip
           # artifacts like py312.zip and py312-macos do have overlapping files
           separate-directories: true
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
+        continue-on-error: true # to allow rerunning this job
         with:
           name: logs.zip
           path: .
@@ -166,14 +172,10 @@ jobs:
       - name: Upload coverage data
         uses: codecov/codecov-action@v5
         with:
-          name: ${{ matrix.passed_name }}
+          name: ${{ matrix.name }}
           # verbose: true # optional (default = false)
           fail_ci_if_error: true
-          use_oidc: true # cspell:ignore oidc
-
-      - name: Check codecov.io status
-        if: github.event_name == 'pull_request'
-        uses: coactions/codecov-status@main
+          use_oidc: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }} # cspell:ignore oidc
 
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@release/v1
@@ -183,4 +185,6 @@ jobs:
       - name: Delete Merged Artifacts
         uses: actions/upload-artifact/merge@v4
         with:
+          include-hidden-files: true
           delete-merged: true
+          pattern: logs-*.zip

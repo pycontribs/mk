@@ -13,7 +13,7 @@ class CMakeTool(Tool):
     name = "cmake"
 
     def __init__(self) -> None:
-        super().__init__(self)
+        super().__init__()
         self.configfile: str | None = None
         self._is_present: bool | None = None
 

@@ -15,7 +15,7 @@ class PyPackageTool(Tool):
     name = "pip"
 
     def __init__(self) -> None:
-        super().__init__(self)
+        super().__init__()
         self.pkg_name = ""
 
     def run(self, action: Action | None = None) -> None:
@@ -74,9 +74,6 @@ class PyPackageTool(Tool):
                 ),
             )
         try:
-            # pylint: disable=import-outside-toplevel,unused-import
-            import build  # noqa: F401
-
             actions.append(
                 Action(
                     name="build",

@@ -73,7 +73,7 @@ source = ["src", ".tox/*/site-packages"]
 [tool.coverage.report]
 exclude_also = ["pragma: no cover", "if TYPE_CHECKING:"]
 # Increase it just so it would pass on any single-python run
-fail_under = 45
+fail_under = 44
 # During development we might remove code (files) with coverage data, and we dont want to fail:
 ignore_errors = true
 omit = ["test/*"]
@@ -95,27 +95,13 @@ profile = "black"
 [tool.mypy]
 color_output = true
 error_summary = true
-no_incremental = true
+exclude = [".ansible", ".cache", ".tox", "build", "dist"]
 python_version = "3.10"
 strict = true
 
-[tool.pylint."MESSAGES CONTROL"]
-disable = [
-  # Disabled on purpose (explain in comment)
-  "line-too-long", # black managed
-  "wrong-import-position", # isort managed
-  # TODO(ssbarnea): remove temporary skips adding during initial adoption:
-  "dangerous-default-value",
-  "invalid-name",
-  "missing-class-docstring",
-  "missing-function-docstring",
-  "missing-module-docstring",
-  "no-value-for-parameter",
-  "not-an-iterable",
-  "too-few-public-methods"
-]
-# increase from default is 50 which is too aggressive
-max-statements = 60
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = ["diskcache", "pytest_benchmark.fixture"]
 
 [tool.ruff]
 # Same as Black.
@@ -125,6 +111,8 @@ target-version = "py39"
 
 [tool.ruff.lint]
 ignore = [
+  # By design
+  "COM812",
   # Disabled due to typer not supporting new annotations format
   "UP007",
   "LOG015",

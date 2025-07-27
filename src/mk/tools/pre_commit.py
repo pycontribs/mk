@@ -10,7 +10,7 @@ from mk.tools import Action, Tool
 class PreCommitTool(Tool):
     name = "pre-commit"
 
-    def run(self, action: Action | None = None):
+    def run(self, action: Action | None = None) -> None:
         run_or_fail(["pre-commit", "run", "-a"], tee=True)
 
     def is_present(self, path: Path) -> bool:

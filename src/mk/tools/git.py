@@ -16,7 +16,7 @@ class GitTool(Tool):
     name = "git"
 
     def __init__(self) -> None:
-        super().__init__(self)
+        super().__init__()
 
     def run(self, action: Action | None = None) -> None:
         if action and action.name == "up":
@@ -34,7 +34,7 @@ class GitTool(Tool):
     def actions(self) -> list[Action]:
         actions: list[Action] = []
         if ctx.runner.branch not in ["main", "master"]:
-            if self.is_present(self.path):
+            if self.is_present(Path(self.path)):
                 actions.append(
                     Action(
                         name="up",
@@ -48,12 +48,14 @@ class GitTool(Tool):
             )
         return actions
 
-    # pylint: disable=too-many-branches
-    def up(self):
+    def up(self) -> None:
         repo = ctx.runner.repo
         if not repo or repo.is_dirty():
             logging.fatal("This action cannot be performed with dirty repos.")
             sys.exit(2)
+        if not ctx.runner.root:
+            msg = "No root directory found"
+            raise RuntimeError(msg)
         if (ctx.runner.root / ".gitreview").is_file():
             cmd = ["git", "review"]
             run_or_fail(cmd, tee=True)
@@ -104,8 +106,8 @@ class GitTool(Tool):
                 if len(pr_list) == 0:
                     logging.debug("Existing PR not found, creating one.")
                     commit = repo.head.commit
-                    title = commit.summary
-                    body = "\n".join(commit.message.splitlines()[2:])
+                    title = str(commit.summary)
+                    body = "\n".join(str(commit.message).splitlines()[2:])
                     cmd = [
                         "gh",
                         "pr",

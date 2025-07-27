@@ -12,7 +12,7 @@ class MakeTool(Tool):
     name = "make"
 
     def __init__(self) -> None:
-        super().__init__(self)
+        super().__init__()
         self.makefile: str | None = None
 
     def run(self, action: Action | None = None) -> None:

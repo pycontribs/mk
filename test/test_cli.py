@@ -5,6 +5,7 @@ import re
 import runpy
 
 import pytest
+from pytest_benchmark.fixture import BenchmarkFixture
 from subprocess_tee import run
 
 from mk.text import strip_ansi_escape
@@ -17,7 +18,7 @@ from mk.text import strip_ansi_escape
         pytest.param("bash", "_mk_completion()", id="bash"),
     ),
 )
-def test_show_completion_script(shell, expected) -> None:
+def test_show_completion_script(shell: str, expected: str) -> None:
     """Tests completion script generation."""
     env = os.environ.copy()
     env["_TYPER_COMPLETE_TEST_DISABLE_SHELL_DETECTION"] = "True"
@@ -34,19 +35,23 @@ def test_show_completion_script(shell, expected) -> None:
     disable_gc=True,
     warmup=False,
 )
-def test_completion_speed(benchmark, monkeypatch) -> None:
+def test_completion_speed(
+    benchmark: BenchmarkFixture, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """Tests completion script speed."""
     monkeypatch.setattr("sys.argv", ["mk", "commands"])
     # monkeypatch.setenv("_MK_COMPLETE", "complete_zsh")
     # monkeypatch.setenv("_TYPER_COMPLETE_ARGS", "c")
 
-    def do_complete() -> int | None:
+    def do_complete() -> str | int | None:
         # shell execution can add considerable extra time that varies from
         # system to system. We only benchmark our own module execution time
         try:
-            return runpy.run_module("mk", run_name="__main__")
+            runpy.run_module("mk", run_name="__main__")
         except SystemExit as exc:
             return exc.code
+        else:
+            return 0
 
     result = benchmark(do_complete)
 
@@ -62,7 +67,7 @@ def test_completion_speed(benchmark, monkeypatch) -> None:
         pytest.param("bash", "commands", id="bash"),
     ),
 )
-def test_show_completion_data(shell, expected) -> None:
+def test_show_completion_data(shell: str, expected: str) -> None:
     """Tests completion hints."""
     env = os.environ.copy()
     env["_MK_COMPLETE"] = f"complete_{shell}"

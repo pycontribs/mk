@@ -2,4 +2,4 @@ coverage>=7.5.3
 pytest>=8.0.0
 pytest-benchmark>=4.0.0
 pytest-plus>=0.7.0
-tox>=4.2.4  # older version can fail to exit when calling --showconfig
+tox>=4.28.3  # older version can fail to exit when calling --showconfig
