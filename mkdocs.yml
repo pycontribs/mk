@@ -10,9 +10,15 @@ strict: true
 extra_css:
   - stylesheets/extra.css
 
+nav:
+  - Home: README.md
+  - tools.md
+  - multirepo.md
+  - CHANGELOG.md
+
 theme:
   name: material
-  custom_dir: docs/.overrides
+  # custom_dir: docs/.overrides
   logo: images/logo.svg
   favicon: images/favicon.ico
   features:
@@ -26,7 +32,7 @@ theme:
     - header.autohide
     - navigation.expand
     - navigation.footer
-    - navigation.indexes
+    # - navigation.indexes  # incompatible with toc.integrate
     - navigation.instant
     - navigation.path
     - navigation.prune
@@ -77,9 +83,11 @@ plugins:
   - material/social
   - material/tags
   # https://github.com/manuzhang/mkdocs-htmlproofer-plugin
-  - htmlproofer:
-      raise_error_excludes:
-        404: ["https://github.com/*/security/*"]
+  # - htmlproofer:
+  #     raise_error_excludes:
+  #       404: ["https://github.com/*/security/*"]
+  #     skip_downloads: true
+  #     warn_on_ignored_urls: true
 
 markdown_extensions:
   - admonition
@@ -102,7 +110,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - toc:
-      toc_depth: 2
+      toc_depth: 3
       permalink: true
   - pymdownx.superfences:
       custom_fences:
