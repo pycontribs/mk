@@ -46,7 +46,7 @@ repos:
       - id: debug-statements
         language_version: python3
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.6.1
+    rev: v25.7.0
     hooks:
       - id: ansible-lint
         language_version: python3.10 # minimal supported officially
@@ -65,12 +65,12 @@ repos:
         alias: toml
 
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: 1.5.0
+    rev: 1.6.0
     hooks:
       - id: tox-ini-fmt
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.5
+    rev: v0.12.7
     hooks:
       - id: ruff-format
         alias: ruff
@@ -78,7 +78,7 @@ repos:
         args: ["--fix"]
         alias: ruff
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.17.0
+    rev: v1.17.1
     hooks:
       - id: mypy
         # "." and pass_files are used to make pre-commit mypy behave the same as standalone mypy
