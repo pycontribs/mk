@@ -40,6 +40,7 @@ magiclink
 markdownlint
 minversion
 mkdocs
+multirepo
 newhostkey
 nocows
 nosetests
@@ -70,9 +71,9 @@ taskfile
 taskfiles
 testenv
 timeago
+tomlsort
 toxenv
 toxinidir
-tomlsort
 typer
 typeshed
 usedevelop
