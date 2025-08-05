@@ -13,11 +13,7 @@ dictionaries:
 enabled: true
 ignorePaths:
   - cspell.config.yaml
-  # The requirements file
-  - .config/constraints.txt
   - ./samples/integration/*.*
-  - .config/requirements.txt
-  - .config/requirements.in
   # Other
   - "*.svg"
   - ".vscode/**"
