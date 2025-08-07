@@ -31,6 +31,7 @@ gerrit
 gitpython
 gitreview
 hashseed
+hexsha
 htmlproofer
 inlinehilite
 jeepney
