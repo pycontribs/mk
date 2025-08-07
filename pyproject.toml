@@ -5,6 +5,53 @@ requires = [
   "setuptools_scm[toml] >= 7.0.5" # required for "no-local-version" scheme
 ]
 
+[dependency-groups]
+dev = [
+  "build>=1.2.2",
+  "coverage>=7.5.3",
+  "pip>=24.0",
+  "pipx>=1.7.1",
+  "pre-commit-uv>=4.1.4",
+  "pytest>=8.0.0",
+  "pytest-benchmark>=4.0.0",
+  "pytest-plus>=0.7.0",
+  "setuptools>=80.9.0",
+  "tox>=4.28.3",
+  "twine>=6.1.0"
+]
+docs = [
+  "cairosvg>=2.6.0",
+  "markdown-exec>=1.3.0",
+  "mkdocs-autorefs",
+  "mkdocs-gen-files>=0.4.0",
+  "mkdocs-htmlproofer-plugin>=0.10.2",
+  "mkdocs-material-extensions>=1.1.1",
+  "mkdocs-material>=9.0.13",
+  "mkdocs>=1.4.2",
+  "pillow>=9.4.0",
+  "pipdeptree>=2.4.0",
+  "pymdown-extensions>=9.9.2"
+]
+integration = ["ansible-core>=2.15", "nox>=2024.3"]
+lint = ["pre-commit>=3.5.0", "pre-commit-uv>=4.1.4"]
+lower = [
+  "build==1.2.2",
+  "diskcache==5.2.1",
+  "gitpython==3.1.26",
+  "packaging==25",
+  "pip==24.0", # py_package (before installation might fail, including with tox)
+  "pluggy==1.6.0",
+  "pyyaml==5.1",
+  "rich==12.0.0", # typer, twine indirect
+  "setuptools", # py_package due to running setup.py
+  "shellingham==1.5.4",
+  "subprocess-tee==0.4.1",
+  'tomli >= 2.0.1 ; python_version < "3.11"', # tox v4
+  "twine==6.1.0",
+  "typer-config==1.4.0",
+  "typer==0.16.0"
+]
+
 [project]
 authors = [{"email" = "sorin.sbarnea@gmail.com", "name" = "Sorin Sbarnea"}]
 classifiers = [
@@ -13,7 +60,6 @@ classifiers = [
   "Intended Audience :: Developers",
   "Intended Audience :: Information Technology",
   "Intended Audience :: System Administrators",
-  "License :: OSI Approved :: MIT License",
   "Operating System :: MacOS",
   "Operating System :: POSIX",
   "Programming Language :: Python :: 3",
@@ -27,9 +73,25 @@ classifiers = [
   "Topic :: Software Development :: Testing",
   "Topic :: Utilities"
 ]
-description = "mk"
-dynamic = ["version", "dependencies", "optional-dependencies"]
-keywords = ["mk"]
+dependencies = [
+  "build>=1.2.2",
+  "diskcache>=5.2.1",
+  "gitpython>=3.1.26",
+  "packaging>=22",
+  "pip>=21.0.1",
+  "pluggy>=1.5.0",
+  "pyyaml>=5.1",
+  "rich>=10.11.0",
+  "setuptools",
+  "shellingham>=1.5.4",
+  "subprocess-tee>=0.4.1",
+  "tomli>=2.0.1 ; python_full_version < '3.11'",
+  "twine>=3.4.1",
+  "typer-config>=1.4.0",
+  "typer>=0.16.0"
+]
+dynamic = ["version"]
+license = "MIT"
 name = "mk"
 readme = "docs/README.md"
 # https://peps.python.org/pep-0621/#readme
@@ -49,6 +111,28 @@ pytest = "mk.tools.pytest:PyTestTool"
 shell = "mk.tools.shell:ShellTool"
 taskfile = "mk.tools.taskfile:TaskfileTool"
 tox = "mk.tools.tox:ToxTool"
+
+[project.optional-dependencies]
+docs = [
+  "cairosvg>=2.6.0",
+  "markdown-exec>=1.3.0",
+  "mkdocs-autorefs",
+  "mkdocs-gen-files>=0.4.0",
+  "mkdocs-htmlproofer-plugin>=0.10.2",
+  "mkdocs-material-extensions>=1.1.1",
+  "mkdocs-material>=9.0.13",
+  "mkdocs>=1.4.2",
+  "pillow>=9.4.0",
+  "pipdeptree>=2.4.0",
+  "pymdown-extensions>=9.9.2"
+]
+test = [
+  "coverage>=7.5.3",
+  "pytest>=8.0.0",
+  "pytest-benchmark>=4.0.0",
+  "pytest-plus>=0.7.0",
+  "tox>=4.28.3" # older version can fail to exit when calling --showconfig
+]
 
 [project.scripts]
 mk = "mk.__main__:cli"
@@ -149,11 +233,6 @@ known-first-party = ["mk"]
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.setuptools.dynamic]
-dependencies = {file = [".config/requirements.txt"]}
-optional-dependencies.docs = {file = [".config/requirements-docs.txt"]}
-optional-dependencies.test = {file = [".config/requirements-test.txt"]}
-
 [tool.setuptools_scm]
 # To prevent accidental pick of mobile version tags such 'v6'
 git_describe_command = [
@@ -175,21 +254,22 @@ sort_inline_tables = true
 sort_table_keys = true
 
 [tool.uv]
-# incompatible with Windows
-environments = ["platform_system != 'Windows'"]
+# do not include 'lower' constraints in default groups
+default-groups = ["dev", "docs"]
+package = true
 
-[tool.uv.pip]
-annotation-style = "line"
-custom-compile-command = "tox run -e deps"
-no-emit-package = [
-  "backports-tarfile",
-  "cryptography",
-  "exceptiongroup",
-  "jeepney",
-  "pip",
-  "resolvelib",
-  "secretstorage",
-  "twine",
-  "typing_extensions",
-  "uv"
-]
+# [tool.uv.pip]
+# annotation-style = "line"
+# custom-compile-command = "tox run -e deps"
+# no-emit-package = [
+# "backports-tarfile",
+# "cryptography",
+# "exceptiongroup",
+# "jeepney",
+# "pip",
+# "resolvelib",
+# "secretstorage",
+# "twine",
+# "typing_extensions",
+# "uv"
+# ]

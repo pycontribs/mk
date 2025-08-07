@@ -6,6 +6,7 @@ import logging
 import os
 import re
 import shlex
+import shutil
 import sys
 from configparser import ConfigParser, ParsingError
 from pathlib import Path
@@ -20,6 +21,9 @@ class ToxTool(Tool):
 
     def is_present(self, path: Path) -> bool:
         if os.path.isfile(os.path.join(path, "tox.ini")):
+            if not shutil.which("tox"):
+                msg = "Tox config found but tox is not installed. Please install it with `uv pip install tox`."
+                raise RuntimeError(msg)
             return True
         return False
 
