@@ -41,6 +41,7 @@ jobs:
             integration
             pkg
             lower
+            devel
 
           platforms: linux,macos
   build:
