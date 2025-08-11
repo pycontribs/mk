@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Determine matrix
         id: generate_matrix
-        uses: coactions/dynamic-matrix@v4
+        uses: coactions/dynamic-matrix@50bdfc992f9a028decf04588a858cc1a5d130b40 # v4
         with:
           min_python: "3.10"
           default_python: |
@@ -60,7 +60,7 @@ jobs:
       # tests. Update value if you add/remove tests.
       PYTEST_REQPASS: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           fetch-depth: 0 # needed by setuptools-scm
           submodules: true
@@ -72,11 +72,11 @@ jobs:
           && sudo apt-get install -y libvirt-dev zsh
 
       - name: Install mise
-        uses: jdx/mise-action@v2
+        uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac # v2
 
       - name: Set up Python ${{ matrix.python_version || '3.10' }}
         if: "!contains(matrix.shell, 'wsl')"
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           cache: pip
           python-version: ${{ matrix.python_version || '3.10' }}
@@ -104,7 +104,7 @@ jobs:
         if: ${{ matrix.command5 }}
 
       - name: Archive logs
-        uses: coactions/upload-artifact@v4
+        uses: coactions/upload-artifact@ec1957e16e4ecd304d3a115907ccb4ba5f636e9d # v4
         with:
           name: logs-${{ matrix.name }}.zip
           include-hidden-files: true
@@ -137,17 +137,17 @@ jobs:
 
     steps:
       # checkout needed for codecov action which needs codecov.yml file
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
 
       - name: Set up Python # likely needed for coverage
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
 
       - run: pip3 install 'coverage>=7.5.1'
 
       - name: Merge logs into a single archive
-        uses: actions/upload-artifact/merge@v4
+        uses: actions/upload-artifact/merge@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: logs.zip
           include-hidden-files: true
@@ -156,14 +156,14 @@ jobs:
           separate-directories: true
 
       - name: Download artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         continue-on-error: true # to allow rerunning this job
         with:
           name: logs.zip
           path: .
 
       - name: Upload coverage data
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5
         with:
           name: ${{ matrix.name }}
           # verbose: true # optional (default = false)
@@ -176,7 +176,7 @@ jobs:
           jobs: ${{ toJSON(needs) }}
 
       - name: Delete Merged Artifacts
-        uses: actions/upload-artifact/merge@v4
+        uses: actions/upload-artifact/merge@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           include-hidden-files: true
           delete-merged: true
