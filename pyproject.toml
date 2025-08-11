@@ -214,24 +214,16 @@ ignore = [
   "FBT",
   "SIM",
   "PGH",
-  "TCH",
+  "TC",
   "PLR",
   "INP",
   "RET"
 ]
 select = ["ALL"]
-
-[tool.ruff.lint.flake8-pytest-style]
-parametrize-values-type = "tuple"
-
-[tool.ruff.lint.isort]
-known-first-party = ["mk"]
-
-[tool.ruff.lint.per-file-ignores]
-"test/**/*.py" = ["S"]
-
-[tool.ruff.lint.pydocstyle]
-convention = "google"
+flake8-pytest-style.parametrize-values-type = "tuple"
+isort.known-first-party = ["mk"]
+per-file-ignores."test/**/*.py" = ["S"]
+pydocstyle.convention = "google"
 
 [tool.setuptools_scm]
 # To prevent accidental pick of mobile version tags such 'v6'
@@ -249,27 +241,199 @@ tag_regex = "^(?P<prefix>v)?(?P<version>[0-9.]+)(?P<suffix>.*)?$"
 write_to = "src/mk/_version.py"
 
 [tool.tomlsort]
+# used by pre-commit hook
 in_place = true
+sort_inline_arrays = false
 sort_inline_tables = true
 sort_table_keys = true
+
+[tool.tox]
+env_list = ["py", "lint", "docs", "pkg", "lower", "devel", "integration"]
+requires = [
+  "pip>=24",
+  "setuptools>=65.3",
+  "tox>=4.28.3",
+  "tox-extra>=2.1",
+  "tox-uv>=1.27"
+]
+skip_missing_interpreters = true
+
+[tool.tox.env.clean]
+commands = [
+  "find . -type d \\( -name __pycache__ -o -name .mypy_cache \\) -delete",
+  "find . -type f \\( -name '*.py[co]' -o -name \".coverage*\" -o -name coverage.xml \\) -delete"
+]
+commands_post = []
+commands_pre = []
+deps = []
+description = "Remove temporary files"
+skip_install = true
+
+[tool.tox.env.deps]
+commands = [
+  [
+    "pre-commit",
+    "run",
+    "--all-files",
+    "--show-diff-on-failure",
+    "--hook-stage",
+    "manual",
+    "deps"
+  ],
+  [
+    "pre-commit",
+    "autoupdate"
+  ],
+  {extend = true, of = ["tool", "tox", "env", "lint", "commands"], replace = "ref"}
+]
+commands_post = [
+  {extend = true, of = ["tool", "tox", "env", "lint", "commands_post"], replace = "ref"}
+]
+commands_pre = [
+  {extend = true, of = ["tool", "tox", "env", "lint", "commands_pre"], replace = "ref"}
+]
+dependency_groups = [
+  {extend = true, of = ["tool", "tox", "env", "lint", "dependency_groups"], replace = "ref"}
+]
+description = "Bump all test dependencies"
+env_dir = "{work_dir}/lint"
+runner = "{[tool.tox.testenv.lint]runner}"
+skip_install = true
+
+[tool.tox.env.devel]
+commands = [
+  [
+    "sh",
+    "-c",
+    "uv pip list -q --format=freeze | tr '\\n' ','"
+  ],
+  {extend = true, of = ["tool", "tox", "env_run_base", "commands"], replace = "ref"},
+  [
+    "git",
+    "restore",
+    "uv.lock"
+  ]
+]
+description = "Run the tests with newest dependencies (no lock and allowing prereleases)"
+runner = "uv-venv-lock-runner"
+uv_sync_flags = ["--upgrade", "--prerelease=allow"]
+uv_sync_locked = false
+
+[tool.tox.env.docs]
+commands = [
+  [
+    "sh",
+    "-c",
+    "cd docs && mk changelog"
+  ],
+  [
+    "mkdocs",
+    {default = ["build", "--strict", "--site-dir=_readthedocs/html/"], extend = true, replace = "posargs"}
+  ]
+]
+description = "Builds docs"
+extras = ["docs"]
+package = "editable"
+skip_install = false
+
+[tool.tox.env.integration]
+commands = [["ansible", "--version"], ["nox", "--version"], ["mk", "test-integration"]]
+dependency_groups = ["integration"]
+description = "Run integrations tests"
+package = "editable"
+
+[tool.tox.env.lint]
+commands = [
+  [
+    "{env_python}",
+    "-m",
+    "pre_commit",
+    "run",
+    "--all-files",
+    "--show-diff-on-failure",
+    {extend = true, replace = "posargs"}
+  ]
+]
+dependency_groups = ["lint"]
+description = "Run all linters"
+runner = "uv-venv-runner"
+skip_install = true
+
+[tool.tox.env.lower]
+dependency_groups = ["dev", "lower"]
+description = "Run the tests with lower constraints dependencies"
+runner = "uv-venv-runner"
+
+[tool.tox.env.pkg]
+commands = [["bash", "./tools/pkg.sh"]]
+commands_post = []
+commands_pre = []
+description = "Build package, verify metadata, install package and assert behavior when ansible is missing."
+skip_install = true
+
+[tool.tox.env_run_base]
+allowlist_externals = ["find", "git", "rm", "sh", "bash"]
+commands = [
+  [
+    "coverage",
+    "run",
+    "-m",
+    "pytest",
+    {default = ["-ra", "--showlocals", "--doctest-modules", "--durations=10", "-m", "not eco"], extend = true, replace = "posargs"}
+  ],
+  [
+    "sh",
+    "-c",
+    "coverage combine -a -q --data-file={env_dir}/.coverage {work_dir}/*/.coverage.* && coverage xml --data-file={env_dir}/.coverage -o {env_dir}/coverage.xml --fail-under=0 && coverage report --data-file={env_dir}/.coverage"
+  ]
+]
+commands_pre = [["sh", "-c", "rm -f {env_dir}/.coverage* 2>/dev/null || true"]]
+description = "Run tests"
+group = "test"
+package = "editable"
+pass_env = [
+  "CI",
+  "CURL_CA_BUNDLE",
+  "FORCE_COLOR",
+  "GH_*",
+  "GITHUB_*",
+  "HOME",
+  "LANG",
+  "LC_*",
+  "NO_COLOR",
+  "PYTEST_*",
+  "PYTEST_REQPASS",
+  "PYTHON*",
+  "PYTHONBREAKPOINT",
+  "PYTHONHTTPSVERIFY",
+  "PYTHONIOENCODING",
+  "PYTHONPYCACHEPREFIX",
+  "PY_COLORS",
+  "PRE_COMMIT_HOME",
+  "REQUESTS_CA_BUNDLE",
+  "RTD_TOKEN",
+  "SETUPTOOLS_SCM_DEBUG",
+  "SSH_AUTH_SOCK",
+  "SSL_CERT_FILE",
+  "UV_*"
+]
+runner = "uv-venv-lock-runner"
+
+[tool.tox.env_run_base.set_env]
+ANSIBLE_DEVEL_WARNING = "false"
+ANSIBLE_FORCE_COLOR = "1"
+ANSIBLE_NOCOWS = "1"
+COVERAGE_FILE = "{env:COVERAGE_FILE:{env_dir}/.coverage.{env_name}}"
+COVERAGE_PROCESS_START = "{tox_root}/pyproject.toml"
+DYLD_FALLBACK_LIBRARY_PATH = "/opt/homebrew/lib:{env:LD_LIBRARY_PATH}"
+FORCE_COLOR = "1"
+MK_CONFIG_FILE = "/dev/null"
+PIP_DISABLE_PIP_VERSION_CHECK = "1"
+PRE_COMMIT_COLOR = "always"
+PYTHONHASHSEED = "0"
+TERM = "dump"
 
 [tool.uv]
 # do not include 'lower' constraints in default groups
 default-groups = ["dev", "docs"]
 package = true
-
-# [tool.uv.pip]
-# annotation-style = "line"
-# custom-compile-command = "tox run -e deps"
-# no-emit-package = [
-# "backports-tarfile",
-# "cryptography",
-# "exceptiongroup",
-# "jeepney",
-# "pip",
-# "resolvelib",
-# "secretstorage",
-# "twine",
-# "typing_extensions",
-# "uv"
-# ]

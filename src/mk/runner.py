@@ -38,7 +38,9 @@ class Runner:
                 self.branch = self.repo.active_branch.name
                 logging.info("Detected active branch '%s'", self.branch)
             except TypeError:
-                logging.warning("No branch detected.")
+                # https://github.com/gitpython-developers/GitPython/issues/633#issuecomment-786710029
+                logging.debug("No branch detected.")
+                self.branch = f"detached on {self.repo.head.object.hexsha}"
 
         self.root = Path(self.repo.working_dir)
         hash_key = f"{sys.version_info.major}{sys.version_info.minor}{self.root}"
@@ -46,7 +48,7 @@ class Runner:
         self.cache = Cache(f"~/.cache/mk.{self.hash}/")
 
         if self.repo.is_dirty():
-            logging.warning("Repo is dirty on %s", self.repo.active_branch)
+            logging.warning("Repo is dirty on %s", self.branch)
 
     @cached_property
     def pm(self) -> pluggy.PluginManager:
