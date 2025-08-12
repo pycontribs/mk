@@ -519,11 +519,11 @@ wheels = [
 
 [[package]]
 name = "diskcache"
-version = "5.2.1"
+version = "5.6.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/49/07/079b8b4eb2aba194fca4562c7f014ea45a40130ebff539628c05c52d9050/diskcache-5.2.1.tar.gz", hash = "sha256:1805acd5868ac10ad547208951a1190a0ab7bbff4e70f9a07cde4dbdfaa69f64", size = 48321, upload-time = "2021-01-23T02:55:34.135Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3f/21/1c1ffc1a039ddcc459db43cc108658f32c57d271d7289a2794e401d0fdb6/diskcache-5.6.3.tar.gz", hash = "sha256:2c3a3fa2743d8535d832ec61c2054a1641f41775aa7c556758a109941e33e4fc", size = 67916, upload-time = "2023-08-31T06:12:00.316Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6a/5e/3deb8f9c83bead2af6f2cda97c4400516488464fede2853875a81e502953/diskcache-5.2.1-py3-none-any.whl", hash = "sha256:6e8137c778fd2752b93c8a8f944e939b3665d645b46774d8537dd3528ac3baa1", size = 44558, upload-time = "2021-01-23T02:55:32.682Z" },
+    { url = "https://files.pythonhosted.org/packages/3f/27/4570e78fc0bf5ea0ca45eb1de3818a23787af9b390c0b0a0033a1b8236f9/diskcache-5.6.3-py3-none-any.whl", hash = "sha256:5e31b2d5fbad117cc363ebaf6b689474db18a1f6438bc82358b024abd4c2ca19", size = 45550, upload-time = "2023-08-31T06:11:58.822Z" },
 ]
 
 [[package]]
@@ -985,7 +985,7 @@ lint = [
 ]
 lower = [
     { name = "build", specifier = "==1.3.0" },
-    { name = "diskcache", specifier = "==5.2.1" },
+    { name = "diskcache", specifier = "==5.6.3" },
     { name = "gitpython", specifier = "==3.1.45" },
     { name = "packaging", specifier = "==25" },
     { name = "pip", specifier = "==24.3.1" },
