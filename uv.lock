@@ -998,7 +998,7 @@ lower = [
     { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0.1" },
     { name = "twine", specifier = "==6.1.0" },
     { name = "typer", specifier = "==0.16.0" },
-    { name = "typer-config", specifier = "==1.4.0" },
+    { name = "typer-config", specifier = "==1.4.2" },
 ]
 
 [[package]]
@@ -1803,14 +1803,14 @@ wheels = [
 
 [[package]]
 name = "typer-config"
-version = "1.4.0"
+version = "1.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1b/09/2a04769efe34567bee0a72b15c90d204aed8545f7beced910e8b63e58fc2/typer_config-1.4.0.tar.gz", hash = "sha256:48c65954a15192ad6439ac16c4bc91e4b406fdb055f9ee66e4b467cd14cea265", size = 10579, upload-time = "2023-11-17T16:17:50.057Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2e/af/78f802bc49eaa5855082cca10e9c9d7d03469c957c149aa159561dc3d744/typer_config-1.4.2.tar.gz", hash = "sha256:69dffc0e06095b57754bfe9fb3e4caf28ab9c2c430dade6433b0ca128510f600", size = 10919, upload-time = "2024-11-08T01:59:06.635Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/43/540f046ad3e5d805a94454178ccaa8aa4d5179cfa33a802a84ae4af69faa/typer_config-1.4.0-py3-none-any.whl", hash = "sha256:e1f0287006810e08e9a063e40941f08531482810f74ffc2a25f6a8c22127fadf", size = 11205, upload-time = "2023-11-17T16:17:48.912Z" },
+    { url = "https://files.pythonhosted.org/packages/df/bd/2e9d407d7ed3f33a40d8211a481b76a0507ba4f117da9dec116c0de9871e/typer_config-1.4.2-py3-none-any.whl", hash = "sha256:b3e1f59bacc8276e5b830f35c9ca403cd85f14173169c23c3756fa816357a34f", size = 11698, upload-time = "2024-11-08T01:59:05.787Z" },
 ]
 
 [[package]]
