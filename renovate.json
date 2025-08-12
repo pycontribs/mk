@@ -8,7 +8,10 @@
     {
       "groupName": "all dependencies",
       "groupSlug": "all",
-      "matchPackageNames": ["*"]
+      "matchPackageNames": ["*"],
+      "matchJsonata": [
+        "(depType = 'dependency-groups' and managerData.depGroup != 'lower') or (depType != 'dependency-groups')"
+      ]
     }
   ],
   "separateMajorMinor": false
