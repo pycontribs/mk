@@ -51,6 +51,7 @@ lower = [
   "typer-config==1.4.2",
   "typer==0.16.0"
 ]
+pkg = ["tomli>=2.2.1; python_version<'3.11'"]
 
 [project]
 authors = [{"email" = "sorin.sbarnea@gmail.com", "name" = "Sorin Sbarnea"}]
@@ -87,8 +88,8 @@ dependencies = [
   "subprocess-tee>=0.4.1",
   "tomli>=2.0.1 ; python_full_version < '3.11'",
   "twine>=3.4.1",
-  "typer-config>=1.4.0",
-  "typer>=0.16.0"
+  "typer>=0.16.0",
+  "mk-pre"
 ]
 dynamic = ["version"]
 license = "MIT"
@@ -104,7 +105,6 @@ git = "mk.tools.git:GitTool"
 make = "mk.tools.make:MakeTool"
 node = "mk.tools.node:NodeTool"
 nox = "mk.tools.nox:NoxTool"
-pre = "mk.tools.pre:PreTool"
 pre-commit = "mk.tools.pre_commit:PreCommitTool"
 pypackage = "mk.tools.py_package:PyPackageTool"
 pytest = "mk.tools.pytest:PyTestTool"
@@ -179,13 +179,22 @@ profile = "black"
 [tool.mypy]
 color_output = true
 error_summary = true
-exclude = [".ansible", ".cache", ".tox", "build", "dist"]
+exclude = [
+  ".ansible",
+  ".cache",
+  ".tox",
+  ".venv",
+  "node_modules",
+  "build",
+  "dist",
+  "site"
+]
 python_version = "3.10"
 strict = true
 
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
-module = ["diskcache", "pytest_benchmark.fixture"]
+module = ["git.*", "diskcache", "pytest_benchmark.fixture"]
 
 [tool.ruff]
 # Same as Black.
@@ -222,7 +231,7 @@ ignore = [
 select = ["ALL"]
 flake8-pytest-style.parametrize-values-type = "tuple"
 isort.known-first-party = ["mk"]
-per-file-ignores."test/**/*.py" = ["S"]
+per-file-ignores."**/test/**/*.py" = ["S"]
 pydocstyle.convention = "google"
 
 [tool.setuptools_scm]
@@ -252,9 +261,9 @@ env_list = ["py", "lint", "docs", "pkg", "lower", "devel", "integration"]
 requires = [
   "pip>=24",
   "setuptools>=65.3",
-  "tox>=4.28.3",
+  "tox>=4.28.4",
   "tox-extra>=2.1",
-  "tox-uv>=1.27"
+  "tox-uv>=1.28"
 ]
 skip_missing_interpreters = true
 
@@ -333,14 +342,12 @@ commands = [
 ]
 description = "Builds docs"
 extras = ["docs"]
-package = "editable"
 skip_install = false
 
 [tool.tox.env.integration]
 commands = [["ansible", "--version"], ["nox", "--version"], ["mk", "test-integration"]]
 dependency_groups = ["integration"]
 description = "Run integrations tests"
-package = "editable"
 
 [tool.tox.env.lint]
 commands = [
@@ -360,8 +367,10 @@ runner = "uv-venv-runner"
 skip_install = true
 
 [tool.tox.env.lower]
+commands_post = [["uv", "pip", "check"]]
 dependency_groups = ["dev", "lower"]
 description = "Run the tests with lower constraints dependencies"
+editable = true
 runner = "uv-venv-runner"
 
 [tool.tox.env.pkg]
@@ -369,6 +378,7 @@ commands = [["bash", "./tools/pkg.sh"]]
 commands_post = []
 commands_pre = []
 description = "Build package, verify metadata, install package and assert behavior when ansible is missing."
+group = "pkg"
 skip_install = true
 
 [tool.tox.env_run_base]
@@ -437,3 +447,11 @@ TERM = "dump"
 # do not include 'lower' constraints in default groups
 default-groups = ["dev", "docs"]
 package = true
+
+[tool.uv.sources]
+mk-pre = {workspace = true}
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+# exclude = ["packages/seeds"]

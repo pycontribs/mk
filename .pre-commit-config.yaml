@@ -48,7 +48,6 @@ repos:
     rev: v25.8.1
     hooks:
       - id: ansible-lint
-        language_version: python3.10 # minimal supported officially
         args: [--fix]
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.37.1

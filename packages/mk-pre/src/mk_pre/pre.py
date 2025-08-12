@@ -9,8 +9,8 @@ import shutil
 from pathlib import Path
 
 from mk.exec import run_or_fail
-from mk.pre import CFG_FILE
 from mk.tools import Action, Tool
+from mk_pre.__main__ import CFG_FILE
 
 
 class PreTool(Tool):
