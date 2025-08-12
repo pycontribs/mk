@@ -991,7 +991,7 @@ lower = [
     { name = "pip", specifier = "==24.3.1" },
     { name = "pluggy", specifier = "==1.6.0" },
     { name = "pyyaml", specifier = "==5.1" },
-    { name = "rich", specifier = "==12.0.0" },
+    { name = "rich", specifier = "==12.6.0" },
     { name = "setuptools" },
     { name = "shellingham", specifier = "==1.5.4" },
     { name = "subprocess-tee", specifier = "==0.4.2" },
@@ -1615,15 +1615,15 @@ wheels = [
 
 [[package]]
 name = "rich"
-version = "12.0.0"
+version = "12.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "commonmark" },
     { name = "pygments" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/88/fd/13ee53f8bdf538b64c8ed505a92d3bc1f2c0d1071173d65216af61e0e88b/rich-12.0.0.tar.gz", hash = "sha256:14bfd0507edc633e021b02c45cbf7ca22e33b513817627b8de3412f047a3e798", size = 206045, upload-time = "2022-03-10T15:31:16.385Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/11/23/814edf09ec6470d52022b9e95c23c1bef77f0bc451761e1504ebd09606d3/rich-12.6.0.tar.gz", hash = "sha256:ba3a3775974105c221d31141f2c116f4fd65c5ceb0698657a11e9f295ec93fd0", size = 220114, upload-time = "2022-10-02T16:27:00.363Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/93/ac/463598448d578f1f9168eb17405b2faebb4e76123c986b2c4ab64d387d5e/rich-12.0.0-py3-none-any.whl", hash = "sha256:fdcd2f8d416e152bcf35c659987038d1ae5a7bd336e821ca7551858a4c7e38a9", size = 224015, upload-time = "2022-03-10T15:31:14.82Z" },
+    { url = "https://files.pythonhosted.org/packages/32/60/81ac2e7d1e3b861ab478a72e3b20fc91c4302acd2274822e493758941829/rich-12.6.0-py3-none-any.whl", hash = "sha256:a4eb26484f2c82589bd9a17c73d32a010b1e29d89f1604cd9bf3a2097b81bb5e", size = 237505, upload-time = "2022-10-02T16:26:58.086Z" },
 ]
 
 [[package]]
