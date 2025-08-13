@@ -41,7 +41,7 @@ lower = [
   "packaging==25",
   "pip==25.2", # py_package (before installation might fail, including with tox)
   "pluggy==1.6.0",
-  "pyyaml==5.1",
+  "pyyaml==5.4.1",
   "rich==12.6.0", # typer, twine indirect
   "setuptools", # py_package due to running setup.py
   "shellingham==1.5.4",
