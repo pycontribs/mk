@@ -5,7 +5,7 @@ ci:
     - renovate-config-validator # container limits
 repos:
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 41.65.1
+    rev: 41.66.1
     hooks:
       - id: renovate-config-validator
         args: [--strict]
