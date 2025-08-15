@@ -1,8 +1,7 @@
 """Tests"""
 
+from mk_pre.__main__ import app
 from typer.testing import CliRunner
-
-from mk.pre import app
 
 runner = CliRunner()
 
