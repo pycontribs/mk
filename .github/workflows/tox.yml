@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: Determine matrix
         id: generate_matrix
-        uses: coactions/dynamic-matrix@50bdfc992f9a028decf04588a858cc1a5d130b40 # v4
+        uses: coactions/dynamic-matrix@adb35c02b55e67564ae7feebfcbc3358d8d02900 # v4
         with:
           min_python: "3.10"
           default_python: |
