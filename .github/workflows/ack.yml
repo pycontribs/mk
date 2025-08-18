@@ -1,10 +1,21 @@
 ---
 # See https://github.com/ansible/team-devtools/blob/main/.github/workflows/ack.yml
+# cspell: ignore amannn
 name: ack
 on:
   pull_request_target:
-    types: [opened, labeled, unlabeled, synchronize]
+    types: [edited, opened, labeled, unlabeled, synchronize]
+  workflow_dispatch:
 jobs:
+  # ack:
+  #   uses: ansible/team-devtools/.github/workflows/ack.yml@main
+  #   secrets: inherit
   ack:
-    uses: ansible/team-devtools/.github/workflows/ack.yml@main
-    secrets: inherit
+    runs-on: ubuntu-24.04
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
