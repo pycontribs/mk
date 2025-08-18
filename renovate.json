@@ -1,20 +1,20 @@
 {
-	"groupName": "all dependencies",
-	"groupSlug": "all",
-	"lockFileMaintenance": {
-		"enabled": true
-	},
-	"packageRules": [
-		{
-			"automerge": false,
-			"groupName": "all dependencies",
-			"groupSlug": "all",
-			"matchPackageNames": ["*"],
-			"matchJsonata": [
-				"(depType = 'dependency-groups' and managerData.depGroup != 'lower') or (depType != 'dependency-groups')"
-			],
-			"minimumReleaseAge": "2 days"
-		}
-	],
-	"separateMajorMinor": false
+  "groupName": "all dependencies",
+  "groupSlug": "all",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "automerge": false,
+      "groupName": "all dependencies",
+      "groupSlug": "all",
+      "matchPackageNames": ["*"],
+      "matchJsonata": [
+        "(depType = 'dependency-groups' and managerData.depGroup != 'lower') or (depType != 'dependency-groups')"
+      ],
+      "minimumReleaseAge": "2 days"
+    }
+  ],
+  "separateMajorMinor": false
 }

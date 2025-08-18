@@ -2,63 +2,63 @@
 Inspired by https://spec.draculatheme.com/ specification
 */
 :root {
-	--ansi-red: #ff5555;
-	--ansi-green: #50fa7b;
-	--ansi-blue: #265285;
-	--ansi-yellow: #ffb86c; /* Orange */
-	--ansi-magenta: #bd93f9; /* Purple */
-	--ansi-cyan: #8be9fd;
-	--ansi-black: #282a36;
-	--ansi-white: #f8f8f2;
+  --ansi-red: #ff5555;
+  --ansi-green: #50fa7b;
+  --ansi-blue: #265285;
+  --ansi-yellow: #ffb86c; /* Orange */
+  --ansi-magenta: #bd93f9; /* Purple */
+  --ansi-cyan: #8be9fd;
+  --ansi-black: #282a36;
+  --ansi-white: #f8f8f2;
 }
 
 .-Color-Green,
 .-Color-Faint-Green,
 .-Color-Bold-Green {
-	color: var(--ansi-green);
+  color: var(--ansi-green);
 }
 .-Color-Red,
 .-Color-Faint-Red,
 .-Color-Bold-Red {
-	color: var(--ansi-red);
+  color: var(--ansi-red);
 }
 .-Color-Yellow,
 .-Color-Faint-Yellow,
 .-Color-Bold-Yellow {
-	color: var(--ansi-yellow);
+  color: var(--ansi-yellow);
 }
 .-Color-Blue,
 .-Color-Faint-Blue,
 .-Color-Bold-Blue {
-	color: var(--ansi-blue);
+  color: var(--ansi-blue);
 }
 .-Color-Magenta,
 .-Color-Faint-Magenta,
 .-Color-Bold-Magenta {
-	color: var(--ansi-magenta);
+  color: var(--ansi-magenta);
 }
 .-Color-Cyan,
 .-Color-Faint-Cyan,
 .-Color-Bold-Cyan {
-	color: var(--ansi-cyan);
+  color: var(--ansi-cyan);
 }
 .-Color-White,
 .-Color-Faint-White,
 .-Color-Bold-White {
-	color: var(--ansi-white);
+  color: var(--ansi-white);
 }
 .-Color-Black,
 .-Color-Faint-Black,
 .-Color-Bold-Black {
-	color: var(--ansi-black);
+  color: var(--ansi-black);
 }
 
 .-Color-Faint {
-	opacity: 0.5;
+  opacity: 0.5;
 }
 
 .-Color-Bold {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .-Color-Black-BGBlack,
@@ -70,7 +70,7 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGBlack,
 .-Color-Cyan-BGBlack,
 .-Color-White-BGBlack {
-	background-color: var(--ansi-black);
+  background-color: var(--ansi-black);
 }
 
 .-Color-Black-BGRed,
@@ -82,7 +82,7 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGRed,
 .-Color-Cyan-BGRed,
 .-Color-White-BGRed {
-	background-color: var(--ansi-red);
+  background-color: var(--ansi-red);
 }
 
 .-Color-Black-BGGreen,
@@ -94,7 +94,7 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGGreen,
 .-Color-Cyan-BGGreen,
 .-Color-White-BGGreen {
-	background-color: var(--ansi-green);
+  background-color: var(--ansi-green);
 }
 
 .-Color-Black-BGYellow,
@@ -106,7 +106,7 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGYellow,
 .-Color-Cyan-BGYellow,
 .-Color-White-BGYellow {
-	background-color: var(--ansi-yellow);
+  background-color: var(--ansi-yellow);
 }
 
 .-Color-Black-BGBlue,
@@ -118,7 +118,7 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGBlue,
 .-Color-Cyan-BGBlue,
 .-Color-White-BGBlue {
-	background-color: var(--ansi-blue);
+  background-color: var(--ansi-blue);
 }
 
 .-Color-Black-BGMagenta,
@@ -130,7 +130,7 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGMagenta,
 .-Color-Cyan-BGMagenta,
 .-Color-White-BGMagenta {
-	background-color: var(--ansi-magenta);
+  background-color: var(--ansi-magenta);
 }
 
 .-Color-Black-BGCyan,
@@ -142,7 +142,7 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGCyan,
 .-Color-Cyan-BGCyan,
 .-Color-White-BGCyan {
-	background-color: var(--ansi-cyan);
+  background-color: var(--ansi-cyan);
 }
 
 .-Color-Black-BGWhite,
@@ -154,13 +154,13 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGWhite,
 .-Color-Cyan-BGWhite,
 .-Color-White-BGWhite {
-	background-color: var(--ansi-white);
+  background-color: var(--ansi-white);
 }
 
 .-Color-Black-BGBlack,
 .-Color-Red-BGRed,
 .-Color-Blue-BGBlue {
-	text-shadow: 0 0 1px var(--ansi-white);
+  text-shadow: 0 0 1px var(--ansi-white);
 }
 
 .-Color-Green-BGGreen,
@@ -170,5 +170,5 @@ Inspired by https://spec.draculatheme.com/ specification
 .-Color-Magenta-BGMagenta,
 .-Color-Cyan-BGGreen,
 .-Color-Green-BGCyan {
-	text-shadow: 0 0 1px var(--ansi-black);
+  text-shadow: 0 0 1px var(--ansi-black);
 }
