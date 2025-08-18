@@ -49,7 +49,7 @@ lower = [
   'tomli >= 2.0.1 ; python_version < "3.11"', # tox v4
   "twine==6.1.0",
   "typer-config==1.4.2",
-  "typer==0.16.0"
+  "typer==0.16.1"
 ]
 pkg = ["tomli>=2.2.1; python_version<'3.11'"]
 
