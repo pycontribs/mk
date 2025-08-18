@@ -1,10 +1,10 @@
 {
-  "editor.formatOnSave": true,
-  "prettier.proseWrap": "always",
-  "python.testing.nosetestsEnabled": false,
-  "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false,
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  }
+	"editor.formatOnSave": true,
+	"prettier.proseWrap": "always",
+	"python.testing.nosetestsEnabled": false,
+	"python.testing.pytestEnabled": true,
+	"python.testing.unittestEnabled": false,
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.black-formatter"
+	}
 }

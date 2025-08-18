@@ -9,14 +9,11 @@ repos:
     hooks:
       - id: renovate-config-validator
         args: [--strict]
-  - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.6.2
+  - repo: https://github.com/biomejs/pre-commit
+    rev: "v2.1.1"
     hooks:
-      - id: prettier
-        always_run: true
-        additional_dependencies:
-          - prettier
-          - prettier-plugin-sort-json
+      - id: biome-check
+        args: [--unsafe]
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v9.2.0
     hooks:
