@@ -13,8 +13,6 @@
         url: https://github.com/containers/podman
       - name: ansible-lint
         url: https://github.com/ansible/ansible-lint
-      - name: cookiecutter
-        url: https://github.com/cookiecutter/cookiecutter
       - name: typeshed
         url: https://github.com/python/typeshed
       - name: flask-babel

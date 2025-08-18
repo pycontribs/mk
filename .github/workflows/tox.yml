@@ -2,16 +2,20 @@
 name: tox
 
 on:
-  merge_group:
-  push: # only publishes pushes to the main branch to TestPyPI
-    branches: # any integration branch but not tag
-      - main
-  pull_request:
+  # merge_group:
+  push:
     branches:
       - main
-  schedule:
-    - cron: "0 0 * * *"
-  workflow_call:
+  # pull_request:
+  #   branches:
+  #     - main
+  # schedule:
+  #   - cron: "0 0 * * *"
+  # workflow_call:
+  # Make this run only after 'ack' runs
+  workflow_run:
+    workflows: ["ack"]
+    types: [completed]
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
@@ -23,6 +27,7 @@ env:
 jobs:
   prepare:
     name: prepare
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.generate_matrix.outputs.matrix }}
@@ -145,8 +150,10 @@ jobs:
           python-version: "3.13"
 
       - run: pip3 install 'coverage>=7.5.1'
+        if: ${{ needs.build.result != 'skipped' }}
 
       - name: Merge logs into a single archive
+        if: ${{ needs.build.result != 'skipped' }}
         uses: actions/upload-artifact/merge@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: logs.zip
@@ -156,6 +163,7 @@ jobs:
           separate-directories: true
 
       - name: Download artifacts
+        if: ${{ needs.build.result != 'skipped' }}
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         continue-on-error: true # to allow rerunning this job
         with:
@@ -163,6 +171,7 @@ jobs:
           path: .
 
       - name: Upload coverage data
+        if: ${{ needs.build.result != 'skipped' }}
         uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5
         with:
           name: ${{ matrix.name }}
