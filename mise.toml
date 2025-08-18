@@ -1,3 +1,4 @@
 [tools]
+biome = "latest"
 github-cli = "latest"
 python = "latest"
