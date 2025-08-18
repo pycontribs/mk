@@ -2,6 +2,10 @@
 # See https://github.com/ansible/team-devtools/blob/main/.github/workflows/ack.yml
 # cspell: ignore amannn
 name: ack
+run-name: >
+  ${{ github.workflow }}:
+  ${{ github.event.pull_request.title || github.event.head_commit.message }}
+
 on:
   pull_request_target:
     types: [edited, opened, labeled, unlabeled, synchronize]
