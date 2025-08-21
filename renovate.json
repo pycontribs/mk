@@ -10,9 +10,6 @@
       "groupName": "all dependencies",
       "groupSlug": "all",
       "matchPackageNames": ["*"],
-      "matchJsonata": [
-        "(depType = 'dependency-groups' and managerData.depGroup != 'lower') or (depType != 'dependency-groups')"
-      ],
       "minimumReleaseAge": "2 days"
     }
   ],
