@@ -60,7 +60,7 @@ jobs:
       - name: Wait for ack workflow to pass
         id: wait
         # cspell: ignore smartcontractkit chainlink
-        uses: smartcontractkit/chainlink-github-actions/utils/wait-for-workflows@b49a9d04744b0237908831730f8553f26d73a94b # v2.3.17
+        uses: smartcontractkit/chainlink-github-actions/utils/wait-for-workflows@1ada5d85b0de3439a0ba238210d40605b5ed6704 # v2.3.32
         with:
           max-timeout: "120"
           polling-interval: "15"
