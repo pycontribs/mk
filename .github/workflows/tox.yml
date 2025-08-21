@@ -69,6 +69,7 @@ jobs:
           DEBUG: "true"
 
       - name: Wait for required GitHub Checks to pass
+        if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
