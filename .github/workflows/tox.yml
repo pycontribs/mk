@@ -128,7 +128,7 @@ jobs:
           && sudo apt-get install -y libvirt-dev zsh
 
       - name: Install mise
-        uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac # v2
+        uses: jdx/mise-action@ca0c5fc9c8a8386dae8ba5d37608a083a307991c # v3
 
       - name: Set up Python ${{ matrix.python_version || '3.10' }}
         if: "!contains(matrix.shell, 'wsl')"
