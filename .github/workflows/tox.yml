@@ -1,23 +1,26 @@
 ---
 name: tox
+run-name: >
+  ${{ github.workflow }}:
+  ${{ github.event.pull_request.title || github.event.head_commit.message }}
 
 on:
-  # merge_group:
+  merge_group:
   push:
     branches:
       - main
-  # pull_request:
-  #   branches:
-  #     - main
-  # schedule:
-  #   - cron: "0 0 * * *"
-  # workflow_call:
-  # Make this run only after 'ack' runs
-  workflow_run:
-    workflows: ["ack"]
-    types: [completed]
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_call:
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.sha }}
+  group: >
+    ${{ github.workflow }}-
+    ${{ github.event_name }}-
+    ${{ github.event.pull_request.number }}-
+    ${{ github.sha }}
   cancel-in-progress: true
 
 env:
@@ -27,11 +30,18 @@ env:
 jobs:
   prepare:
     name: prepare
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
+    permissions:
+      checks: read
     outputs:
       matrix: ${{ steps.generate_matrix.outputs.matrix }}
     steps:
+      # - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      #   with:
+      #     fetch-depth: 0 # needed by setuptools-scm
+      #     ref: ${{ github.ref }}   # ensures you have the branch, not detached (needed by gh cli)
+      #     submodules: true
+
       - name: Determine matrix
         id: generate_matrix
         uses: coactions/dynamic-matrix@adb35c02b55e67564ae7feebfcbc3358d8d02900 # v4
@@ -47,8 +57,51 @@ jobs:
             pkg
             lower
             devel
-
           platforms: linux,macos
+
+      # https://github.com/orgs/community/discussions/16059
+      - name: Wait for ack workflow to pass
+        id: wait
+        # cspell: ignore smartcontractkit chainlink
+        uses: smartcontractkit/chainlink-github-actions/utils/wait-for-workflows@b49a9d04744b0237908831730f8553f26d73a94b # v2.3.17
+        with:
+          max-timeout: "120"
+          polling-interval: "15"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          DEBUG: "true"
+
+      - name: Wait for required GitHub Checks to pass
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+          TIMEOUT=120
+          INTERVAL=10
+          CHECK_NAME="pre-commit"
+          MAX_RETRIES=$((TIMEOUT / INTERVAL))
+          for ((i=1; i<=MAX_RETRIES; i++)); do
+            # https://docs.github.com/en/graphql/reference/enums#checkrunstate
+            lines=()
+            while IFS= read -r line; do
+              lines+=("$line")
+            done < <(gh pr checks --repo ${{ github.repository }} --required --json name,state,link --jq ".[] | select(.name | test(\"^${CHECK_NAME}\")) | .state,.link" ${{ github.event.pull_request.number || github.ref_name }} || true)
+            state=${lines[0]}
+            link=${lines[1]}
+            if [[ "$state" == "SUCCESS" ]]; then
+              exit 0
+            elif [[ "$state" =~ ^(TIME_OUT|FAILURE|ERROR|STALE|SKIPPED|CANCELLED)$ ]]; then
+              echo "::error title=Check ${CHECK_NAME}::Check ${CHECK_NAME} failed due to reporting ${state} ${link}"
+              exit 1
+            fi
+            # Other known values: QUEUED, PENDING
+            echo "::debug title=Check ${CHECK_NAME}::Attempt ${i}/${MAX_RETRIES}: ack state='${state}' (waiting ${INTERVAL}s)..."
+            sleep "${INTERVAL}"
+          done
+          echo "::error title=Check ${CHECK_NAME}::Check ${CHECK_NAME} did not reach SUCCESS within ${TIMEOUT}s. Last state: ${state} ${link}"
+          exit 1
+
   build:
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os || 'ubuntu-24.04' }}

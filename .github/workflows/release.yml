@@ -1,30 +1,17 @@
 ---
 name: release
-
 on:
   release:
     types: [published]
 jobs:
   pypi:
-    name: Publish to PyPI registry
+    name: Publish ${{ github.event.release.tag_name || '<testing>' }} to pypi.org
     environment: release
     runs-on: ubuntu-24.04
     permissions:
       id-token: write
-
-    env:
-      FORCE_COLOR: 1
-      PY_COLORS: 1
-      TOXENV: pkg
-
     steps:
-      - name: Switch to using Python 3.10 by default
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: "3.13"
-
-      - name: Install tox
-        run: python3 -m pip install --user "tox>=4.0.0"
+      - uses: astral-sh/setup-uv@v3
 
       - name: Check out src from Git
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
@@ -33,9 +20,23 @@ jobs:
           submodules: true
 
       - name: Build dists
-        run: python3 -m tox
+        run: uv build --all-packages
+
+      - name: Run smoke tests for wheels
+        run: uv run --isolated --no-project $(printf -- "--with %s " dist/*.whl) ./tools/smoke.sh
+
+      - name: Run smoke tests for source distribution
+        run: uv run --isolated --no-project $(printf -- "--with %s " dist/*.tar.gz) ./tools/smoke.sh
+
+      - name: Attach dists to the release
+        if: github.event_name == 'release'
+        # cspell: ignore softprops
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.event.release.tag_name }}
+          files: dist/*
 
       - name: Publish to pypi.org
-        if: >- # "create" workflows run separately from "push" & "pull_request"
-          github.event_name == 'release'
-        uses: pypa/gh-action-pypi-publish@release/v1
+        # "create" workflows run separately from "push" & "pull_request"
+        if: github.event_name == 'release'
+        run: uv publish --trusted-publishing always

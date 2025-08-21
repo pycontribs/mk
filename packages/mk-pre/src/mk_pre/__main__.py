@@ -37,7 +37,6 @@ def default(repos: Annotated[list[str], typer.Option()] = []) -> None:
     """Implicit entry point."""
     if repos is None:
         repos = []
-    # breakpoint()
     app.repos = list(filter(lambda s: not s.startswith("_"), repos))
 
 
