@@ -1,8 +1,5 @@
 ---
 name: tox
-run-name: >
-  ${{ github.workflow }}:
-  ${{ github.event.pull_request.title || github.event.head_commit.message }}
 
 on:
   merge_group:
@@ -87,8 +84,8 @@ jobs:
             while IFS= read -r line; do
               lines+=("$line")
             done < <(gh pr checks --repo ${{ github.repository }} --required --json name,state,link --jq ".[] | select(.name | test(\"^${CHECK_NAME}\")) | .state,.link" ${{ github.event.pull_request.number || github.ref_name }} || true)
-            state=${lines[0]}
-            link=${lines[1]}
+            state=${lines[0]-}
+            link=${lines[1]-}
             if [[ "$state" == "SUCCESS" ]]; then
               exit 0
             elif [[ "$state" =~ ^(TIME_OUT|FAILURE|ERROR|STALE|SKIPPED|CANCELLED)$ ]]; then
