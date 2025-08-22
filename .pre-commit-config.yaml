@@ -50,7 +50,7 @@ repos:
       - id: toml-sort-fix
         alias: toml
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.9
+    rev: v0.12.10
     hooks:
       - id: ruff-format
         alias: ruff
@@ -80,7 +80,7 @@ repos:
 
   # keep at bottom as these are slower
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.8.12
+    rev: 0.8.13
     hooks:
       - id: uv-sync
       - id: uv-lock
@@ -90,7 +90,7 @@ repos:
         stages: [manual]
       - id: uv-lock
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.8.1
+    rev: v25.8.2
     hooks:
       - id: ansible-lint
         args: [--fix]
