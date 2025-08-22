@@ -60,7 +60,7 @@ jobs:
       - name: Wait for ack workflow to pass
         id: wait
         # cspell: ignore smartcontractkit chainlink
-        uses: smartcontractkit/chainlink-github-actions/utils/wait-for-workflows@b49a9d04744b0237908831730f8553f26d73a94b # v2.3.17
+        uses: smartcontractkit/chainlink-github-actions/utils/wait-for-workflows@1ada5d85b0de3439a0ba238210d40605b5ed6704 # v2.3.32
         with:
           max-timeout: "120"
           polling-interval: "15"
@@ -128,7 +128,7 @@ jobs:
           && sudo apt-get install -y libvirt-dev zsh
 
       - name: Install mise
-        uses: jdx/mise-action@c37c93293d6b742fc901e1406b8f764f6fb19dac # v2
+        uses: jdx/mise-action@ca0c5fc9c8a8386dae8ba5d37608a083a307991c # v3
 
       - name: Set up Python ${{ matrix.python_version || '3.10' }}
         if: "!contains(matrix.shell, 'wsl')"
@@ -223,7 +223,7 @@ jobs:
 
       - name: Upload coverage data
         if: ${{ needs.build.result != 'skipped' }}
-        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5
+        uses: codecov/codecov-action@fdcc8476540edceab3de004e990f80d881c6cc00 # v5
         with:
           name: ${{ matrix.name }}
           # verbose: true # optional (default = false)
