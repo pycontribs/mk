@@ -1,16 +1,16 @@
 {
-  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "autoApprove": false,
   "automerge": true,
   "automergeStrategy": "squash",
   "configMigration": true,
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "groupName": "all dependencies",
   "groupSlug": "all",
+  "ignorePaths": ["samples/**"],
   "labels": ["chore", "dependencies"],
   "lockFileMaintenance": {
     "enabled": true
   },
-  "rangeStrategy": "update-lockfile",
   "packageRules": [
     {
       "automerge": false,
@@ -23,6 +23,7 @@
   "pre-commit": {
     "enabled": true
   },
+  "rangeStrategy": "update-lockfile",
   "separateMajorMinor": false,
   "separateMinorPatch": false
 }
