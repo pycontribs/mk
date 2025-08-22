@@ -1,5 +1,10 @@
 {
   "formatter": {
     "indentStyle": "space" // default is `tab`
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
   }
 }

@@ -1,6 +1,12 @@
 {
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
+  "autoApprove": false,
+  "automerge": true,
+  "automergeStrategy": "squash",
+  "configMigration": true,
   "groupName": "all dependencies",
   "groupSlug": "all",
+  "labels": ["chore", "dependencies"],
   "lockFileMaintenance": {
     "enabled": true
   },
@@ -13,5 +19,9 @@
       "minimumReleaseAge": "2 days"
     }
   ],
-  "separateMajorMinor": false
+  "pre-commit": {
+    "enabled": true
+  },
+  "separateMajorMinor": false,
+  "separateMinorPatch": false
 }

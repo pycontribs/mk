@@ -5,15 +5,17 @@ ci:
     - renovate-config-validator # container limits
 repos:
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 41.81.2
+    rev: 41.82.4
     hooks:
       - id: renovate-config-validator
+        alias: renovate
         args: [--strict]
   - repo: https://github.com/biomejs/pre-commit
     rev: "v2.2.0"
     hooks:
       - id: biome-check
         name: biome
+        alias: biome
         args: [--unsafe]
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v9.2.0
