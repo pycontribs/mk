@@ -5,7 +5,6 @@
 .mypy_cache
 .tox
 .venv
-.vscode
 CHANGELOG.md
 CMakeFiles
 __pycache__
