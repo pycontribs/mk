@@ -19,14 +19,6 @@ build:
     - PATH=~/.local/share/mise/shims:$PATH ~/.local/bin/mise doctor || true
     - PATH=~/.local/share/mise/shims:$PATH ~/.local/bin/mise exec --command "python3 -m pip install tox"
     - PATH=~/.local/share/mise/shims:$PATH ~/.local/bin/mise exec --command "python3 -m tox -e docs"
-python:
-  install:
-    - method: pip
-      path: tox
-    - method: pip
-      path: .
-      extra_requirements:
-        - docs
 submodules:
   include: all
   recursive: true

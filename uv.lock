@@ -838,6 +838,9 @@ name = "mk"
 source = { editable = "." }
 dependencies = [
     { name = "build" },
+    { name = "cffi" },
+    { name = "chardet" },
+    { name = "colorama" },
     { name = "diskcache" },
     { name = "gitpython" },
     { name = "mk-pre" },
@@ -852,34 +855,14 @@ dependencies = [
     { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "twine" },
     { name = "typer" },
-]
-
-[package.optional-dependencies]
-docs = [
-    { name = "cairosvg" },
-    { name = "markdown-exec" },
-    { name = "mkdocs" },
-    { name = "mkdocs-autorefs" },
-    { name = "mkdocs-gen-files" },
-    { name = "mkdocs-htmlproofer-plugin" },
-    { name = "mkdocs-material" },
-    { name = "mkdocs-material-extensions" },
-    { name = "pillow" },
-    { name = "pipdeptree" },
-    { name = "pymdown-extensions" },
-]
-test = [
-    { name = "coverage" },
-    { name = "pytest" },
-    { name = "pytest-benchmark" },
-    { name = "pytest-plus" },
-    { name = "tox" },
+    { name = "uv" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "build" },
     { name = "coverage" },
+    { name = "nodeenv" },
     { name = "pip" },
     { name = "pipx" },
     { name = "pre-commit-uv" },
@@ -888,7 +871,6 @@ dev = [
     { name = "pytest-plus" },
     { name = "setuptools" },
     { name = "tox" },
-    { name = "twine" },
 ]
 docs = [
     { name = "cairosvg" },
@@ -912,23 +894,6 @@ lint = [
     { name = "pre-commit" },
     { name = "pre-commit-uv" },
 ]
-lower = [
-    { name = "build" },
-    { name = "diskcache" },
-    { name = "gitpython" },
-    { name = "packaging" },
-    { name = "pip" },
-    { name = "pluggy" },
-    { name = "pyyaml" },
-    { name = "rich" },
-    { name = "setuptools" },
-    { name = "shellingham" },
-    { name = "subprocess-tee" },
-    { name = "tomli", marker = "python_full_version < '3.11'" },
-    { name = "twine" },
-    { name = "typer" },
-    { name = "typer-config" },
-]
 pkg = [
     { name = "tomli", marker = "python_full_version < '3.11'" },
 ]
@@ -936,43 +901,31 @@ pkg = [
 [package.metadata]
 requires-dist = [
     { name = "build", specifier = ">=1.2.2" },
-    { name = "cairosvg", marker = "extra == 'docs'", specifier = ">=2.6.0" },
-    { name = "coverage", marker = "extra == 'test'", specifier = ">=7.5.3" },
+    { name = "cffi", specifier = ">=1.17.1" },
+    { name = "chardet", specifier = ">=5.2" },
+    { name = "colorama", specifier = ">=0.4.6" },
     { name = "diskcache", specifier = ">=5.2.1" },
     { name = "gitpython", specifier = ">=3.1.26" },
-    { name = "markdown-exec", marker = "extra == 'docs'", specifier = ">=1.3.0" },
     { name = "mk-pre", editable = "packages/mk-pre" },
-    { name = "mkdocs", marker = "extra == 'docs'", specifier = ">=1.4.2" },
-    { name = "mkdocs-autorefs", marker = "extra == 'docs'" },
-    { name = "mkdocs-gen-files", marker = "extra == 'docs'", specifier = ">=0.4.0" },
-    { name = "mkdocs-htmlproofer-plugin", marker = "extra == 'docs'", specifier = ">=0.10.2" },
-    { name = "mkdocs-material", marker = "extra == 'docs'", specifier = ">=9.0.13" },
-    { name = "mkdocs-material-extensions", marker = "extra == 'docs'", specifier = ">=1.1.1" },
-    { name = "packaging", specifier = ">=22" },
-    { name = "pillow", marker = "extra == 'docs'", specifier = ">=9.4.0" },
+    { name = "packaging", specifier = ">=25" },
     { name = "pip", specifier = ">=21.0.1" },
-    { name = "pipdeptree", marker = "extra == 'docs'", specifier = ">=2.4.0" },
-    { name = "pluggy", specifier = ">=1.5.0" },
-    { name = "pymdown-extensions", marker = "extra == 'docs'", specifier = ">=9.9.2" },
-    { name = "pytest", marker = "extra == 'test'", specifier = ">=8.0.0" },
-    { name = "pytest-benchmark", marker = "extra == 'test'", specifier = ">=4.0.0" },
-    { name = "pytest-plus", marker = "extra == 'test'", specifier = ">=0.7.0" },
+    { name = "pluggy", specifier = ">=1.6.0" },
     { name = "pyyaml", specifier = ">=5.1" },
     { name = "rich", specifier = ">=10.11.0" },
-    { name = "setuptools" },
+    { name = "setuptools", specifier = ">=69.0.0" },
     { name = "shellingham", specifier = ">=1.5.4" },
     { name = "subprocess-tee", specifier = ">=0.4.1" },
-    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0.1" },
-    { name = "tox", marker = "extra == 'test'", specifier = ">=4.28.3" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" },
     { name = "twine", specifier = ">=3.4.1" },
     { name = "typer", specifier = ">=0.16.0" },
+    { name = "uv", specifier = ">=0.8.8" },
 ]
-provides-extras = ["docs", "test"]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "build", specifier = ">=1.2.2" },
     { name = "coverage", specifier = ">=7.5.3" },
+    { name = "nodeenv", specifier = ">=1.9.0" },
     { name = "pip", specifier = ">=24.0" },
     { name = "pipx", specifier = ">=1.7.1" },
     { name = "pre-commit-uv", specifier = ">=4.1.4" },
@@ -981,7 +934,6 @@ dev = [
     { name = "pytest-plus", specifier = ">=0.7.0" },
     { name = "setuptools", specifier = ">=80.9.0" },
     { name = "tox", specifier = ">=4.28.3" },
-    { name = "twine", specifier = ">=6.1.0" },
 ]
 docs = [
     { name = "cairosvg", specifier = ">=2.6.0" },
@@ -1004,23 +956,6 @@ lint = [
     { name = "pre-commit", specifier = ">=3.5.0" },
     { name = "pre-commit-uv", specifier = ">=4.1.4" },
 ]
-lower = [
-    { name = "build", specifier = "==1.3.0" },
-    { name = "diskcache", specifier = "==5.6.3" },
-    { name = "gitpython", specifier = "==3.1.45" },
-    { name = "packaging", specifier = "==25" },
-    { name = "pip", specifier = "==25.2" },
-    { name = "pluggy", specifier = "==1.6.0" },
-    { name = "pyyaml", specifier = "==6.0.2" },
-    { name = "rich", specifier = "==14.1.0" },
-    { name = "setuptools" },
-    { name = "shellingham", specifier = "==1.5.4" },
-    { name = "subprocess-tee", specifier = "==0.4.2" },
-    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0.1" },
-    { name = "twine", specifier = "==6.1.0" },
-    { name = "typer", specifier = "==0.16.0" },
-    { name = "typer-config", specifier = "==1.4.2" },
-]
 pkg = [{ name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" }]
 
 [[package]]
@@ -1031,6 +966,7 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
     { name = "typer-config" },
+    { name = "typing-extensions" },
 ]
 
 [package.metadata]
@@ -1038,6 +974,7 @@ requires-dist = [
     { name = "rich", specifier = ">=12.0.0" },
     { name = "typer", specifier = ">=0.16.0" },
     { name = "typer-config", specifier = ">=1.4.2" },
+    { name = "typing-extensions", specifier = ">=4.14.1" },
 ]
 
 [[package]]
