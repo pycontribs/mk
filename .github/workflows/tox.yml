@@ -62,7 +62,7 @@ jobs:
         # cspell: ignore smartcontractkit chainlink
         uses: smartcontractkit/chainlink-github-actions/utils/wait-for-workflows@1ada5d85b0de3439a0ba238210d40605b5ed6704 # v2.3.32
         with:
-          max-timeout: "120"
+          max-timeout: "240"
           polling-interval: "15"
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
