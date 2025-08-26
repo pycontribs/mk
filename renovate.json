@@ -10,6 +10,7 @@
   "lockFileMaintenance": {
     "enabled": true
   },
+  "rangeStrategy": "update-lockfile",
   "packageRules": [
     {
       "automerge": false,
