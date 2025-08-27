@@ -1,3 +1,12 @@
 ---
+# cspell: ignore depr
 # see https://github.com/ansible/team-devtools
 _extends: ansible/team-devtools
+replacers:
+  # Remove conventional commits from titles
+  - search: "/- (build|chore|ci|depr|docs|feat|fix|perf|refactor|release|test)(\\(.*\\))?(\\!)?\\: /g"
+    replace: "- "
+exclude-contributors:
+  - dependabot[bot]
+  - pre-commit-ci[bot]
+  - renovate[bot]

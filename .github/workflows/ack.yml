@@ -1,6 +1,6 @@
 ---
 # See https://github.com/ansible/team-devtools/blob/main/.github/workflows/ack.yml
-# cspell: ignore amannn
+# cspell: ignore amannn hmarr autolabeler
 name: ack
 
 on:
@@ -20,3 +20,24 @@ jobs:
       - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: auto-add labels
+        if: github.event.issue.labels.length == 0
+        uses: release-drafter/release-drafter@v6
+        with:
+          # we only want to use the auto-labeler bits:
+          disable-autolabeler: false
+          disable-releaser: true
+        # config from .github/release-drafter.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: auto-approve safe maintenance PRs
+        if: >
+          github.actor == 'dependabot[bot]' ||
+          github.actor == 'renovate[bot]' ||
+          github.actor == 'pre-commit-ci[bot]'
+        uses: hmarr/auto-approve-action@v4
+        with:
+          review-message: "Auto approved automated PR"
