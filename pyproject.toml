@@ -114,6 +114,13 @@ repository = "https://github.com/pycontribs/mk"
 # from https://peps.python.org/pep-0604/
 target-version = ["py39"]
 
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$version"
+update_changelog_on_bump = true
+version_provider = "scm"
+version_scheme = "pep440"
+
 # Keep this default because xml/report do not know to use load it from config file:
 # data_file = ".coverage"
 [tool.coverage.paths]
@@ -428,5 +435,3 @@ mk-pre = {workspace = true}
 
 [tool.uv.workspace]
 members = ["packages/*"]
-
-# exclude = ["packages/seeds"]
