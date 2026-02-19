@@ -11,6 +11,7 @@ dictionaries:
   - python
   - python-common
 enabled: true
+useGitignore: true
 ignorePaths:
   - cspell.config.yaml
   - ./samples/integration/*.*

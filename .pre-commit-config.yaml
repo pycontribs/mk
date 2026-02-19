@@ -4,11 +4,38 @@ ci:
   # https://github.com/pre-commit-ci/issues/issues/83
   autoupdate_schedule: quarterly
   skip:
-    - uv-lock
-    - renovate-config-validator # container limits
+    - cspell # missing uv
+    - codecov # missing uv
+    - shellcheck # no docker support on pre-commit.ci
+    # uv not present on pre-commit.ci
+    - mypy
+    - ruff
+    - toml
+    - renovate-config-validator
 repos:
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes
+        priority: 0
+  - repo: https://github.com/ansible/actions
+    rev: v0.5.1
+    hooks:
+      - id: toml
+        priority: 0
+      - id: mypy
+        priority: 2
+      - id: ruff
+        priority: 1
+      - id: cspell
+        priority: 0
+      - id: codecov
+        priority: 0
+      - id: shellcheck
+        priority: 0
+      - id: renovate-config-validator
+        priority: 0
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.8.13
+    rev: 0.10.4
     hooks:
       - id: uv-sync
       - id: uv-lock
@@ -16,36 +43,19 @@ repos:
         alias: deps
         args: ["--upgrade"]
         stages: [manual]
-      - id: uv-lock
-        alias: lock
-  - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 41.82.9
-    hooks:
-      - id: renovate-config-validator
-        alias: renovate
-        args: [--strict]
   - repo: https://github.com/biomejs/pre-commit
-    rev: "v2.2.2"
+    rev: "v2.4.2"
     hooks:
       - id: biome-check
         name: biome
         alias: biome
         args: [--unsafe]
-  - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v9.2.0
-    hooks:
-      - id: cspell
-        name: cspell
-        # entry: codespell --relative
-        args: [--relative, --no-progress, --no-summary]
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.45.0
-    hooks:
-      - id: markdownlint
+        priority: 0
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
+        priority: 0
       - id: check-merge-conflict
       - id: check-symlinks
       - id: debug-statements
@@ -56,52 +66,3 @@ repos:
       - id: fix-byte-order-marker
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
-      - id: debug-statements
-        language_version: python3
-  - repo: https://github.com/pappasam/toml-sort
-    rev: v0.24.2
-    hooks:
-      - id: toml-sort-fix
-        alias: toml
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.10
-    hooks:
-      - id: ruff-format
-        alias: ruff
-      - id: ruff-check
-        args: ["--fix"]
-        alias: ruff
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.17.1
-    hooks:
-      - id: mypy
-        # "." and pass_files are used to make pre-commit mypy behave the same as standalone mypy
-        args: ["."]
-        pass_filenames: false
-        additional_dependencies:
-          - ansible-lint
-          - build
-          - diskcache
-          - gitpython
-          - importlib-metadata
-          - packaging
-          - pytest
-          - pytest-benchmark
-          - rich
-          - subprocess-tee
-          - typer-config
-          - typer>=0.12.2
-
-  # keep at bottom as these are slower
-  - repo: https://github.com/ansible/ansible-lint
-    rev: v25.8.2
-    hooks:
-      - id: ansible-lint
-        args: [--fix]
-  - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.1
-    hooks:
-      - id: yamllint
-        files: \.(yaml|yml)$
-        types: [file, yaml]
-        entry: yamllint --strict

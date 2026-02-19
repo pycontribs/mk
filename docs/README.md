@@ -20,7 +20,7 @@ configuration file is needed as the tool will look for common tools used by the
 repository and expose their commands.
 
 `mk` is inspired by tools such [make][make], [waf][waf], [taskfile][taskfile],
-[tox][tox], [nox][nox], [npm][npm], [yarn][yarn] and [pre-commit][pre-commit],
+[tox][tox], [nox][nox], [npm][npm], [yarn][yarn] and [prek (pre-commit)][prek],
 but **it does not aim to replace them**. Instead, it aims to provide a unified
 interface for calling them that is friendly even for those that never used these
 tools.
@@ -110,7 +110,7 @@ status or that the testing did not leave untracked files.
 [make]: https://www.gnu.org/software/make/
 [nox]: https://nox.thea.codes/en/stable/
 [npm]: https://www.npmjs.com/
-[pre-commit]: https://pre-commit.com/
+[prek]: https://github.com/j178/prek
 [taskfile]: https://taskfile.dev/#/
 [tox]: https://github.com/tox-dev/tox/
 [waf]: https://waf.io/
