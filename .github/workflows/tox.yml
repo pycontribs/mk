@@ -41,14 +41,14 @@ jobs:
 
       - name: Determine matrix
         id: generate_matrix
-        uses: coactions/dynamic-matrix@adb35c02b55e67564ae7feebfcbc3358d8d02900 # v4
+        uses: ansible/actions/matrix@v0
         with:
-          min_python: "3.10"
+          min_python: "3.11"
           default_python: |
-            3.10
-          max_python: "3.13"
+            3.11
+          max_python: "3.14"
           other_names: |
-            lint:tox -e py310-lint;tox -e py310-lint
+            lint:tox -e py311-lint;tox -e py311-lint
             docs
             integration
             pkg
@@ -68,37 +68,37 @@ jobs:
         env:
           DEBUG: "true"
 
-      - name: Wait for required GitHub Checks to pass
-        if: github.event_name == 'pull_request'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          #!/usr/bin/env bash
-          set -euo pipefail
-          TIMEOUT=120
-          INTERVAL=10
-          CHECK_NAME="pre-commit"
-          MAX_RETRIES=$((TIMEOUT / INTERVAL))
-          for ((i=1; i<=MAX_RETRIES; i++)); do
-            # https://docs.github.com/en/graphql/reference/enums#checkrunstate
-            lines=()
-            while IFS= read -r line; do
-              lines+=("$line")
-            done < <(gh pr checks --repo ${{ github.repository }} --required --json name,state,link --jq ".[] | select(.name | test(\"^${CHECK_NAME}\")) | .state,.link" ${{ github.event.pull_request.number || github.ref_name }} || true)
-            state=${lines[0]-}
-            link=${lines[1]-}
-            if [[ "$state" == "SUCCESS" ]]; then
-              exit 0
-            elif [[ "$state" =~ ^(TIME_OUT|FAILURE|ERROR|STALE|SKIPPED|CANCELLED)$ ]]; then
-              echo "::error title=Check ${CHECK_NAME}::Check ${CHECK_NAME} failed due to reporting ${state} ${link}"
-              exit 1
-            fi
-            # Other known values: QUEUED, PENDING
-            echo "::debug title=Check ${CHECK_NAME}::Attempt ${i}/${MAX_RETRIES}: ack state='${state}' (waiting ${INTERVAL}s)..."
-            sleep "${INTERVAL}"
-          done
-          echo "::error title=Check ${CHECK_NAME}::Check ${CHECK_NAME} did not reach SUCCESS within ${TIMEOUT}s. Last state: ${state} ${link}"
-          exit 1
+      # - name: Wait for required GitHub Checks to pass
+      #   if: github.event_name == 'pull_request'
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     #!/usr/bin/env bash
+      #     set -euo pipefail
+      #     TIMEOUT=120
+      #     INTERVAL=10
+      #     CHECK_NAME="pre-commit"
+      #     MAX_RETRIES=$((TIMEOUT / INTERVAL))
+      #     for ((i=1; i<=MAX_RETRIES; i++)); do
+      #       # https://docs.github.com/en/graphql/reference/enums#checkrunstate
+      #       lines=()
+      #       while IFS= read -r line; do
+      #         lines+=("$line")
+      #       done < <(gh pr checks --repo ${{ github.repository }} --required --json name,state,link --jq ".[] | select(.name | test(\"^${CHECK_NAME}\")) | .state,.link" ${{ github.event.pull_request.number || github.ref_name }} || true)
+      #       state=${lines[0]-}
+      #       link=${lines[1]-}
+      #       if [[ "$state" == "SUCCESS" ]]; then
+      #         exit 0
+      #       elif [[ "$state" =~ ^(TIME_OUT|FAILURE|ERROR|STALE|SKIPPED|CANCELLED)$ ]]; then
+      #         echo "::error title=Check ${CHECK_NAME}::Check ${CHECK_NAME} failed due to reporting ${state} ${link}"
+      #         exit 1
+      #       fi
+      #       # Other known values: QUEUED, PENDING
+      #       echo "::debug title=Check ${CHECK_NAME}::Attempt ${i}/${MAX_RETRIES}: ack state='${state}' (waiting ${INTERVAL}s)..."
+      #       sleep "${INTERVAL}"
+      #     done
+      #     echo "::error title=Check ${CHECK_NAME}::Check ${CHECK_NAME} did not reach SUCCESS within ${TIMEOUT}s. Last state: ${state} ${link}"
+      #     exit 1
 
   build:
     name: ${{ matrix.name }}
@@ -130,12 +130,12 @@ jobs:
       - name: Install mise
         uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e86d566 # v3
 
-      - name: Set up Python ${{ matrix.python_version || '3.10' }}
+      - name: Set up Python ${{ matrix.python_version || '3.11' }}
         if: "!contains(matrix.shell, 'wsl')"
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           cache: pip
-          python-version: ${{ matrix.python_version || '3.10' }}
+          python-version: ${{ matrix.python_version || '3.11' }}
 
       - name: Install tox
         run: |

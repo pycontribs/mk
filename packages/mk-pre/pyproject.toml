@@ -5,15 +5,15 @@ requires = ["uv_build>=0.8.6,<0.9.0"]
 [project]
 authors = [{email = "sorin.sbarnea@gmail.com", name = "Sorin Sbarnea"}]
 dependencies = [
-  "rich>=12.0.0",
-  "typer>=0.16.0",
+  "rich>=12.0.0", # indirect of typer/tox
+  "typer>=0.16.0", # indirect of typer/tox
   "typer-config>=1.4.2",
-  "typing-extensions>=4.14.1" # indirect of typer/tox
+  "typing-extensions>=4.14.1"
 ]
 description = "mk-pre plugin"
 name = "mk-pre"
 readme = "README.md"
-requires-python = ">=3.10.0"
+requires-python = ">=3.11.0"
 version = "0.1.0"
 
 [project.entry-points."mk_tools"]

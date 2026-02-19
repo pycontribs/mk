@@ -1,40 +1,40 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-  "setuptools >= 65.3.0", # required by pyproject+setuptools_scm integration and editable installs
-  "setuptools_scm[toml] >= 7.0.5" # required for "no-local-version" scheme
+  "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
+  "setuptools >= 65.3.0" # required by pyproject+setuptools_scm integration and editable installs
 ]
 
 [dependency-groups]
 dev = [
-  "build>=1.2.2",
+  "build>=1.2.2", # indirect of pre-commit-uv
   "coverage>=7.5.3",
-  "nodeenv>=1.9.0", # indirect of pre-commit-uv
+  "nodeenv>=1.9.0",
   "pip>=24.0",
   "pipx>=1.7.1",
   "pre-commit-uv>=4.1.4",
+  "pytest>=8.0.0",
   "pytest-benchmark>=4.0.0",
   "pytest-plus>=0.7.0",
-  "pytest>=8.0.0",
   "setuptools>=80.9.0",
   "tox>=4.28.3"
 ]
 docs = [
   "cairosvg>=2.6.0",
   "markdown-exec>=1.3.0",
+  "mkdocs>=1.4.2",
   "mkdocs-autorefs",
   "mkdocs-gen-files>=0.4.0",
   "mkdocs-htmlproofer-plugin>=0.10.2",
-  "mkdocs-material-extensions>=1.1.1",
   "mkdocs-material>=9.0.13",
-  "mkdocs>=1.4.2",
+  "mkdocs-material-extensions>=1.1.1",
   "pillow>=9.4.0",
   "pipdeptree>=2.4.0",
   "pymdown-extensions>=9.9.2"
 ]
 integration = ["ansible-core>=2.15", "nox>=2024.3"]
 lint = ["pre-commit>=3.5.0", "pre-commit-uv>=4.1.4"]
-pkg = ["tomli>=2.2.1; python_version<'3.11'"]
+pkg = []
 
 [project]
 authors = [{"email" = "sorin.sbarnea@gmail.com", "name" = "Sorin Sbarnea"}]
@@ -46,36 +46,36 @@ classifiers = [
   "Intended Audience :: System Administrators",
   "Operating System :: MacOS",
   "Operating System :: POSIX",
+  "Programming Language :: Python",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Software Development :: Quality Assurance",
   "Topic :: Software Development :: Testing",
   "Topic :: Utilities"
 ]
 dependencies = [
-  "build>=1.2.2",
-  "cffi>=1.17.1", # indirect of twine
+  "build>=1.2.2", # indirect of twine
+  "cffi>=1.17.1", # indirect lower constraint
   "chardet>=5.2", # indirect lower constraint
   "colorama>=0.4.6", # indirect lower constraint
-  "diskcache>=5.2.1",
-  "gitpython>=3.1.26",
-  "packaging>=25", # indirect lower constraint
+  "diskcache>=5.2.1", # indirect lower constraint
+  "gitpython>=3.1.26", # same as pkg
+  "html5lib>=1.1", # indirect of twine
+  "mk-pre",
+  "packaging>=25",
   "pip>=21.0.1",
-  "pluggy>=1.6.0", # indirect lower constraint
+  "pluggy>=1.6.0",
   "pyyaml>=5.1",
   "rich>=10.11.0",
   "setuptools>=69.0.0",
   "shellingham>=1.5.4",
   "subprocess-tee>=0.4.1",
-  "tomli>=2.2.1 ; python_full_version < '3.11'", # same as pkg
   "twine>=3.4.1",
   "typer>=0.16.0",
-  "mk-pre",
   "uv>=0.8.8"
 ]
 dynamic = ["version"]
@@ -83,7 +83,7 @@ license = "MIT"
 name = "mk"
 readme = "docs/README.md"
 # https://peps.python.org/pep-0621/#readme
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 
 [project.entry-points."mk_tools"]
 ansible = "mk.tools.ansible:AnsibleTool"
@@ -154,7 +154,7 @@ exclude = [
   "dist",
   "site"
 ]
-python_version = "3.10"
+python_version = "3.11"
 strict = true
 
 [[tool.mypy.overrides]]
@@ -254,10 +254,7 @@ commands = [
     "manual",
     "deps"
   ],
-  [
-    "pre-commit",
-    "autoupdate"
-  ],
+  ["pre-commit", "autoupdate"],
   {extend = true, of = ["tool", "tox", "env", "lint", "commands"], replace = "ref"}
 ]
 commands_post = [
@@ -271,22 +268,13 @@ dependency_groups = [
 ]
 description = "Bump all test dependencies"
 env_dir = "{work_dir}/lint"
-runner = "{[tool.tox.testenv.lint]runner}"
 skip_install = true
 
 [tool.tox.env.devel]
 commands = [
-  [
-    "sh",
-    "-c",
-    "uv pip list -q --format=freeze | tr '\\n' ','"
-  ],
+  ["sh", "-c", "uv pip list -q --format=freeze | tr '\\n' ','"],
   {extend = true, of = ["tool", "tox", "env_run_base", "commands"], replace = "ref"},
-  [
-    "git",
-    "restore",
-    "uv.lock"
-  ]
+  ["git", "restore", "uv.lock"]
 ]
 description = "Run the tests with newest dependencies (no lock and allowing prereleases)"
 runner = "uv-venv-lock-runner"
@@ -295,11 +283,7 @@ uv_sync_locked = false
 
 [tool.tox.env.docs]
 commands = [
-  [
-    "sh",
-    "-c",
-    "cd docs && mk changelog"
-  ],
+  ["sh", "-c", "cd docs && mk changelog"],
   [
     "mkdocs",
     {default = ["build", "--strict", "--site-dir=_readthedocs/html/"], extend = true, replace = "posargs"}
@@ -310,7 +294,11 @@ groups = ["docs"]
 skip_install = false
 
 [tool.tox.env.integration]
-commands = [["ansible", "--version"], ["nox", "--version"], ["mk", "test-integration"]]
+commands = [
+  ["ansible", "--version"],
+  ["nox", "--version"],
+  ["mk", "test-integration"]
+]
 dependency_groups = ["integration"]
 description = "Run integrations tests"
 
@@ -334,11 +322,7 @@ skip_install = true
 [tool.tox.env.lower]
 commands_post = [
   ["uv", "--version"],
-  [
-    "sh",
-    "-c",
-    "uv pip list -q --format=freeze | paste -sd ' ' -"
-  ],
+  ["sh", "-c", "uv pip list -q --format=freeze | paste -sd ' ' -"],
   ["uv", "pip", "tree"],
   ["uv", "pip", "check"]
 ]
@@ -364,7 +348,14 @@ commands = [
     "run",
     "-m",
     "pytest",
-    {default = ["-ra", "--showlocals", "--doctest-modules", "--durations=10", "-m", "not eco"], extend = true, replace = "posargs"}
+    {default = [
+      "-ra",
+      "--showlocals",
+      "--doctest-modules",
+      "--durations=10",
+      "-m",
+      "not eco"
+    ], extend = true, replace = "posargs"}
   ],
   [
     "sh",

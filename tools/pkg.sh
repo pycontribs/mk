@@ -4,10 +4,7 @@ set -euo pipefail
 
 PROJECT=$(python -c '''
 import sys
-if sys.version_info >= (3, 11):
-    import tomllib
-else:  # pragma: no cover (py311+)
-    import tomli as tomllib
+import tomllib
 print(tomllib.load(open("pyproject.toml","rb"))["project"]["name"])
 ''')
 echo "Packaging sanity testing for '${PROJECT}' ..."

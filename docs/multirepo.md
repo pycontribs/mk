@@ -33,7 +33,7 @@ their age, with PR numbers being clickable hyperlinks.
 
 ```bash
 $ mk prs
-ansible/tox-ansible                 28 minutes ago  Exclude *-py3.10-dev.  #336
+ansible/tox-ansible                 28 minutes ago  Exclude *-py3.11-dev.  #336
 ansible/vscode-ansible               2 hours ago    Update the segment s  #1375
 ansible-community/molecule-plugins  16 hours ago    [pre-commit.ci] pre-c  #238
 ansible/ansible-content-actions      2 days ago      Install tox-ansible    #14
