@@ -1,20 +1,20 @@
-[build-system]
-build-backend = "uv_build"
-requires = ["uv_build>=0.8.6,<0.9.0"]
-
 [project]
-authors = [{email = "sorin.sbarnea@gmail.com", name = "Sorin Sbarnea"}]
-dependencies = [
-  "rich>=12.0.0", # indirect of typer/tox
-  "typer>=0.16.0", # indirect of typer/tox
-  "typer-config>=1.4.2",
-  "typing-extensions>=4.14.1"
-]
-description = "mk-pre plugin"
 name = "mk-pre"
+version = "0.1.0"
+description = "mk-pre plugin"
 readme = "README.md"
 requires-python = ">=3.11.0"
-version = "0.1.0"
+authors = [{ name = "Sorin Sbarnea", email = "sorin.sbarnea@gmail.com" }]
+dependencies = [
+  "rich>=12.0.0",  # indirect of typer/tox
+  "typer>=0.16.0",  # indirect of typer/tox
+  "typer-config>=1.4.2",
+  "typing-extensions>=4.14.1",  # indirect of typer/tox
+]
 
 [project.entry-points."mk_tools"]
 pre = "mk_pre.pre:PreTool"
+
+[build-system]
+requires = ["uv_build>=0.8.6,<0.9.0"]
+build-backend = "uv_build"

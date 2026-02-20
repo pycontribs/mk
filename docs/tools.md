@@ -78,9 +78,9 @@ If the current git repository is using
 [Gerrit](https://www.gerritcodereview.com), it will run `git review` and if the
 repository is from GitHub, it will run `gh pr create` instead.
 
-### pre-commit
+### prek (pre-commit)
 
-If a [pre-commit](https://pre-commit.com/) configuration file is found, the tool
+If a [prek](https://github.com/j178/prek) configuration file is found, the tool
 will expose the `lint` command for running linting.
 
 ### py (python packages)

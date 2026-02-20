@@ -1,43 +1,10 @@
-[build-system]
-build-backend = "setuptools.build_meta"
-requires = [
-  "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
-  "setuptools >= 65.3.0" # required by pyproject+setuptools_scm integration and editable installs
-]
-
-[dependency-groups]
-dev = [
-  "build>=1.2.2", # indirect of pre-commit-uv
-  "coverage>=7.5.3",
-  "nodeenv>=1.9.0",
-  "pip>=24.0",
-  "pipx>=1.7.1",
-  "pre-commit-uv>=4.1.4",
-  "pytest>=8.0.0",
-  "pytest-benchmark>=4.0.0",
-  "pytest-plus>=0.7.0",
-  "setuptools>=80.9.0",
-  "tox>=4.28.3"
-]
-docs = [
-  "cairosvg>=2.6.0",
-  "markdown-exec>=1.3.0",
-  "mkdocs>=1.4.2",
-  "mkdocs-autorefs",
-  "mkdocs-gen-files>=0.4.0",
-  "mkdocs-htmlproofer-plugin>=0.10.2",
-  "mkdocs-material>=9.0.13",
-  "mkdocs-material-extensions>=1.1.1",
-  "pillow>=9.4.0",
-  "pipdeptree>=2.4.0",
-  "pymdown-extensions>=9.9.2"
-]
-integration = ["ansible-core>=2.15", "nox>=2024.3"]
-lint = ["pre-commit>=3.5.0", "pre-commit-uv>=4.1.4"]
-pkg = []
-
 [project]
-authors = [{"email" = "sorin.sbarnea@gmail.com", "name" = "Sorin Sbarnea"}]
+name = "mk"
+readme = "docs/README.md"
+# https://peps.python.org/pep-0621/#readme
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ "name" = "Sorin Sbarnea", "email" = "sorin.sbarnea@gmail.com" }]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Console",
@@ -58,13 +25,13 @@ classifiers = [
   "Topic :: Utilities"
 ]
 dependencies = [
-  "build>=1.2.2", # indirect of twine
-  "cffi>=1.17.1", # indirect lower constraint
-  "chardet>=5.2", # indirect lower constraint
-  "colorama>=0.4.6", # indirect lower constraint
-  "diskcache>=5.2.1", # indirect lower constraint
-  "gitpython>=3.1.26", # same as pkg
-  "html5lib>=1.1", # indirect of twine
+  "build>=1.2.2",  # indirect of twine
+  "cffi>=1.17.1",  # indirect lower constraint
+  "chardet>=5.2",  # indirect lower constraint
+  "colorama>=0.4.6",  # indirect lower constraint
+  "diskcache>=5.2.1",  # indirect lower constraint
+  "gitpython>=3.1.26",  # same as pkg
+  "html5lib>=1.1",  # indirect of twine
   "mk-pre",
   "packaging>=25",
   "pip>=21.0.1",
@@ -79,11 +46,16 @@ dependencies = [
   "uv>=0.8.8"
 ]
 dynamic = ["version"]
-license = "MIT"
-name = "mk"
-readme = "docs/README.md"
-# https://peps.python.org/pep-0621/#readme
-requires-python = ">=3.11"
+
+[project.urls]
+changelog = "https://github.com/pycontribs/mk/releases"
+documentation = "https://mk.readthedocs.io/"
+homepage = "https://github.com/pycontribs/mk"
+repository = "https://github.com/pycontribs/mk"
+
+[project.scripts]
+mk = "mk.__main__:cli"
+pre = "mk.pre:app"
 
 [project.entry-points."mk_tools"]
 ansible = "mk.tools.ansible:AnsibleTool"
@@ -92,22 +64,55 @@ git = "mk.tools.git:GitTool"
 make = "mk.tools.make:MakeTool"
 node = "mk.tools.node:NodeTool"
 nox = "mk.tools.nox:NoxTool"
-pre-commit = "mk.tools.pre_commit:PreCommitTool"
+prek = "mk.tools.pre_commit:PreCommitTool"
 pypackage = "mk.tools.py_package:PyPackageTool"
 pytest = "mk.tools.pytest:PyTestTool"
 shell = "mk.tools.shell:ShellTool"
 taskfile = "mk.tools.taskfile:TaskfileTool"
 tox = "mk.tools.tox:ToxTool"
 
-[project.scripts]
-mk = "mk.__main__:cli"
-pre = "mk.pre:app"
+[dependency-groups]
+dev = [
+  "coverage>=7.5.3",
+  "mk-pre",
+  "nodeenv>=1.9.0",
+  "pip>=24.0",
+  "pipx>=1.7.1",
+  "prek>=0.3.3",
+  "pytest>=8.0.0",
+  "pytest-benchmark>=4.0.0",
+  "pytest-plus>=0.7.0",
+  "setuptools>=80.9.0",
+  "tox>=4.28.3",
+]
+docs = [
+  "cairosvg>=2.6.0",
+  "markdown-exec>=1.3.0",
+  "mkdocs>=1.4.2",
+  "mkdocs-autorefs",
+  "mkdocs-gen-files>=0.4.0",
+  "mkdocs-htmlproofer-plugin>=0.10.2",
+  "mkdocs-material>=9.0.13",
+  "mkdocs-material-extensions>=1.1.1",
+  "pillow>=9.4.0",
+  "pipdeptree>=2.4.0",
+  "pymdown-extensions>=9.9.2"
+]
+integration = ["ansible-core>=2.15", "nox>=2024.3"]
+lint = [
+  "mypy>=1.19.1",
+  "prek>=0.3.3",
+  "ruff>=0.15.2",
+  "tombi>=0.7.31",
+]
+pkg = []
 
-[project.urls]
-changelog = "https://github.com/pycontribs/mk/releases"
-documentation = "https://mk.readthedocs.io/"
-homepage = "https://github.com/pycontribs/mk"
-repository = "https://github.com/pycontribs/mk"
+[build-system]
+requires = [
+  "setuptools_scm[toml] >= 7.0.5",  # required for "no-local-version" scheme
+  "setuptools >= 65.3.0",  # required by pyproject+setuptools_scm integration and editable installs
+]
+build-backend = "setuptools.build_meta"
 
 [tool.black]
 # keep this value because typer does not accept new annotations such str | None
@@ -215,7 +220,7 @@ tag_regex = "^(?P<prefix>v)?(?P<version>[0-9.]+)(?P<suffix>.*)?$"
 write_to = "src/mk/_version.py"
 
 [tool.tomlsort]
-# used by pre-commit hook
+# used by prek hook
 in_place = true
 sort_inline_arrays = false
 sort_inline_tables = true
@@ -246,7 +251,7 @@ skip_install = true
 [tool.tox.env.deps]
 commands = [
   [
-    "pre-commit",
+    "prek",
     "run",
     "--all-files",
     "--show-diff-on-failure",
@@ -254,17 +259,17 @@ commands = [
     "manual",
     "deps"
   ],
-  ["pre-commit", "autoupdate"],
-  {extend = true, of = ["tool", "tox", "env", "lint", "commands"], replace = "ref"}
+  ["prek", "autoupdate"],
+  { extend = true, of = ["tool", "tox", "env", "lint", "commands"], replace = "ref" }
 ]
 commands_post = [
-  {extend = true, of = ["tool", "tox", "env", "lint", "commands_post"], replace = "ref"}
+  { extend = true, of = ["tool", "tox", "env", "lint", "commands_post"], replace = "ref" }
 ]
 commands_pre = [
-  {extend = true, of = ["tool", "tox", "env", "lint", "commands_pre"], replace = "ref"}
+  { extend = true, of = ["tool", "tox", "env", "lint", "commands_pre"], replace = "ref" }
 ]
 dependency_groups = [
-  {extend = true, of = ["tool", "tox", "env", "lint", "dependency_groups"], replace = "ref"}
+  { extend = true, of = ["tool", "tox", "env", "lint", "dependency_groups"], replace = "ref" }
 ]
 description = "Bump all test dependencies"
 env_dir = "{work_dir}/lint"
@@ -273,7 +278,7 @@ skip_install = true
 [tool.tox.env.devel]
 commands = [
   ["sh", "-c", "uv pip list -q --format=freeze | tr '\\n' ','"],
-  {extend = true, of = ["tool", "tox", "env_run_base", "commands"], replace = "ref"},
+  { extend = true, of = ["tool", "tox", "env_run_base", "commands"], replace = "ref" },
   ["git", "restore", "uv.lock"]
 ]
 description = "Run the tests with newest dependencies (no lock and allowing prereleases)"
@@ -286,7 +291,7 @@ commands = [
   ["sh", "-c", "cd docs && mk changelog"],
   [
     "mkdocs",
-    {default = ["build", "--strict", "--site-dir=_readthedocs/html/"], extend = true, replace = "posargs"}
+    { default = ["build", "--strict", "--site-dir=_readthedocs/html/"], extend = true, replace = "posargs" }
   ]
 ]
 description = "Builds docs"
@@ -305,13 +310,11 @@ description = "Run integrations tests"
 [tool.tox.env.lint]
 commands = [
   [
-    "{env_python}",
-    "-m",
-    "pre_commit",
+    "prek",
     "run",
     "--all-files",
     "--show-diff-on-failure",
-    {extend = true, replace = "posargs"}
+    { extend = true, replace = "posargs" }
   ]
 ]
 dependency_groups = ["lint"]
@@ -348,14 +351,14 @@ commands = [
     "run",
     "-m",
     "pytest",
-    {default = [
+    { default = [
       "-ra",
       "--showlocals",
       "--doctest-modules",
       "--durations=10",
       "-m",
       "not eco"
-    ], extend = true, replace = "posargs"}
+    ], extend = true, replace = "posargs" }
   ],
   [
     "sh",
@@ -385,7 +388,6 @@ pass_env = [
   "PYTHONIOENCODING",
   "PYTHONPYCACHEPREFIX",
   "PY_COLORS",
-  "PRE_COMMIT_HOME",
   "REQUESTS_CA_BUNDLE",
   "RTD_TOKEN",
   "SETUPTOOLS_SCM_DEBUG",
@@ -405,7 +407,6 @@ DYLD_FALLBACK_LIBRARY_PATH = "/opt/homebrew/lib:{env:LD_LIBRARY_PATH}"
 FORCE_COLOR = "1"
 MK_CONFIG_FILE = "/dev/null"
 PIP_DISABLE_PIP_VERSION_CHECK = "1"
-PRE_COMMIT_COLOR = "always"
 PYTHONHASHSEED = "0"
 TERM = "dump"
 
@@ -415,7 +416,7 @@ default-groups = ["dev", "docs"]
 package = true
 
 [tool.uv.sources]
-mk-pre = {workspace = true}
+mk-pre = { workspace = true }
 
 [tool.uv.workspace]
 members = ["packages/*"]

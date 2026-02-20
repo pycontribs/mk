@@ -18,7 +18,7 @@ class PreTool(Tool):
 
     def run(self, action: Action | None = None) -> None:
         if action:
-            if action.name in ["changelog"]:
+            if action.name == "changelog":
                 self.changelog()
                 return
             run_or_fail(["pre", action.name], tee=True)

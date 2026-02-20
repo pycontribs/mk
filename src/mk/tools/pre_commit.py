@@ -8,10 +8,10 @@ from mk.tools import Action, Tool
 
 
 class PreCommitTool(Tool):
-    name = "pre-commit"
+    name = "prek"
 
     def run(self, action: Action | None = None) -> None:
-        run_or_fail(["pre-commit", "run", "-a"], tee=True)
+        run_or_fail(["prek", "run", "-a"], tee=True)
 
     def is_present(self, path: Path) -> bool:
         if os.path.isfile(os.path.join(path, ".pre-commit-config.yaml")):
@@ -20,5 +20,5 @@ class PreCommitTool(Tool):
 
     def actions(self) -> list[Action]:
         return [
-            Action(name="lint", description="[dim]pre-commit run -a[/dim]", tool=self),
+            Action(name="lint", description="[dim]prek run -a[/dim]", tool=self),
         ]
