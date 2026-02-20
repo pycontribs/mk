@@ -3,10 +3,7 @@
 from pathlib import Path
 from typing import Any
 
-try:
-    import tomllib  # type: ignore
-except ModuleNotFoundError:
-    import tomli as tomllib  # type: ignore
+import tomllib
 
 
 def load_toml(file: Path) -> dict[Any, Any]:
