@@ -41,7 +41,7 @@ jobs:
 
       - name: Determine matrix
         id: generate_matrix
-        uses: ansible/actions/matrix@v0
+        uses: ansible/actions/matrix@112a23d800e173bf6678b3c9a4bb52d3454eab61 # v0
         with:
           min_python: "3.11"
           default_python: |
@@ -116,7 +116,7 @@ jobs:
       # tests. Update value if you add/remove tests.
       PYTEST_REQPASS: 8
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0 # needed by setuptools-scm
           submodules: true
@@ -128,11 +128,11 @@ jobs:
           && sudo apt-get install -y libvirt-dev zsh
 
       - name: Install mise
-        uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e86d566 # v3
+        uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3
 
       - name: Set up Python ${{ matrix.python_version || '3.11' }}
         if: "!contains(matrix.shell, 'wsl')"
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           cache: pip
           python-version: ${{ matrix.python_version || '3.11' }}
@@ -193,19 +193,19 @@ jobs:
 
     steps:
       # checkout needed for codecov action which needs codecov.yml file
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Set up Python # likely needed for coverage
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - run: pip3 install 'coverage>=7.5.1'
         if: ${{ needs.build.result != 'skipped' }}
 
       - name: Merge logs into a single archive
         if: ${{ needs.build.result != 'skipped' }}
-        uses: actions/upload-artifact/merge@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact/merge@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: logs.zip
           include-hidden-files: true
@@ -215,7 +215,7 @@ jobs:
 
       - name: Download artifacts
         if: ${{ needs.build.result != 'skipped' }}
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         continue-on-error: true # to allow rerunning this job
         with:
           name: logs.zip
@@ -223,7 +223,7 @@ jobs:
 
       - name: Upload coverage data
         if: ${{ needs.build.result != 'skipped' }}
-        uses: codecov/codecov-action@fdcc8476540edceab3de004e990f80d881c6cc00 # v5
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
         with:
           name: ${{ matrix.name }}
           # verbose: true # optional (default = false)
@@ -236,7 +236,7 @@ jobs:
           jobs: ${{ toJSON(needs) }}
 
       - name: Delete Merged Artifacts
-        uses: actions/upload-artifact/merge@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact/merge@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           include-hidden-files: true
           delete-merged: true
