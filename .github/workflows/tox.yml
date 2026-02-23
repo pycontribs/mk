@@ -115,6 +115,8 @@ jobs:
       # Number of expected test passes, safety measure for accidental skip of
       # tests. Update value if you add/remove tests.
       PYTEST_REQPASS: 8
+      # needed by tox -e docs to produce changelog
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
