@@ -11,10 +11,10 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: astral-sh/setup-uv@4959332f0f014c5280e7eac8b70c90cb574c9f9b # v6
+      - uses: astral-sh/setup-uv@eac588ad8def6316056a12d4907a9d4d84ff7a3b # v7
 
       - name: Check out src from Git
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0 # needed by setuptools-scm
           submodules: true
@@ -31,7 +31,7 @@ jobs:
       - name: Attach dists to the release
         if: github.event_name == 'release'
         # cspell: ignore softprops
-        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2
         with:
           name: ${{ github.event.release.tag_name }}
           files: dist/*
