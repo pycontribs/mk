@@ -162,7 +162,8 @@ jobs:
         if: ${{ matrix.command5 }}
 
       - name: Archive logs
-        uses: coactions/upload-artifact@ec1957e16e4ecd304d3a115907ccb4ba5f636e9d # v4
+        if: always()
+        uses: ansible/actions/upload-artifact@main
         with:
           name: logs-${{ matrix.name }}.zip
           include-hidden-files: true

@@ -55,7 +55,7 @@ repository = "https://github.com/pycontribs/mk"
 
 [project.scripts]
 mk = "mk.__main__:cli"
-pre = "mk.pre:app"
+pre = "mk_pre:__main__.app"
 
 [project.entry-points."mk_tools"]
 ansible = "mk.tools.ansible:AnsibleTool"
