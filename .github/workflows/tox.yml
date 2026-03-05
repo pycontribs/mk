@@ -130,7 +130,7 @@ jobs:
           && sudo apt-get install -y libvirt-dev zsh
 
       - name: Install mise
-        uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3
+        uses: jdx/mise-action@e79ddf65a11cec7b0e882bedced08d6e976efb2d # v3
 
       - name: Set up Python ${{ matrix.python_version || '3.11' }}
         if: "!contains(matrix.shell, 'wsl')"
@@ -213,7 +213,7 @@ jobs:
 
       - name: Merge logs into a single archive
         if: ${{ needs.build.result != 'skipped' }}
-        uses: actions/upload-artifact/merge@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: logs.zip
           include-hidden-files: true
@@ -223,7 +223,7 @@ jobs:
 
       - name: Download artifacts
         if: ${{ needs.build.result != 'skipped' }}
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8
         continue-on-error: true # to allow rerunning this job
         with:
           name: logs.zip
@@ -244,7 +244,7 @@ jobs:
           jobs: ${{ toJSON(needs) }}
 
       - name: Delete Merged Artifacts
-        uses: actions/upload-artifact/merge@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           include-hidden-files: true
           delete-merged: true
