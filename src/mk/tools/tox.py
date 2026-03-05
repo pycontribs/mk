@@ -2,17 +2,14 @@
 
 from __future__ import annotations
 
-import logging
+import json
 import os
-import re
-import shlex
 import shutil
-import sys
-from configparser import ConfigParser, ParsingError
 from pathlib import Path
 
+import tomllib
+
 from mk.exec import run_or_fail
-from mk.text import strip_ansi_escape
 from mk.tools import Action, Tool
 
 
@@ -20,58 +17,28 @@ class ToxTool(Tool):
     name = "tox"
 
     def is_present(self, path: Path) -> bool:
+        pyproject = Path(path) / "pyproject.toml"
         if os.path.isfile(os.path.join(path, "tox.ini")):
             if not shutil.which("tox"):
                 msg = "Tox config found but tox is not installed. Please install it with `uv pip install tox`."
                 raise RuntimeError(msg)
             return True
+        if pyproject.is_file():
+            data = tomllib.loads(pyproject.read_text())
+            if "tool" in data and "tox" in data["tool"]:
+                return True
         return False
 
     def actions(self) -> list[Action]:
-        # -a is not supported by tox4!
         actions: list[Action] = []
-        cp = ConfigParser(strict=False, interpolation=None)
-        env_overrides = {"PY_COLORS": "0"}
         result = run_or_fail(
-            ["tox", "-qq", "--colored", "no", "--hashseed", "1", "--showconfig"],
-            env_overrides=env_overrides,
+            "uv tool run --with 'tox>=4.48.1' tox config --format=json --color=no -qq",
             tee=False,
         )
-        tox_cfg = result.stdout or ""
-
-        # workaround for https://github.com/tox-dev/tox/issues/2030
-        # we remove all lines starting with .tox from output
-        tox_cfg = re.sub(
-            r"^\.tox[^\r\n]*\n$",
-            "",
-            strip_ansi_escape(tox_cfg),
-            flags=re.MULTILINE,
-        )
-
-        # now tox_cfg should have a valid ini content
-        try:
-            cp.read_string(tox_cfg)
-        except ParsingError:
-            logging.fatal(
-                "Unable to parse tox output from command: %s",
-                shlex.join(result.args),
-            )
-            print(tox_cfg, file=sys.stderr)
-            sys.exit(22)
-        for section in cp.sections():
-            if section.startswith("testenv:"):
-                _, env_name = section.split(":")
-                # we ignore hidden envs like implicit .pkg:
-                if not env_name.startswith("."):
-                    actions.append(
-                        Action(
-                            name=env_name,
-                            tool=self,
-                            description=cp[section]["description"],
-                            args=[env_name],
-                        ),
-                    )
-
+        data = json.loads(result.stdout)
+        for name in data["env"]:
+            description = data["env"][name].get("description", None)
+            actions.append(Action(name=name, description=description, tool=self))
         return actions
 
     def run(self, action: Action | None = None) -> None:
