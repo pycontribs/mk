@@ -86,17 +86,9 @@ dev = [
   "tox>=4.28.3",
 ]
 docs = [
-  "cairosvg>=2.6.0",
-  "markdown-exec>=1.3.0",
-  "mkdocs>=1.4.2",
   "mkdocs-autorefs",
-  "mkdocs-gen-files>=0.4.0",
-  "mkdocs-htmlproofer-plugin>=0.10.2",
-  "mkdocs-material>=9.0.13",
-  "mkdocs-material-extensions>=1.1.1",
-  "pillow>=9.4.0",
   "pipdeptree>=2.4.0",
-  "pymdown-extensions>=9.9.2"
+  "zensical>=0.0.24",
 ]
 integration = ["ansible-core>=2.15", "nox>=2024.3"]
 lint = [
@@ -284,8 +276,8 @@ uv_sync_locked = false
 commands = [
   ["sh", "-c", "cd docs && mk changelog"],
   [
-    "mkdocs",
-    { default = ["build", "--strict", "--site-dir=_readthedocs/html/"], extend = true, replace = "posargs" }
+    "zensical",
+    { default = ["build", "--strict"], extend = true, replace = "posargs" }
   ]
 ]
 description = "Builds docs"

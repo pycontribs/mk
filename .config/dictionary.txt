@@ -40,3 +40,4 @@ timeago
 tombi
 tomlsort
 typeshed
+zensical
