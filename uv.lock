@@ -919,7 +919,6 @@ dependencies = [
     { name = "setuptools" },
     { name = "shellingham" },
     { name = "subprocess-tee" },
-    { name = "twine" },
     { name = "typer" },
     { name = "uv" },
 ]
@@ -954,6 +953,9 @@ lint = [
     { name = "ruff" },
     { name = "tombi" },
 ]
+pkg = [
+    { name = "twine" },
+]
 
 [package.metadata]
 requires-dist = [
@@ -973,7 +975,6 @@ requires-dist = [
     { name = "setuptools", specifier = ">=69.0.0" },
     { name = "shellingham", specifier = ">=1.5.4" },
     { name = "subprocess-tee", specifier = ">=0.4.1" },
-    { name = "twine", specifier = ">=3.4.1" },
     { name = "typer", specifier = ">=0.16.0" },
     { name = "uv", specifier = ">=0.8.8" },
 ]
@@ -1007,7 +1008,7 @@ lint = [
     { name = "ruff", specifier = ">=0.15.2" },
     { name = "tombi", specifier = ">=0.7.31" },
 ]
-pkg = []
+pkg = [{ name = "twine", specifier = ">=6.2.0" }]
 
 [[package]]
 name = "mk-pre"
