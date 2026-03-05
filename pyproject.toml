@@ -27,13 +27,12 @@ classifiers = [
 dependencies = [
   "build>=1.2.2",  # indirect of twine
   "cffi>=1.17.1",  # indirect lower constraint
-  "chardet>=5.2",  # indirect lower constraint
   "colorama>=0.4.6",  # indirect lower constraint
   "diskcache>=5.2.1",  # indirect lower constraint
   "gitpython>=3.1.26",  # same as pkg
   "html5lib>=1.1",  # indirect of twine
   "mk-pre",
-  "packaging>=25",
+  "packaging>=26",
   "pip>=21.0.1",
   "pluggy>=1.6.0",
   "pyyaml>=5.1",
@@ -75,6 +74,7 @@ dev = [
   "coverage>=7.5.3",
   "mk-pre",
   "nodeenv>=1.9.0",
+  "packaging>=26",  # tox requires at least 26.0
   "pip>=24.0",
   "pipx>=1.7.1",
   "prek>=0.3.3",
@@ -82,7 +82,7 @@ dev = [
   "pytest-benchmark>=4.0.0",
   "pytest-plus>=0.7.0",
   "setuptools>=80.9.0",
-  "tox>=4.28.3",
+  "tox>=4.47.3",
 ]
 docs = [
   "mkdocs-autorefs",
@@ -222,7 +222,7 @@ env_list = ["py", "lint", "docs", "pkg", "lower", "devel", "integration"]
 requires = [
   "pip>=24",
   "setuptools>=65.3",
-  "tox>=4.28.4",
+  "tox>=4.47.3",
   "tox-extra>=2.1",
   "tox-uv>=1.28"
 ]
