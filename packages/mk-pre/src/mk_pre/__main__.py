@@ -53,6 +53,7 @@ def drafts() -> None:
             check=True,
         )
         drafts_json = json.loads(result.stdout)
+
         if not drafts_json or (
             isinstance(drafts_json, dict) and drafts_json["message"] == "Not Found"
         ):
@@ -63,8 +64,11 @@ def drafts() -> None:
                 tzinfo=datetime.timezone.utc,
             )
             age = (datetime.datetime.now(tz=datetime.timezone.utc) - created).days
-            if not draft["body"].strip():
-                console.print(f"🟢 {repo_link} [dim]has an empty draft release.[/]")
+            body = draft["body"].strip()
+            if not body or body.startswith(("## Maintenance", "* No changes")):
+                console.print(
+                    f"🟢 {repo_link} [dim]has nothing important to release.[/]"
+                )
                 continue
 
             md = Panel(draft["body"].replace("\n\n", "\n").strip("\n"), box=box.MINIMAL)
