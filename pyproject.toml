@@ -41,7 +41,6 @@ dependencies = [
   "setuptools>=69.0.0",
   "shellingham>=1.5.4",
   "subprocess-tee>=0.4.1",
-  "twine>=3.4.1",
   "typer>=0.16.0",
   "uv>=0.8.8"
 ]
@@ -97,7 +96,7 @@ lint = [
   "ruff>=0.15.2",
   "tombi>=0.7.31",
 ]
-pkg = []
+pkg = ["twine>=6.2.0"]
 
 [build-system]
 requires = [
@@ -326,7 +325,7 @@ commands = [["bash", "./tools/pkg.sh"]]
 commands_post = []
 commands_pre = []
 description = "Build package, verify metadata, install package and assert behavior when ansible is missing."
-group = "pkg"
+dependency_groups = ["pkg"]
 skip_install = true
 
 [tool.tox.env_run_base]

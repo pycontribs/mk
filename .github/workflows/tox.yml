@@ -148,18 +148,23 @@ jobs:
         run: python3 -m pip freeze --all
 
       - run: ${{ matrix.command }}
+        timeout-minutes: 2
 
       - run: ${{ matrix.command2 }}
         if: ${{ matrix.command2 }}
+        timeout-minutes: 2
 
       - run: ${{ matrix.command3 }}
         if: ${{ matrix.command3 }}
+        timeout-minutes: 2
 
       - run: ${{ matrix.command4 }}
         if: ${{ matrix.command4 }}
+        timeout-minutes: 2
 
       - run: ${{ matrix.command5 }}
         if: ${{ matrix.command5 }}
+        timeout-minutes: 2
 
       - name: Archive logs
         if: always()

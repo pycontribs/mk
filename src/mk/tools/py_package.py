@@ -24,7 +24,7 @@ class PyPackageTool(Tool):
         if action.name in ["build", "install", "uninstall"]:
             cmd = action.args
             run_or_fail(cmd, tee=True)
-            run_or_fail(f"{sys.executable} -m twine check dist/*", tee=True)
+            run_or_fail("uv tool run twine check dist/*", tee=True)
         else:
             msg = f"Action {action.name} not implemented"
             raise NotImplementedError(msg)
