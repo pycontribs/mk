@@ -262,12 +262,6 @@ commands = [
   ["prek", "autoupdate"],
   { extend = true, of = ["tool", "tox", "env", "lint", "commands"], replace = "ref" }
 ]
-commands_post = [
-  { extend = true, of = ["tool", "tox", "env", "lint", "commands_post"], replace = "ref" }
-]
-commands_pre = [
-  { extend = true, of = ["tool", "tox", "env", "lint", "commands_pre"], replace = "ref" }
-]
 dependency_groups = [
   { extend = true, of = ["tool", "tox", "env", "lint", "dependency_groups"], replace = "ref" }
 ]
