@@ -3,6 +3,8 @@ site_name: mk tool documentation
 site_url: https://mk.readthedocs.io/
 repo_url: https://github.com/pycontribs/mk
 edit_uri: blob/main/docs/
+# must match RTD default because zensical does not allow cli override
+site_dir: _readthedocs/html/
 copyright: Copyright © Sorin Sbarnea
 docs_dir: docs
 strict: true
@@ -46,7 +48,6 @@ theme:
     - search.suggest
     - toc.integrate
   palette:
-    # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#primary-color
     - media: "(prefers-color-scheme: light)"
       primary: green
       accent: green
@@ -117,7 +118,3 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-        - name: python
-          class: python
-          validator: !!python/name:markdown_exec.validator
-          format: !!python/name:markdown_exec.formatter
