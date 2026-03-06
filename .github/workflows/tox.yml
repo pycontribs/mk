@@ -142,29 +142,29 @@ jobs:
       - name: Install tox
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install --upgrade "tox>=4.0.0" "tox-uv>=1.25.0" "uv>=0.6.6"
+          python3 -m pip install --upgrade "tox>=4.47.3" "tox-uv>=1.25.0" "uv>=0.6.6"
 
       - name: Log installed dists
         run: python3 -m pip freeze --all
 
       - run: ${{ matrix.command }}
-        timeout-minutes: 2
+        timeout-minutes: 5
 
       - run: ${{ matrix.command2 }}
         if: ${{ matrix.command2 }}
-        timeout-minutes: 2
+        timeout-minutes: 5
 
       - run: ${{ matrix.command3 }}
         if: ${{ matrix.command3 }}
-        timeout-minutes: 2
+        timeout-minutes: 5
 
       - run: ${{ matrix.command4 }}
         if: ${{ matrix.command4 }}
-        timeout-minutes: 2
+        timeout-minutes: 5
 
       - run: ${{ matrix.command5 }}
         if: ${{ matrix.command5 }}
-        timeout-minutes: 2
+        timeout-minutes: 5
 
       - name: Archive logs
         if: always()
