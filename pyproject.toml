@@ -25,12 +25,8 @@ classifiers = [
   "Topic :: Utilities"
 ]
 dependencies = [
-  "build>=1.2.2",  # indirect of twine
-  "cffi>=1.17.1",  # indirect lower constraint
-  "colorama>=0.4.6",  # indirect lower constraint
-  "diskcache>=5.2.1",  # indirect lower constraint
-  "gitpython>=3.1.26",  # same as pkg
-  "html5lib>=1.1",  # indirect of twine
+  "diskcache>=5.2.1",
+  "gitpython>=3.1.26",
   "mk-pre",
   "packaging>=26",
   "pip>=21.0.1",
