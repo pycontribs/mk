@@ -41,7 +41,7 @@ jobs:
 
       - name: Determine matrix
         id: generate_matrix
-        uses: ansible/actions/matrix@112a23d800e173bf6678b3c9a4bb52d3454eab61 # v0
+        uses: ansible/actions/matrix@6a1213bcc7c0780d12a1858618f98af21599b719 # v1
         with:
           min_python: "3.11"
           default_python: |
