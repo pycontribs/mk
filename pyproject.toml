@@ -333,12 +333,12 @@ commands = [
     "-m",
     "pytest",
     { default = [
-      "-ra",
+      "-v",
+      "-rA",
       "--showlocals",
       "--doctest-modules",
       "--durations=10",
-      "-m",
-      "not eco"
+      "--durations-min=5",
     ], extend = true, replace = "posargs" }
   ],
   [
