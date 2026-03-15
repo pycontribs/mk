@@ -41,7 +41,7 @@ jobs:
 
       - name: Determine matrix
         id: generate_matrix
-        uses: ansible/actions/matrix@112a23d800e173bf6678b3c9a4bb52d3454eab61 # v0
+        uses: ansible/actions/matrix@6a1213bcc7c0780d12a1858618f98af21599b719 # v1
         with:
           min_python: "3.11"
           default_python: |
@@ -223,7 +223,7 @@ jobs:
 
       - name: Download artifacts
         if: ${{ needs.build.result != 'skipped' }}
-        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         continue-on-error: true # to allow rerunning this job
         with:
           name: logs.zip
