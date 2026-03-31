@@ -87,9 +87,7 @@ def prs() -> None:
     # for user in TEAM:
     # --review-requested=@{user}
     # --owner=ansible --owner=ansible-community
-    cmd = (
-        "GH_PAGER= gh search prs --draft=false --state=open --limit=100 --sort=updated"
-    )
+    cmd = "GH_PAGER=cat gh search prs --draft=false --state=open --limit=100 --sort=updated"
     cmd += "".join(f" --repo={repo}" for repo in app.repos)
     cmd += (
         " --template '{{range .}}{{tablerow .repository.nameWithOwner (timeago .updatedAt) "
@@ -104,7 +102,7 @@ def prs() -> None:
 def alerts() -> None:
     """List open alerts."""
     for repo in app.repos:
-        cmd = "GH_PAGER= gh "
+        cmd = "GH_PAGER=cat gh "
         cmd += f"api /repos/{repo}/dependabot/alerts"
         cmd += " --jq='.[] | select(.state!=\"fixed\") | .html_url'"
         result = run(  # noqa: S602
