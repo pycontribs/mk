@@ -16,7 +16,6 @@ distros
 facelessuser
 fontawesome
 gitreview
-hashseed
 hexsha
 htmlproofer
 inlinehilite
@@ -29,7 +28,6 @@ posargs
 prek
 pymdownx
 pypackage
-showconfig
 showlocals
 ssbarnea
 superfences
