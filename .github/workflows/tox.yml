@@ -41,7 +41,7 @@ jobs:
 
       - name: Determine matrix
         id: generate_matrix
-        uses: ansible/actions/matrix@96828a1bedeacf72afaf583aa9fd1003e5a34cb5 # v1
+        uses: ansible/actions/matrix@b2b0657c2e1d083cf979eba2fd04ae79e5ab3900 # v1
         with:
           min_python: "3.11"
           default_python: |
@@ -168,7 +168,7 @@ jobs:
 
       - name: Archive logs
         if: always()
-        uses: ansible/actions/upload-artifact@9048781436578c05be457b94e2fc7981c67674b5 # main
+        uses: ansible/actions/upload-artifact@136dbb4feaaf56fc77ab895c249d4eb8a0b92c6d # main
         with:
           name: logs-${{ matrix.name }}.zip
           include-hidden-files: true
@@ -213,7 +213,7 @@ jobs:
 
       - name: Merge logs into a single archive
         if: ${{ needs.build.result != 'skipped' }}
-        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact/merge@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: logs.zip
           include-hidden-files: true
@@ -244,7 +244,7 @@ jobs:
           jobs: ${{ toJSON(needs) }}
 
       - name: Delete Merged Artifacts
-        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact/merge@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           include-hidden-files: true
           delete-merged: true
