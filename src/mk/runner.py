@@ -37,6 +37,10 @@ class Runner:
             try:
                 self.branch = self.repo.active_branch.name
                 logging.info("Detected active branch '%s'", self.branch)
+            except ValueError:
+                if self.repo.head.reference == '.invalid':
+                    self.branch = self.repo.git.rev_parse('--abrev-ref', 'HEAD')
+                    logging.info("Detected active branch using reftables '%s'", self.branch)
             except TypeError:
                 # https://github.com/gitpython-developers/GitPython/issues/633#issuecomment-786710029
                 logging.debug("No branch detected.")
