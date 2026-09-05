@@ -41,7 +41,7 @@ jobs:
 
       - name: Determine matrix
         id: generate_matrix
-        uses: ansible/actions/matrix@96828a1bedeacf72afaf583aa9fd1003e5a34cb5 # v1
+        uses: ansible/actions/matrix@b2b0657c2e1d083cf979eba2fd04ae79e5ab3900 # v1
         with:
           min_python: "3.11"
           default_python: |
@@ -118,7 +118,7 @@ jobs:
       # needed by tox -e docs to produce changelog
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0 # needed by setuptools-scm
           submodules: true
@@ -130,11 +130,11 @@ jobs:
           && sudo apt-get install -y libvirt-dev zsh
 
       - name: Install mise
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
 
       - name: Set up Python ${{ matrix.python_version || '3.11' }}
         if: "!contains(matrix.shell, 'wsl')"
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           cache: pip
           python-version: ${{ matrix.python_version || '3.11' }}
@@ -168,7 +168,7 @@ jobs:
 
       - name: Archive logs
         if: always()
-        uses: ansible/actions/upload-artifact@9048781436578c05be457b94e2fc7981c67674b5 # main
+        uses: ansible/actions/upload-artifact@c9f5fb837e8187ca06eb84f36f076286d51d2bd8 # main
         with:
           name: logs-${{ matrix.name }}.zip
           include-hidden-files: true
@@ -201,10 +201,10 @@ jobs:
 
     steps:
       # checkout needed for codecov action which needs codecov.yml file
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Set up Python # likely needed for coverage
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.14"
 
@@ -213,7 +213,7 @@ jobs:
 
       - name: Merge logs into a single archive
         if: ${{ needs.build.result != 'skipped' }}
-        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact/merge@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: logs.zip
           include-hidden-files: true
@@ -231,7 +231,7 @@ jobs:
 
       - name: Upload coverage data
         if: ${{ needs.build.result != 'skipped' }}
-        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7
         with:
           name: ${{ matrix.name }}
           # verbose: true # optional (default = false)
@@ -239,12 +239,12 @@ jobs:
           use_oidc: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork) }} # cspell:ignore oidc
 
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # release/v1
+        uses: re-actors/alls-green@b5b5b37504aa4183270bd3d855c52a67f212be35 # release/v1
         with:
           jobs: ${{ toJSON(needs) }}
 
       - name: Delete Merged Artifacts
-        uses: actions/upload-artifact/merge@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact/merge@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           include-hidden-files: true
           delete-merged: true
