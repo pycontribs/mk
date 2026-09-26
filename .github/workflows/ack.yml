@@ -23,7 +23,7 @@ jobs:
 
       - name: auto-add labels
         if: github.event.issue.labels.length == 0
-        uses: release-drafter/release-drafter@139054aeaa9adc52ab36ddf67437541f039b88e2 # v7
+        uses: release-drafter/release-drafter@34d80673e067bdc0c24568d3af899c216adcfaa9 # v7
         with:
           # we only want to use the auto-labeler bits:
           disable-autolabeler: false
