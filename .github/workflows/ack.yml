@@ -12,18 +12,18 @@ jobs:
   #   uses: ansible/team-devtools/.github/workflows/ack.yml@main
   #   secrets: inherit
   ack:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       issues: write
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6
+      - uses: amannn/action-semantic-pull-request@66e72920af32222769c386d81f89656ebcb6d6d5 # v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: auto-add labels
         if: github.event.issue.labels.length == 0
-        uses: release-drafter/release-drafter@139054aeaa9adc52ab36ddf67437541f039b88e2 # v7
+        uses: release-drafter/release-drafter@d1a19e60e81a7e650d00a7de9277f87e439117ea # v7
         with:
           # we only want to use the auto-labeler bits:
           disable-autolabeler: false
